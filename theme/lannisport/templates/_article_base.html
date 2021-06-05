@@ -1,0 +1,22 @@
+<time datetime="{{article.date.isoformat()}}"><div class="DateDay">{{article.date.strftime("%d")}}</div><span class="DateMounth"> {{article.date.strftime("%b")}} {{article.date.strftime("%Y")}} </span><span class="triangle"></span></time>
+
+<section>
+    <article>
+        <header>
+            <h2><a href="{{SITEURL}}/{{article.url}}" rel="bookmark">{{article.title}}</a></h2>
+	    {% if article.author %}
+	    <span class='author'>{{article.author}}</span>
+	    {% endif %}
+        </header>
+        
+        {% block article_content %} {% endblock %}
+        {% block article_footer %} {% endblock %}
+        </footer>
+    </article>
+</section>
+    <div class="article_infos">
+        <p>Posted in: <a href="{{SITEURL}}/{{article.category.url}}">{{article.category}}</a></p>
+        <p>Tagged as: {% for tag in article.tags %}<a href="{{SITEURL}}/{{tag.url}}">{{tag}}</a>{% if not loop.last %} / {% endif %}{% endfor %}</p>
+    </div>
+
+<!--article.locale_date-->
