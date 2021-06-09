@@ -18,7 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700,300italic,300' rel='stylesheet' type='text/css'>
 
     <!--        <link rel="stylesheet" href="{{SITEURL}}/theme/css/bootstrap.min.css">-->
-    
+
     <script>window.jQuery || document.write('<script src="{{SITEURL}}/theme/js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
       <script src="{{SITEURL}}/theme/js/vendor/modernizr-latest.js"></script>
       <link rel="stylesheet" href="{{SITEURL}}/theme/css/bootstrap.css">
@@ -28,20 +28,21 @@
       <!--        <script src="{{SITEURL}}/theme/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
       <script src="{{SITEURL}}/theme/js/vendor/jquery.lavalamp.js"></script>
 
-      <script src="{{SITEURL}}/theme/js/vendor/respond.min.js"></script> 
-      
+      <script src="{{SITEURL}}/theme/js/vendor/respond.min.js"></script>
+
   </head>
   <body>
+  <!--
     <div id="Web_Map">
       <div class="row">
         <div class="col-sm-3">
           <div class="Content">
             <div class="Logo_Frame">
-              <a href="http://shinken-solutions.com" target="_blank"> 
+              <a href="http://shinken-solutions.com" target="_blank">
                 <img alt="Logo Ninja Solutions Shinken Monitoring" class="Logo" src="/theme/img/ninjagrey.png">
                 <p class="Title_Map">shinken-solutions.com</p>
                 <p><tiny>Business-centric monitoring</tiny></p>
-              </a>    
+              </a>
             </div>
           </div>
         </div>
@@ -80,6 +81,7 @@
         </div>
       </div>
     </div>
+    -->
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -182,34 +184,34 @@
               {{article.title}}
             </a>
           </div>
-          {% endfor %}        
+          {% endfor %}
         </div>
         <hr class="clear">
       </div>
     </div>
     <div class="col-md-1"></div>
-    
+
     <footer id="site-footer">
       <div class="row">
         <div class="col-sm-4">
-          <img src="/theme/img/LogoFrameworkWhite.png" alt="Logo Shinken solutions" class="Logo">   
+          <img src="/theme/img/LogoFrameworkWhite.png" alt="Logo Shinken solutions" class="Logo">
         </div>
         <ul class="col-sm-2 col-xs-6">
           <li>
             <a target="_blank" href="{{SITEURL}}">Home</a>
-          </li> 
-          <li> 
+          </li>
+          <li>
             <a target="_blank" href="http://shinken-monitoring.org/">Download</a>
           </li>
           <li>
             <a target="_blank" href="https://shinken.readthedocs.org/en/latest/">Docs</a>
-          </li> 
-        </ul>   
+          </li>
+        </ul>
         <ul class="col-sm-2 col-xs-6">
           <li>
             <a target="_blank" href="mailto:naparuba@gmail.com">Contact Us</a>
           </li>
-        </ul>                   
+        </ul>
         <div class="col-sm-4 col-xs-12">
 	  <!--                                <p>2014 © All rights reserved | SAS SHINKEN Solutions | RCS Bordeaux 794 549 543 |</p>-->
         </div>
@@ -228,25 +230,25 @@
           </p>
 	  -->
     </footer>
-    
+
     <script>
-      
+
       $( document ).ready(function() {
 
 
-      
-      $( "#Menu li a" ).click(function() {
-      $(this).next("ul").slideToggle("fast");   
-      });   
 
-      // Show Case : Commande la direction des hovers    
+      $( "#Menu li a" ).click(function() {
+      $(this).next("ul").slideToggle("fast");
+      });
+
+      // Show Case : Commande la direction des hovers
       $(function(){
       $(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
   });
 
   $('#Lavalamp').lavalamp({
   easing:"swing",
-  duration:300 
+  duration:300
   });
 
   $('.lavalamp-object').css({
@@ -272,7 +274,7 @@
 
   $( window ).resize(function() {
   var HeightSlide = $("#Slide1").innerHeight();
-  $( ".Gradient" ).css("height",HeightSlide+"px");    
+  $( ".Gradient" ).css("height",HeightSlide+"px");
   });
 
   });
@@ -296,6 +298,6 @@
       </script>
       -->
 
-  
+
 </body>
 </html>

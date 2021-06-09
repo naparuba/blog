@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Shinken framework team'
-SITENAME = u'Some monitoring guys'
+AUTHOR = u'Jean GABES'
+SITENAME = u'Des serveurs et du code'
 SITEURL = ''
 
 GOOGLE_ANALYTICS_CODE = 'UA-48477803-1'
@@ -18,23 +18,22 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS =  (('shinken project', 'http://www.shinken-monitoring.org/'),
-          ('shinken.io', 'http://shinken.io/'),
-          ('shinken solutions', 'http://www.shinken-solutions.com/'),
-          )
+LINKS = ()  # ('shinken project', 'http://www.shinken-monitoring.org/'),
+# ('shinken.io', 'http://shinken.io/'),
+# ('shinken solutions', 'http://www.shinken-solutions.com/'),
+# )
 
 # Social widget
-SOCIAL = (('community tweets', 'https://twitter.com/shinken_monitor'),
-          ('shinken.io news', 'https://twitter.com/Shinkenio'),
-          ('Enterprise news', 'https://twitter.com/ShinkenInc'),
-          )
+SOCIAL = (
+    ('My Twitter', 'https://twitter.com/naparuba'),
+)
 
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# RELATIVE_URLS = True
 
-#THEME = "theme/ohwait"
+# THEME = "theme/ohwait"
 THEME = "theme/lannisport"
 
 DEFAULT_DATE_FORMAT = '%b %d, %Y'
@@ -55,7 +54,5 @@ ARCHIVES_SAVE_AS = False
 
 MD_EXTENSIONS = ['codehilite(css_class=highlight)']
 
-
-
-GITHUB_URL = 'https://github.com/naparuba/shinken'
-TWITTER_URL = 'https://twitter.com/shinken_monitor'
+GITHUB_URL = 'https://github.com/naparuba/'
+TWITTER_URL = 'https://twitter.com/naparuba'
