@@ -1,0 +1,226 @@
+.home {
+    height   : 100vh;
+    padding  : 0;
+    margin   : 0;
+    color    : #F9FAFC;
+    overflow : hidden;
+}
+
+.background {
+    height                : 100%;
+    width                 : 100%;
+    padding               : 0;
+    margin                : 0;
+    background-attachment : fixed;
+    background-position   : center;
+    transform             : scale(1.1);
+    filter                : blur(3px);
+    background-size       : cover;
+}
+
+/*
+  Resolves https://github.com/hossainemruz/toha/issues/70
+
+  fixed attached images use the whole <body> size. On mobile this can get really
+  tall which blows your image out. Setting the attachment back to scroll allows
+  your cover image to stretch within its own container
+*/
+@supports (-webkit-touch-callout: none) {
+    .background {
+        background-attachment : scroll;
+    }
+}
+
+.content {
+    position : relative;
+    top      : -65%;
+    height   : 60%;
+}
+
+.home img {
+    width            : 148px;
+    height           : 148px;
+    background-color : #E7E7EF;
+    padding          : 5px;
+    margin-bottom    : 10px;
+}
+
+.home .greeting {
+    color : #F9FAFC;
+}
+
+.home .typing-carousel {
+    font-size : 14pt;
+    color     : #F0F0F0;
+}
+
+
+#typing-carousel-data {
+    display : none;
+}
+
+.home .typing-carousel .ityped {
+    background : rgba(50, 50, 50, .5);
+}
+
+
+.home .typing-carousel .ityped {
+    /*position: relative;
+    height: 40px;
+    width: 300px;
+    margin: 10px;
+    padding-right: 30px;*/
+    line-height      : 40px;
+    text-align       : right;
+    /*text-transform: uppercase;*/
+    border-radius    : 8px;
+    /*color: crimson;*/
+    overflow         : hidden;
+    background-color : black;
+}
+.home .typing-carousel .ityped:after {
+    position   : absolute;
+    content    : '';
+    left       : 0;
+    top        : 0;
+    height     : 100%;
+    width      : 100%;
+    background : rgba(0, 0, 0, 0.5);
+    transform  : skew(45deg);
+    z-index    : -1;
+}
+
+.home .typing-carousel .ityped-around {
+    background    : linear-gradient(130deg, #FF7A18, #AF002D 41.07%, #319197 76.05%);
+    border-radius : 12px;
+    padding       : 5px;
+}
+
+.arrow {
+    position  : absolute;
+    color     : #F9FAFC;
+    font-size : 1.5rem;
+    bottom    : 0;
+}
+
+.bounce {
+    -webkit-animation : bounce 2s infinite;
+    animation         : bounce 2s infinite;
+}
+
+@-webkit-keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform : translateY(0);
+    }
+    40% {
+        transform : translateY(-30px);
+    }
+    60% {
+        transform : translateY(-15px);
+    }
+}
+
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform : translateY(0);
+    }
+    40% {
+        transform : translateY(-30px);
+    }
+    60% {
+        transform : translateY(-15px);
+    }
+}
+
+/* ============= Device specific fixes ======= */
+
+/* Large screens such as TV */
+@media only screen and (min-width : 1824px) {
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+
+@media (max-width : 1400px) {
+}
+
+@media (max-width : 1200px) {
+}
+
+/* IPad Pro */
+@media (max-width : 1024px) {
+}
+
+/*  Large devices (desktops, 992px and up) */
+
+@media (max-width : 992px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+
+@media only screen and (max-width : 768px) {
+}
+
+/* Small devices (landscape phones, 576px and up) */
+
+@media only screen and (max-width : 576px) {
+    .content {
+        position : relative;
+        top      : -75%;
+        height   : 65%;
+    }
+
+    .home img {
+        width     : 140px;
+        max-width : 50%;
+        height    : auto;
+    }
+
+    .home .greeting {
+        font-size : 24pt;
+    }
+}
+
+/* iPhoneX, iPhone 6,7,8 */
+@media only screen and (max-width : 375px) {
+}
+
+/* Galaxy S5, Moto G4 */
+@media only screen and (max-width : 360px) {
+}
+
+/* iPhone 5 or before */
+@media only screen and (max-width : 320px) {
+}
+
+#homePageBackgroundImageDivStyled {
+    background-image : url('/theme/images/site/background_hu734aa6f98ca0577a577126c08c02e5c3_354464_500x0_resize_q75_box.jpg');
+}
+
+@media (min-width : 500px) and (max-width : 800px) {
+    #homePageBackgroundImageDivStyled {
+        background-image : url('/theme/images/site/background_hu734aa6f98ca0577a577126c08c02e5c3_354464_800x0_resize_q75_box.jpg');
+    }
+}
+@media (min-width : 801px) and (max-width : 1200px) {
+    #homePageBackgroundImageDivStyled {
+        background-image : url('/theme/images/site/background_hu734aa6f98ca0577a577126c08c02e5c3_354464_1200x0_resize_q75_box.jpg');
+    }
+}
+@media (min-width : 1201px) and (max-width : 1500px) {
+    #homePageBackgroundImageDivStyled {
+        background-image : url('/theme/images/site/background_hu734aa6f98ca0577a577126c08c02e5c3_354464_1500x0_resize_q75_box.jpg');
+    }
+}
+@media (min-width : 1501px) {
+    #homePageBackgroundImageDivStyled {
+        background-image : url('/theme/images/site/background.jpg');
+    }
+}

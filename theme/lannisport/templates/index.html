@@ -1,17 +1,35 @@
-{% extends 'base.html' %}
+{% include '_head.html' %}
 
-{% block content %}
-    {% for article in dates_page.object_list %}
-        {% include '_article_summary.html' %}
+<body data-spy="scroll" data-target="#top-navbar" data-offset="100">
 
-        {% if loop.last and (dates_page.has_previous()
-        or not dates_page.has_previous() and loop.length > 1) %}
-            {% include 'pagination.html' %}
-        {% endif %}
-    {% else %}
-        <section>
-            <p>Nothing here.</p>
-        </section>
-    {% endfor %}
-{% endblock %}
- 
+{% include '_nav.html' %}
+
+
+
+{% include '_home.html' %}
+
+
+{% include '_about.html' %}
+
+
+{% include '_skills.html' %}
+
+
+{% include '_experience.html' %}
+
+
+{% include '_education.html' %}
+
+
+{% include '_projects.html' %}
+
+
+{% include '_recent_posts.html' %}
+
+
+
+
+{% include '_footer.html' %}
+
+</body>
+</html>
