@@ -1,11 +1,13 @@
 .home {
-    height   : 100vh;
-    padding  : 0;
-    margin   : 0;
-    color    : #F9FAFC;
-    overflow : hidden;
+    height     : 100vh;
+    padding    : 0;
+    margin     : 0;
+    color      : #F9FAFC;
+    overflow   : hidden;
+    background : #353535;
 }
 
+/*
 .background {
     height                : 100%;
     width                 : 100%;
@@ -17,6 +19,8 @@
     filter                : blur(3px);
     background-size       : cover;
 }
+*/
+
 
 /*
   Resolves https://github.com/hossainemruz/toha/issues/70
@@ -31,6 +35,9 @@
     }
 }
 
+#header-background-canvas {
+    display : none;
+}
 .content {
     position : relative;
     top      : -65%;
@@ -91,16 +98,16 @@
 }
 
 .home .typing-carousel .ityped-around {
-    background    : linear-gradient(130deg, #FF7A18, #AF002D 41.07%, #319197 76.05%);
-    border-radius : 12px;
-    padding       : 5px;
+    background    : linear-gradient(45deg, #AD27AD, #BD2681, #6512B9, #FF3300DE);
+    border-radius : 8px;
+    padding       : 2px;
 }
 
 .arrow {
     position  : absolute;
     color     : #F9FAFC;
     font-size : 1.5rem;
-    bottom    : 0;
+    bottom    : 100px;
 }
 
 .bounce {
@@ -222,5 +229,85 @@
 @media (min-width : 1501px) {
     #homePageBackgroundImageDivStyled {
         background-image : url('/theme/images/site/background.jpg');
+    }
+}
+
+
+/*********** HEXAGONS *******/
+
+
+.hexagons {
+}
+
+.hexrow {
+    display         : block;
+    width           : 100vw;
+    height          : 125px;
+    overflow        : hidden;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    flex-wrap       : wrap;
+    margin-top      : -35px;
+    margin-left     : -33px;
+}
+
+.hexrow .hexagon {
+    position         : relative;
+    width            : 100px;
+    height           : 57.74px;
+    background-color : #2B2B2B;
+    margin           : 32.87px 2px;
+    display          : block;
+    transition       : all 0.2s linear;
+}
+.hexrow .hexagon::after {
+    content      : "";
+    position     : absolute;
+    width        : 0;
+    border-left  : 50px solid transparent;
+    border-right : 50px solid transparent;
+    top          : 100%;
+    width        : 0;
+    border-top   : 28.87px solid #2B2B2B;
+    transition   : all 0.2s linear;
+}
+.hexrow .hexagon::before {
+    content       : "";
+    position      : absolute;
+    width         : 0;
+    border-left   : 50px solid transparent;
+    border-right  : 50px solid transparent;
+    bottom        : 100%;
+    border-bottom : 28.87px solid #2B2B2B;
+    transition    : all 0.2s linear;
+}
+.hexrow.hexrow-moved {
+    margin-left : 19px;
+}
+
+.cursor {
+    width           : 350px;
+    height          : 350px;
+    border-radius   : 100%;
+    position        : absolute;
+    box-shadow      : 2px -3px 41px -1px rgba(241, 196, 15, 0.64);
+    z-index         : 0;
+    opacity         : 0;
+    background      : linear-gradient(45deg, #E8F74D, #FF6600D9, #00FF66, #13FF13, #AD27AD, #BD2681, #6512B9, #FF3300DE, #5AABDE);
+    background-size : 400%;
+    animation       : glower 20s linear infinite;
+    filter          : blur(40px);
+}
+
+@keyframes glower {
+    0% {
+        background-position : 0 0;
+    }
+    50% {
+        background-position : 400% 0;
+    }
+    100% {
+        background-position : 0 0;
     }
 }
