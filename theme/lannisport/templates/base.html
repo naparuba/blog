@@ -1,303 +1,46 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{% block title %}{{SITENAME}}{% endblock %}</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+{% include '_head.html' %}
 
-    <link rel="shortcut icon" href="{{SITEURL}}/theme/favicon16.png" />
-    <link rel="apple-touch-icon" href="{{SITEURL}}/theme/favicon32.png.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="{{SITEURL}}/theme/favicon48.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="{{SITEURL}}/theme/favicon64.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="{{SITEURL}}/theme/favicon64.png" />
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,300italic,300' rel='stylesheet' type='text/css'>
 
-    <!--        <link rel="stylesheet" href="{{SITEURL}}/theme/css/bootstrap.min.css">-->
+<body>
 
-    <script>window.jQuery || document.write('<script src="{{SITEURL}}/theme/js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
-      <script src="{{SITEURL}}/theme/js/vendor/modernizr-latest.js"></script>
-      <link rel="stylesheet" href="{{SITEURL}}/theme/css/bootstrap.css">
-      <!--    <link rel="stylesheet" href="{{SITEURL}}/theme/css/bootstrap-responsive.min.css">-->
-      <link rel="stylesheet" href="{{SITEURL}}/theme/css/colorbox.css">
-      <link rel="stylesheet" href="{{SITEURL}}/theme/css/main.css">
-      <!--        <script src="{{SITEURL}}/theme/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
-      <script src="{{SITEURL}}/theme/js/vendor/jquery.lavalamp.js"></script>
+{% include '_nav.html' %}
 
-      <script src="{{SITEURL}}/theme/js/vendor/respond.min.js"></script>
 
-  </head>
-  <body>
-  <!--
-    <div id="Web_Map">
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="Content">
-            <div class="Logo_Frame">
-              <a href="http://shinken-solutions.com" target="_blank">
-                <img alt="Logo Ninja Solutions Shinken Monitoring" class="Logo" src="/theme/img/ninjagrey.png">
-                <p class="Title_Map">shinken-solutions.com</p>
-                <p><tiny>Business-centric monitoring</tiny></p>
-              </a>
+<div class="container-fluid section-holder d-flex bg-white">
+    <div class="container anchor p-lg-5 about-section" id="about">
+        <div class="row pt-sm-2 pt-md-4 align-self-center">
+            <div class="row">
+                <div class="container col-md-8">
+                    {% block content %}{% endblock %}
+
+                </div> <!-- /container -->
+                <!--<div class="col-md-1"></div>-->
+                <div class="col-md-3">
+                    <div id="SocialIcons" class="row">
+                        {% include '__socials.html' %}
+                    </div>
+
+                    <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
+                        <h2>Archives</h2>
+                        <ul style="padding-left: 8px;">
+                            {% for article in dates %}
+                            <li class="archive-entry">
+                                {{article.date.strftime("%b")}} {{article.date.strftime("%Y")}} : <a href="{{SITEURL}}/{{article.url}}"> {{article.title}} </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <hr class="clear">
+                </div>
             </div>
-          </div>
+            <div class="col-md-1"></div>
+
+
         </div>
-        <div class="col-sm-3 ">
-          <div class="Content">
-            <div class="Logo_Frame">
-              <a href="http://shinken-monitoring.org" target="_blank">
-                <img alt="Logo Ninja Framework Shinken" class="Logo" src="/theme/img/ninjagreen.png">
-                <p class="Title_Map">shinken-monitoring.org</p>
-                <p>Shinken framework project</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="Content">
-            <div class="Logo_Frame">
-              <a href="http://shinken.io" target="_blank">
-                <img alt="Logo Ninja Framework Shinken" class="Logo" src="/theme/img/ninjagreen.png">
-                <p class="Title_Map">shinken.io</p>
-                <p>Shinken packages platform</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="Content">
-            <div class="Logo_Frame">
-              <a href="http://shinkenlab.io" target="_blank">
-                <img alt="Logo Ninja Framework Shinken" class="Logo" src="/theme/img/ninjagreen.png">
-                <p class="Title_Map">shinkenlab.io</p>
-                <p>Let's discuss about monitoring</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    -->
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="http://shinkenlab.io">
-            <img alt="Logo Solutions Shinken" class="Logo" src="/theme/img/Logoframeworkblack.png">
-          </a>
-        </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav" id="Lavalamp">
-            <li>
-              <a href="http://shinkenlab.io">Home</a>
-            </li>
-            <li>
-              <a href="http://www.shinken-monitoring.org/">Download</a>
-            </li>
-            <li>
-              <a href="https://shinken.readthedocs.org/en/latest/">Docs</a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown hide" id="MainDropDown">
-              <img alt="Corners Shinken Solutions Dropdown" src="/theme/img/corners.png" id="CornerL">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <img alt="Logo Shinken" src="/theme/img/logomonogrammewhite.png" class="Dropdown_Logo">
-              </a>
-              <img alt="Corners Shinken Solutions Dropdown" src="/theme/img/corners.png"  id="CornerR">
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="container col-md-8">
-        <div class="row">
-          <div class="span2" id='content'>
-          </div> <!-- logo+navigation span -->
-          <div class="span10">
-            <header id="site-header">
-              <h1>
-                <a href="{{SITEURL}}">{{SITENAME}}</a>
-                <small>
-                  <span class="divider">/</span> {{SITETAGLINE}}
-                </small>
-              </h1>
-              <!--<p>
-                  {{SITEDESCR}}
-                  </p>-->
-            </header>
+</div>
 
-            <div class="content">
-              {% block content %}{% endblock %}
-            </div>
-            <span id="ScrollTop">
-              <img src="/theme/img/caret.png" alt="caret shinken">
-            </span>
-          </div> <!-- header+content+footer span -->
-
-        </div> <!-- row -->
-      </div> <!-- /container -->
-      <!--<div class="col-md-1"></div>-->
-      <div class="col-md-2">
-        <div id="SocialIcons" class="row">
-          <a href="https://twitter.com/shinken_monitor"><img src="/theme/img/twitter.png"></a>
-          <a href="https://plus.google.com/u/0/+shinken/posts"><img src="/theme/img/google.png"></a>
-          <a href="https://github.com/naparuba/shinken/"><img src="/theme/img/github.png"></a>
-        </div>
-        <div id="Search" class="row">
-          <h2>Search</h2>
-          <script>
-            (function() {
-            var cx = '005394482386049038212:vzp97eqtbku';
-            var gcse = document.createElement('script');
-            gcse.type = 'text/javascript';
-            gcse.async = true;
-            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-            '//www.google.com/cse/cse.js?cx=' + cx;
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(gcse, s);
-            })();
-          </script>
-          <gcse:search></gcse:search>
-        </div>
-        <div id="Archives" class="row">
-          <a href="{{SITEURL}}/{{ARCHIVES_URL}}"><h2>Archives</h2></a>
-          {% for article in dates %}
-          <div id="LignArticle">
-            <div id="Date" datetime="{{article.date.isoformat()}}">{{article.date.strftime("%d")}} {{article.date.strftime("%b")}} {{article.date.strftime("%Y")}} : </div>
-            <a href="{{SITEURL}}/{{article.url}}">
-              {{article.title}}
-            </a>
-          </div>
-          {% endfor %}
-        </div>
-        <hr class="clear">
-      </div>
-    </div>
-    <div class="col-md-1"></div>
-
-    <footer id="site-footer">
-      <div class="row">
-        <div class="col-sm-4">
-          <img src="/theme/img/LogoFrameworkWhite.png" alt="Logo Shinken solutions" class="Logo">
-        </div>
-        <ul class="col-sm-2 col-xs-6">
-          <li>
-            <a target="_blank" href="{{SITEURL}}">Home</a>
-          </li>
-          <li>
-            <a target="_blank" href="http://shinken-monitoring.org/">Download</a>
-          </li>
-          <li>
-            <a target="_blank" href="https://shinken.readthedocs.org/en/latest/">Docs</a>
-          </li>
-        </ul>
-        <ul class="col-sm-2 col-xs-6">
-          <li>
-            <a target="_blank" href="mailto:naparuba@gmail.com">Contact Us</a>
-          </li>
-        </ul>
-        <div class="col-sm-4 col-xs-12">
-	  <!--                                <p>2014 © All rights reserved | SAS SHINKEN Solutions | RCS Bordeaux 794 549 543 |</p>-->
-        </div>
-      </div>
-
-      <!--
-          <p>
-            <a href="{{LICENSE_URL}}" target="_blank">
-              {{LICENSE_NAME}}
-            </a> {{AUTHOR}} /
-            <a href="{{SITEURL}}/{{ARCHIVES_URL}}">Archives</a>
-            / Powered by
-            <a href="https://github.com/getpelican/pelican" target="_blank">
-              Pelican
-            </a>
-          </p>
-	  -->
-    </footer>
-
-    <script>
-
-      $( document ).ready(function() {
-
-
-
-      $( "#Menu li a" ).click(function() {
-      $(this).next("ul").slideToggle("fast");
-      });
-
-      // Show Case : Commande la direction des hovers
-      $(function(){
-      $(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
-  });
-
-  $('#Lavalamp').lavalamp({
-  easing:"swing",
-  duration:300
-  });
-
-  $('.lavalamp-object').css({
-  "border-bottom":" 3px solid #ff8400"
-  })
-
-  $( ".dropdown" ).click(function() {
-  /*$( "#Web_Map" ).slideToggle( "fast");*/
-  });
-
-
-  $( "#Lavalamp li" ).bind('mouseenter', function()  {
-  $(this).next(".HoverMenu").slideDown( "fast")
-  });
-
-  $( "#Lavalamp li" ).next(".HoverMenu").bind('mouseleave', function()  {
-  $(this).slideUp( "fast")
-  });
-
-
-  var HeightSlide = $("#Slide1").innerHeight();
-  $( ".Gradient" ).css("height",HeightSlide+"px");
-
-  $( window ).resize(function() {
-  var HeightSlide = $("#Slide1").innerHeight();
-  $( ".Gradient" ).css("height",HeightSlide+"px");
-  });
-
-  });
-
-</script>
-<!--        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-
-
-<!--        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>-->
-<script src="{{SITEURL}}/theme/js/vendor/jquery.colorbox-min.js"></script>
-<script>$('body').popover || document.write('<script src="{{SITEURL}}/theme/js/vendor/bootstrap.min.js"><\/script>')</script>
-  <script src="{{SITEURL}}/theme/js/vendor/jquery.colorbox-min.js"></script>
-  <script src="{{SITEURL}}/theme/js/main.js"></script>
-
-  <!--
-      <script>
-        var _gaq=[['_setAccount','{{GOOGLE_ANALYTICS_CODE}}'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-      </script>
-      -->
-
+{% include '_footer.html' %}
 
 </body>
 </html>

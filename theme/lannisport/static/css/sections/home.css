@@ -47,7 +47,7 @@
 .home img {
     width            : 148px;
     height           : 148px;
-    background-color : #E7E7EF;
+    /*background-color : #E7E7EF;*/
     padding          : 5px;
     margin-bottom    : 10px;
 }

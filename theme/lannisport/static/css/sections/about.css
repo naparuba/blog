@@ -1,18 +1,4 @@
-.social-link {
-  list-style: none;
-  padding: 0.2rem;
-}
 
-.social-link a {
-  font-size: 1.5rem;
-  color: #3c4858;
-  padding: 0.5rem;
-}
-
-.social-link a:hover {
-  color: #248aaa;
-  transition: all 0.3s ease-in;
-}
 
 .circular-progress {
   width: 150px;
