@@ -282,6 +282,19 @@ mark {
     background-color : #FFC21280;
 }
 
+/* for posts, put a technical background on top right*/
+#post-container {
+    background-image    : url('/theme/images/site/hexa_background.png');
+    background-repeat   : no-repeat;
+    background-position : right 0% top 0%;
+}
+
+/* and posts with a white background to read it*/
+#post{
+    background-color: inherit;
+    box-shadow: 0px 0px 20px 0px #fff;
+}
+
 /* Archives */
 .archives-li-header {
     min-width : 75px;
