@@ -44,12 +44,47 @@
     height   : 60%;
 }
 
-.home img {
-    width            : 148px;
-    height           : 148px;
-    /*background-color : #E7E7EF;*/
+.home .portrait img {
+    width            : 180px;
+    height           : 180px;
+    background-color : #424242;
     padding          : 5px;
     margin-bottom    : 10px;
+
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+    transition: all 0.5s ease;
+}
+
+.home .portrait img.on-top {
+    display: none!important;
+    /*position: absolute;
+    top: 0;
+    left : 0;*/
+    z-index: 99;
+    opacity: 0;
+    transition: all 0.5s ease;
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+}
+
+.home .portrait:hover img.on-top {
+    display: inline!important;
+    opacity: 1;
+    transition: all 0.5s ease;
+    filter: grayscale(0.5);
+    -webkit-filter: grayscale(0.5);
+}
+
+
+.home .portrait:hover img.on-bottom {
+    display: none!important;
+}
+
+.home .portrait:hover img {
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+    transition: all 0.5s ease;
 }
 
 .home .greeting {

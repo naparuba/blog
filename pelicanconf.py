@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Jean GABES'
-SITENAME = u'Des serveurs et du code'
+SITENAME = u'Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ'
 SITEURL = ''
 
 GOOGLE_ANALYTICS_CODE = 'UA-48477803-1'
