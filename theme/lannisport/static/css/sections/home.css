@@ -51,40 +51,40 @@
     padding          : 5px;
     margin-bottom    : 10px;
 
-    filter: grayscale(1);
-    -webkit-filter: grayscale(1);
-    transition: all 0.5s ease;
+    filter           : grayscale(1);
+    -webkit-filter   : grayscale(1);
+    transition       : all 0.5s ease;
 }
 
 .home .portrait img.on-top {
-    display: none!important;
+    display        : none !important;
     /*position: absolute;
     top: 0;
     left : 0;*/
-    z-index: 99;
-    opacity: 0;
-    transition: all 0.5s ease;
-    filter: grayscale(0);
-    -webkit-filter: grayscale(0);
+    z-index        : 99;
+    opacity        : 0;
+    transition     : all 0.5s ease;
+    filter         : grayscale(0);
+    -webkit-filter : grayscale(0);
 }
 
 .home .portrait:hover img.on-top {
-    display: inline!important;
-    opacity: 1;
-    transition: all 0.5s ease;
-    filter: grayscale(0.5);
-    -webkit-filter: grayscale(0.5);
+    display        : inline !important;
+    opacity        : 1;
+    transition     : all 0.5s ease;
+    filter         : grayscale(0.5);
+    -webkit-filter : grayscale(0.5);
 }
 
 
 .home .portrait:hover img.on-bottom {
-    display: none!important;
+    display : none !important;
 }
 
 .home .portrait:hover img {
-    filter: grayscale(0);
-    -webkit-filter: grayscale(0);
-    transition: all 0.5s ease;
+    filter         : grayscale(0);
+    -webkit-filter : grayscale(0);
+    transition     : all 0.5s ease;
 }
 
 .home .greeting {
@@ -133,10 +133,39 @@
 }
 
 .home .typing-carousel .ityped-around {
-    background    : linear-gradient(45deg, #AD27AD, #BD2681, #6512B9, #FF3300DE);
-    border-radius : 8px;
-    padding       : 2px;
+    background        : linear-gradient(60deg, #F79533, #F37055, #EF4E7B, #A166AB, #5073B8, #1098AD, #07B39B, #6FBA82);
+    border-radius     : 8px;
+    padding           : 2px;
+    -webkit-animation : animatedgradient 3s ease alternate infinite;
+    animation         : animatedgradient 3s ease alternate infinite;
 }
+
+
+@-webkit-keyframes animatedgradient {
+    0% {
+        background-position : 0% 50%;
+    }
+    50% {
+        background-position : 100% 50%;
+    }
+    100% {
+        background-position : 0% 50%;
+    }
+}
+
+
+@keyframes animatedgradient {
+    0% {
+        background-position : 0% 50%;
+    }
+    50% {
+        background-position : 100% 50%;
+    }
+    100% {
+        background-position : 0% 50%;
+    }
+}
+
 
 .arrow {
     position  : absolute;
