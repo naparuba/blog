@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ</title>
+
+
+    <meta name="description" content="Portfolio et blog profesionnel de Jean Gabès."/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/main.css"/>
+    <link rel="stylesheet" href="/theme/css/navigators/navbar.css"/>
+    <link rel="stylesheet" href="/theme/css/plyr.css"/>
+    <link rel="stylesheet" href="/theme/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/social.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/png" href="/theme/images/author/cadre.png"/>
+
+    <meta property="og:title" content="Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Portfolio et blog profesionnel de Jean Gabès"/>
+    <meta property="og:image" content="/theme/images/author/naparuba.gif">
+    <meta property="og:url" content="https://hugo-toha.github.io">
+
+
+    <link rel="stylesheet" href="/theme/css/style.css"/>
+
+
+    <script type="application/javascript">
+        var doNotTrack = false;
+        if ( !doNotTrack ) {
+            window.ga = window.ga || function() {
+                (ga.q = ga.q || []).push( arguments );
+            };
+            ga.l      = +new Date;
+            ga( 'create', 'UA-122321624-233', 'auto' );
+
+            ga( 'send', 'pageview' );
+        }
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            Jean Gabès</a>
+        <button
+                class="navbar-toggler navbar-dark"
+                id="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#top-nav-items"
+                aria-label="menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="top-nav-items">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#home">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">A propos</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#experiences">Expérience</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#education">Scolarité</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#projects">Projets</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/#recent-posts">Post récents</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+
+<div id="post-container" class="container-fluid section-holder d-flex bg-white">
+    <div class="container anchor p-lg-5" id="post">
+        <div class="row pt-sm-2 pt-md-4 align-self-center">
+            <div class="row">
+                <div class="container col-md-8">
+<section>
+    <article>
+        <header class="post-header">
+            <h2><a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/" rel="bookmark">Mise en place d'une solution de load balancing hautement disponible</a></h2>
+            <span class='author'>Gabès Jean</span>
+            <span style="color: gray;font-style: italic;">( 30 Jun 2009 )</span>
+
+            <span class="tags"><a href="/tag/blog.html">blog</a></span>
+            <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
+
+
+        </header>
+
+    <!-- relu -->
+
+<p>Nous avons vu le principe de la solution de load balancing hautement disponible, regardons désormais comment la mettre en place.</p>
+<h2>Les load balanceurs</h2>
+<h3>Description</h3>
+<p>Nous allons appeler les répartiteurs de charges:</p>
+<ul>
+<li>frontal1 (<strong>192.168.0.1</strong>)</li>
+<li>frontal2 (<strong>192.168.0.2</strong>)</li>
+<li>l'IP virtuelle (VIP) est <strong>192.16.8.0.3</strong></li>
+<li>le service sera sur le port <strong>80</strong>.</li>
+</ul>
+<p>La distribution de notre exemple sera ici une Redhat entreprise 4, mais il est très facile de généraliser pour d'autres.</p>
+<p>Les serveurs réels seront:</p>
+<ul>
+<li>reel1 (linux) en 192.168.0.4</li>
+<li>reel2 (linux) en 192.168.0.5</li>
+</ul>
+<p>Les composants importants sont:</p>
+<ul>
+<li>Heartbeat afin de faire la bascule en cas de mort d'un loadbalanceur</li>
+<li>ldirector qui se charge de configurer et surveiller les serveurs réels</li>
+<li>ipvsadm qui contrôle le module LVS du noyau (<strong>ip_vs</strong>)</li>
+</ul>
+<h3>Installation</h3>
+<p>En terme de package RPM ceci donne à installer (rpm -Uvh *rpm) :</p>
+<ul>
+<li>heartbeat-2.0.7-1.c4.i386.rpm</li>
+<li>heartbeat-ldirectord-2.0.8-2.el4.centos.i386.rpm</li>
+<li>heartbeat-pils-2.0.7-1.c4.i386.rpm</li></li>
+<li>heartbeat-stonith-2.0.7-1.c4.i386.rpm</li></li>
+<li>ipvsadm-1.24-6.i386.rpm</li></li>
+<li>perl-Authen-Radius-0.13-1.el4.rf.noarch.rpm</li></li>
+<li>perl-Data-HexDump-0.02-1.2.el4.rf.noarch.rpm</li></li>
+<li>perl-Digest-HMAC-1.01-13.noarch.rpm</li></li>
+<li>perl-Digest-SHA1-2.07-5.i386.rpm</li></li>
+<li>perl-IO-Socket-SSL-1.01-1.el4.rf.noarch.rpm</li></li>
+<li>perl-Mail-POP3Client-2.17-1.c4.noarch.rpm</li></li>
+<li>perl-MailTools-1.76-1.el4.rf.noarch.rpm</li></li>
+<li>perl-Net-DNS-0.59-5.el4.i386.rpm</li></li>
+<li>perl-Net-IMAP-Simple-1.16-1.c4.noarch.rpm</li></li>
+<li>perl-Net-IMAP-Simple-SSL-1.3-1.c4.noarch.rpm</li></li>
+<li>perl-Net-IP-1.25-3.el4.noarch.rpm</li></li>
+<li>perl-Net_SSLeay.pm-1.25-4.el4.at.i386.rpm</li></li>
+<li>perl-TimeDate-1.16-3_2.el4.at.noarch.rpm</li></li>
+</ul>
+<p>Ces versions sont valables pour une RHES 4U4. Ils sont disponibles sur <a href="http://mirror.centos.org/centos/4/extras/i386/RPMS/">http://mirror.centos.org/centos/4/extras/i386/RPMS/
+</a></p>
+<p>Une fois tous ces packages installés, il faut les configurer. Nous allons nous placer dans une configuration en mode direct.</p>
+<h3>Configuration de Heartbeat</h3>
+<p>Notre configuration commence par celle de Heartbeat. Nous allons commencer par configurer un simple cluster actif/passif d'une adresse virtuelle, <strong>192.16.8.0.3</strong>. Elle ne sera active que sur un des frontaux à la fois. Si le maitre tombe, le second prend la main.</p>
+<p>Le fichier de configuration principal est <strong>/etc/ha.d/ha.cf</strong> sur chaque frontal. </p>
+<p>Ici sur le serveur frontal1 :</p>
+<div class="highlight"><pre><span></span>ucast         eth0 192.168.0.2
+debugfile     /var/log/ha-debug
+logfile       /var/log/ha-log
+logfacility   local0
+
+keepalive     2
+deadtime      10
+warntime      6
+initdead      60
+
+udpport       694
+node          frontal1
+node          frontal2
+
+auto_failback on
+</pre></div>
+
+
+<p>Le fichier de configuration de <strong>frontal2</strong> ne va différer que de la première ligne :</p>
+<div class="highlight"><pre><span></span>ucast         eth0 192.168.0.1
+</pre></div>
+
+
+<p>La ligne <strong>ucast</strong> permet d'aller vérifier si l'autre noeud est toujours en vie ou non. Il est possible de spécifier une autre interface que <strong>eth0</strong> si on possède un lien dédié à cette communication. Ici par soucis de facilité, nous utiliserons le lien LAN normal.</p>
+<p>Le fichier <strong>/etc/ha.d/haresources</strong> qui décrit les services mis en place par HeartBeat. Pour l'instant, nous nous contentons de l'adresse virtuelle :</p>
+<div class="highlight"><pre><span></span>frontal1 IPaddr::192.168.0.3
+</pre></div>
+
+
+<p><strong>IPaddr</strong> est un script dans <strong>/etc/ha.d/resource.d</strong> qui permet de monter une adresse sur un alias d'interface. Ici il va créer <strong>eth0:0</strong> avec comme IP <strong>192.168.0.3</strong>. Il est important de comprendre que ce script est appelé avec <strong>start</strong> sur le maitre, <strong>stop</strong> sur l'esclave. </p>
+<p>Lorsqu'une bascule s'opère, c'est tout simplement l'inverse et donc le neoud secondaire prends l'IP.</p>
+<p>Les deux noeuds ont besoin de s'authentifier. Pour cela, il faut éditer le fichier <strong>/etc/ha.d/authkeys</strong> qui décrit comment communiquent
+les deux noeuds :</p>
+<div class="highlight"><pre><span></span>auth 2
+1 md5 &quot;vive ipvs&quot;
+2 crc
+</pre></div>
+
+
+<p>Faire un :</p>
+<div class="highlight"><pre><span></span>chmod 600 /etc/ha.d/authkeys
+</pre></div>
+
+
+<p>Il faut ajouter le lancement de heartbeat au démarrage des deux frontaux :</p>
+<div class="highlight"><pre><span></span>chkconfig --add heartbeat
+chkconfig heartbeat on
+</pre></div>
+
+
+<p>Lancer les services sur les deux frontaux avec :</p>
+<div class="highlight"><pre><span></span>/etc/init.d/heartbeat start
+</pre></div>
+
+
+<p>Vous pouvez vérifier que vosu avec un alias de monté sur le noeud maitre et pas sur le noeud secondaire :</p>
+<div class="highlight"><pre><span></span>eth0      Link encap:Ethernet  HWaddr 00:50:57:85:5C:96
+inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[...]
+eth0:0    Link encap:Ethernet  HWaddr 00:50:57:85:5C:96
+inet addr:192.168.0.3  Bcast:192.168.0.255  Mask:255.255.255.0
+[...]
+</pre></div>
+
+
+<p>On remarque que <strong>eth0</strong> est toujours disponible, mais que eth0:0 est apparu avec notre VIP.</p>
+<h3>Configuration de Ldirectord</h3>
+<p>Une fois HeartBeat de configuré, penchant nous sur la mise en place de <strong>ldirectord</strong> qui va gérer les règles de load balancing.</p>
+<p>Ldirectord utilise des fichiers de conf situé dans <strong>/etc/ha.d/conf</strong>, soit dans la configuration de Heartbeat. C'est en effet ce dernier qui le lancera sur le noeud primaire uniquement. 
+Le mieux concernant ldirectord est de faire un fichier de conf par service. Ici nous prendrons le fichier <strong>/etc/ha.d/conf/www.cf</strong> :</p>
+<div class="highlight"><pre><span></span>virtual = 192.168.0.3:80
+protocol = tcp
+scheduler = wlc
+real = 192.168.0.4:80 gate 1
+real = 192.168.0.5:80 gate 1
+checktype = connect
+quiescent = no
+persistent = 3600
+fallback = 127.0.0.1:80
+</pre></div>
+
+
+<p>Les paramètres sont :</p>
+<ul>
+<li>gate : mode direct</li>
+<li>1 : poids du nœud par rapport aux autres</li>
+<li>scheduler : algorithme de détermination du serveur réel a qui envoyer le client</li>
+<li>checktype : mode de supervision, ici simple ouverture de port</li>
+<li>quiescent : si mis à no, le serveur réel est retiré de la liste lorsqu'il est mort. S'il revient, il est automatiquement ajouté</li>
+<li>persistent : durée des sessions</li>
+<li>fallback : serveur qui prends le relai lorsque tous les serveurs réels sont morts. typiquement c'est juste un 404.html avec un message d'erreur.</li>
+</ul>
+<h3>Configuration de la synchronisation de la table des sessions</h3>
+<p>La table des sessions sur le <strong>frontal1</strong> peut (doit!) être synchronisée sur le frontal2 de temps en temps (toutes les 30secondes environs). </p>
+<p>En effet, en cas de tombée du serveur1, lorsque le 2 arrive, s'il n'a pas déjà la table des sessions, les utilisateurs vont devoir se reconnecter. Un système existe afin de synchroniser les serveurs.</p>
+<p>Pour cela, créer le fichier <em>/etc/init.d/lvsstate</em> sur les deux frontaux :
+<pre class="wp-caption" style="text-align: left;">#!/bin/sh</p>
+<h1></h1>
+<h1>Created 2000-01-03 by naparuba@gmail.com</h1>
+<h1></h1>
+<h1>lvsstate      This shell script takes care of starting and stopping</h1>
+<h1>sessions managers for IPVS.</h1>
+<h1></h1>
+<h1>chkconfig: -  80 30</h1>
+<h1>description: ipvs_syncmaster is a daemon for syncronising sessions\</h1>
+<h1>between two IPVS.</h1>
+<h1>processname: ipvs_syncmaster</h1>
+<h1>config: /none.cfg</h1>
+<p>case "$1" in
+ start)
+    /sbin/ipvsadm --start-daemon backup --syncid=1
+    /sbin/ipvsadm --start-daemon master --syncid=1
+ ;;
+ stop)
+    /sbin/ipvsadm --stop-daemon=backup
+    /sbin/ipvsadm --stop-daemon=master
+ ;;
+ restart)
+    $0 stop
+    $0 start
+ ;;
+ status)
+    ipvsadm -L --daemon
+ ;;
+ *)
+    echo "Usage: $0 {start|stop|restart|status}"
+esac</p>
+<p>exit 0</pre>
+Attention, il y a la paramètre <em>syncid</em> qui permet de ne pas entrechoquer plusieurs LVS sur le réseau. On peut définir par exemple :</p>
+<ul>
+<li>3 = TEST</li>
+<li>2 = QUALIF</li>
+<li>1 = PROD</li>
+<li>0 = non configuré!</li>
+</ul>
+<p>Ainsi, si le service est en mode heartbeat primaire, il est en mode master lvs, et en mode heartbeat secondaire, il est backup dans le mode lvs.
+Pour info, seules les sessions en état <strong>ESTABLISHED</strong> sont transférées. Les sessions mortes ou non encore actives ne sont pas transmises. De plus, les deux noeuds doivent avoir la syncronisation active en même temps. Les deux peuvent avoir de lancé le backup et le master, ce ci ne pose pas de soucis.</p>
+<p>Puis on les met au démarrage de la machine :</p>
+<div class="highlight"><pre><span></span>chkconfig --add lvsstate
+chkconfig lvsstate on
+/etc/init.d/lvsstate start
+</pre></div>
+
+
+<p>Une fois ceci réalisé, il est temps d'ajouter ldirectord dans les ressources HeartBeat afin qu'il soit lancer sur le noeud maitre et que le noeud secondaire prenne la main si besoin.</p>
+<p>Dans le fichier <strong>/etc/ha.d/haresources</strong> :</p>
+<div class="highlight"><pre><span></span>frontal1 IPaddr::192.168.0.3 ldirectord::www.cf
+</pre></div>
+
+
+<p>La règle dans haressources est simple : on lancer de gauche à droite, et on arrète de droite à gauche. 
+Donc ici, on montera bien la VIP avant de lancer le load balancing.</p>
+<p>On peux vérifier que c'est bien lancé avec :</p>
+<div class="highlight"><pre><span></span>ipvsadm -L
+</pre></div>
+
+
+<h2>Les serveurs réels</h2>
+<p>Nous avons vu dans le post précédent que les serveurs réels dans le cas du mode direct on besoin de la VIP, mais ne doivent pas répondre à l'ARP sur cette VIP. L'astuce ici est de configurer un alias d'interface avec la VIP (ici 192.168.0.3) et de bloquer les requêtes ARP sur cette adresse (car seul le loadbalanceur doit répondre pour cette VIP).</p>
+<p>Il faut monter un alias d'interface en tant que VIP. Nous considérons ici que seule l'interface eth0 est active pour le serveur. Nous allons donc créer l'alias eth0:0. Cependant, il ne faut pas que l'interface réponde à l'ARP, ne serait-ce qu'une seule réponse!</p>
+<p>On demande au noyau de ne pas répondre sur les alias d'interfaces :
+Dans le fichier <strong>/etc/sysctl.conf</strong> :</p>
+<div class="highlight"><pre><span></span>net.ipv4.conf.lo.arp_ignore = 1
+net.ipv4.conf.lo.arp_announce = 2
+net.ipv4.conf.all.arp_ignore = 1
+net.ipv4.conf.all.arp_announce = 2
+</pre></div>
+
+
+<p>Pour les paramètres:
+ <strong>arp_annonce</strong> : détermine les adresse ip source annoncée dans les requêtes ARP émises.
+ * 1 : utilise une IP source qui correspond au sous réseau cible sur une interface primaire ou secondaire/aliasée
+ * 2 : seules les interfaces primaires peuvent répondre</p>
+<p><strong>arp_ignore</strong> : détermine l'adresse MAC à retourner en réponse ARP
+ * 0 : adresse MAC quelconque de la machine
+ * 1 : utilise l'ARP seulement si elle est configurée avec l'ip cible de la requête
+ * 8 : inhibe l'ARP totalement</p>
+<p>L'alias va être monté sur <strong>lo0</strong>. Pour cela, il faut créer le fichier <em>/etc/sysconfig/network-scripts/ifcfg-lo:1</em> :</p>
+<div class="highlight"><pre><span></span>DEVICE=lo:1
+IPADDR=192.168.0.3
+NETMASK=255.255.255.255
+NETWORK=192.168.0.0
+ONBOOT=yes
+ARP=no
+</pre></div>
+
+
+<p>Il faut s'assurer que le programme loadbalancé ouvre bien sur l'ensemble des interfaces son port, ou à défaut au moins sur la VIP.</p>
+<h2>Le Sorry Server</h2>
+<p>Le <strong>Sorry Server</strong> est en fait un serveur de repli lorsque tous les serveurs réels sont tombés. 
+C'est la clause <strong>fallback = 127.0.0.1:80</strong> du fichier de configuration dans ldirectord.
+La situation la plus courante est de le placer directement sur le loadbalanceur afin d'afficher un message comme quoi l'application est en maintenance (on est gentils, on ne va pas dire qu'elle s'est encore plantée...).</p>
+<p>Nous allons donc mettre un Apache minimum sur les frontaux qui ne va servir que pour une page. Il faut éditer le fichier <strong>/etc/httpd/conf/httpd.conf</strong> :</p>
+<div class="highlight"><pre><span></span>ErrorDocument 404 /error/404.html
+</pre></div>
+
+
+<p>Puis générer le fichier <em>/var/www/error/404.html </em>comme souhaité (sympa quoi) puis lier l'index pour être plus propre :</p>
+<div class="highlight"><pre><span></span>ln -s /var/www/error/404.html /var/www/html/index.html
+</pre></div>
+
+
+<p>Dans le fichier de conf d'apache, on va limiter le nombre de processus. Dans le module <strong>IfModule prefork.c</strong> :</p>
+<div class="highlight"><pre><span></span>StartServers 2
+MinSpareServers 2
+MaxSpareServer 10
+</pre></div>
+
+
+<p>Et encore, ces valeurs sont un peu élevées, mais bon.</p>
+<h2>En conclusion</h2>
+<p>Et voila, vous avez entre les mains une solution fonctionnelle et performante pour faire de la répartition de charge hautement disponible. Nous verrons dans un prochain post comment l'administrer et surtout la superviser.</p>
+
+<div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
+    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>
+</div>
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jeangabes.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+        </footer>
+    </article>
+</section>
+
+<!--article.locale_date-->
+                </div> <!-- /container -->
+
+                <div class="col-md-3">
+                    <div id="SocialIcons" class="row">
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>                    </div>
+
+                    <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
+                        <h2>Archives</h2>
+                        <ul style="padding-left: 8px;">
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2015</span> <a href="/smart-agent/"> Smart agent solution </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2010</span> <a href="/retour-des-rmll/"> Retour des RMLL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2010</span> <a href="/retour-a-lecole/"> Retour à l'école </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-la-01-est-arrivee/"> Shinken : la 0.1 est arrivée! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-example-de-hack-rapide-du-code/"> Shinken : example de Hack rapide du code </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-tagguez-vos-pollers/"> Shinken : tagguez vos pollers </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/shinken-quelques-news-sur-la-prochaine-01/"> Shinken : quelques news sur la prochaine 0.1 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/nagios-de-lopen-source-a-lopen-core/"> Nagios : de l'open source à l'open core ? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war/"> Art of (free software) war </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war-fr/"> Art of (free software) war - FR </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/deduplication-bloc-fixe-vs-bloc-variable/"> Déduplication : bloc fixe VS bloc variable </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/la-reponse-de-lauteur-de-nagios/"> La réponse de l'auteur de Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/"> Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/partie-a-trois-python-__slots__-et-metaclass/"> Partie à trois : Python, __slots__ et metaclass </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/"> Les escalades de notifications enfin simples à mettre en place </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/gestion-des-exclusions-de-timeperiods/"> Gestion des exclusions de timeperiods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/apres-mysql-oracle-et-couchdb-sqlite/"> Après MySQL, Oracle et couchdb : Sqlite </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/generalisation-des-modulations-de-resultats/"> Généralisation des modulations de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/couchdb-dans-shinken/"> Couchdb dans Shinken </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-sur-zdnet/"> Shinken sur ZDNet! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/python-et-le-data-driven-programming/"> Python et le Data-Driven programming </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/il-fait-chaud-chaud-cet-hiver/"> Il fait chaud chaud cet hiver </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/hot-periods/"> Hot periods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/mes-premiers-patchs/"> Mes premiers patchs ! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-des-modulateurs-de-resultats/"> Shinken : des modulateurs de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quel-avenir-pour-nagios-shinken/"> Shinken : quel avenir pour Nagios? Shinken? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-gestion-des-noms-en-utf8/"> Shinken : gestion des noms en UTF8 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quoi-de-neuf-docteur/"> Shinken : Quoi de neuf docteur? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-lart-de-linspiration/"> Shinken : l'art de l'inspiration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-nouveau-logo/"> Shinken : un nouveau logo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-le-choix-de-la-licence-agpl/"> Shinken : le choix de la licence AGPL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/"> Shinken : un serveur? Inutile, préférez un eeepc... </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/"> Shinken : 100Kchecks? Ah désolé, il fallait lire 200K </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/"> Shinken : à oui au fait, c'est multiplate-forme </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-les-realms-sont-la/"> Shinken : les realms sont là </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-pool-realm/"> Shinken : Pool -> Realm </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/"> Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-dispatch-des-commandes-externes/"> Shinken : dispatch des commandes externes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-le-dispatching-des-configurations-et-les-spares/"> Shinken : le dispatching des configurations et les spares </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/patch-nagios-ssl-pour-ndo/"> Patch Nagios : SSL pour Ndo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/100k-checks5minutes/"> 100K checks/5minutes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-les-grandes-lignes/"> Shinken : Les grandes lignes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/sortie-de-mon-livre-sur-nagios/"> Sortie de mon livre sur Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/monter-un-cluster-filesystem-avec-ocfs2/"> Monter un cluster filesystem avec OCFS2 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/"> Patch Nagios pour une gestion plus fine de la configuration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/shinken-quand-un-python-rencontre-nagios/"> Shinken : quand un python rencontre Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/"> Patch Nagios pour un démarrage (bien plus) rapide </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/administration-et-supervision-de-heartbeatldirectordipvs/"> Administration et supervision de HeartBeat/Ldirectord/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/"> Mise en place d'une solution de load balancing hautement disponible </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/"> La haute disponiblité et la répartition de charge avec HeartBeat/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/funkyplaylist-un-script-generateur-de-playlist/"> FunkyPlayList : un script générateur de playlist </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/"> Pyndsgest : gérer vos jeux NDS facilement </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/uberlogger/"> UberLogger </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mon-blog/"> Mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/ouverture-de-mon-blog/"> Ouverture de mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/un-petit-point-sur-lauteur/"> Un petit point sur l'auteur </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/ouverture/"> Ouverture </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="clear">
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+        <div class="row text-left">
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Navigation</h5>
+
+                <ul>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#about">A propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#skills">Skills</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#experiences">Expérience</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#education">Scolarité</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#projects">Mes projets</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#recent-posts">Derniers Posts</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Me contacter:</h5>
+                <ul>
+                    <li><span>Email: </span> <span>naparuba@gmail.com</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+    <hr/>
+    <div class="container">
+        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
+        </p>
+    </div>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/theme/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/theme/js/popper.min.js"></script>
+<script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/theme/js/navbar.js"></script>
+<script type="text/javascript" src="/theme/js/plyr.js"></script>
+<script type="text/javascript" src="/theme/js/main.js"></script>
+
+
+<script src="/theme/js/itype.min.js"></script>
+<script src="/theme/js/github-button.js"></script>
+
+<script src="/theme/js/jquery.filterizr.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ</title>
+
+
+    <meta name="description" content="Portfolio et blog profesionnel de Jean Gabès."/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/main.css"/>
+    <link rel="stylesheet" href="/theme/css/navigators/navbar.css"/>
+    <link rel="stylesheet" href="/theme/css/plyr.css"/>
+    <link rel="stylesheet" href="/theme/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/social.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/png" href="/theme/images/author/cadre.png"/>
+
+    <meta property="og:title" content="Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Portfolio et blog profesionnel de Jean Gabès"/>
+    <meta property="og:image" content="/theme/images/author/naparuba.gif">
+    <meta property="og:url" content="https://hugo-toha.github.io">
+
+
+    <link rel="stylesheet" href="/theme/css/style.css"/>
+
+
+    <script type="application/javascript">
+        var doNotTrack = false;
+        if ( !doNotTrack ) {
+            window.ga = window.ga || function() {
+                (ga.q = ga.q || []).push( arguments );
+            };
+            ga.l      = +new Date;
+            ga( 'create', 'UA-122321624-233', 'auto' );
+
+            ga( 'send', 'pageview' );
+        }
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            Jean Gabès</a>
+        <button
+                class="navbar-toggler navbar-dark"
+                id="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#top-nav-items"
+                aria-label="menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="top-nav-items">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#home">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">A propos</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#experiences">Expérience</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#education">Scolarité</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#projects">Projets</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/#recent-posts">Post récents</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+
+<div id="post-container" class="container-fluid section-holder d-flex bg-white">
+    <div class="container anchor p-lg-5" id="post">
+        <div class="row pt-sm-2 pt-md-4 align-self-center">
+            <div class="row">
+                <div class="container col-md-8">
+<section>
+    <article>
+        <header class="post-header">
+            <h2><a href="/nagios-de-lopen-source-a-lopen-core/" rel="bookmark">Nagios : de l'open source à l'open core ?</a></h2>
+            <span class='author'>Gabès Jean</span>
+            <span style="color: gray;font-style: italic;">( 20 Apr 2010 )</span>
+
+            <span class="tags"><a href="/tag/blog.html">blog</a></span>
+            <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
+
+
+        </header>
+
+    <div class="highlight"><pre><span></span>NOTE 2021: SPOILER: j&#39;au du faire de l&#39;open core également, je n&#39;ai pas réussi autrement :(
+</pre></div>
+
+
+<!-- relu -->
+
+<h2>L'open core : Community/Enterprise</h2>
+<p>Je viens de tomber sur deux posts intéressants <a href="http://www.openxtra.co.uk/blog/an-exploration-of-open-core-licensing-in-network-management/">ici </a>et <a href="http://www.openxtra.co.uk/blog/musings-upon-the-open-core-functionality-ceiling/">là</a> qui traitent d'un problème qui se répand de plus en plus dans les logiciels <em>ouverts </em>touchant au monde de l'administration et supervision système : le modèle Community/Enterprise, déjà utilisé par Zenoss par exemple. Ce modèle à un nom en fait : <em>open core</em>.</p>
+<p>Le principe est simple : 
+ * une version <em>open source</em>, nommée <em>Community</em>, est fournie. 
+ * Une version <em>Enterprise</em>, privatrice, est également présente et est la seule version supportée par la société éditrice du logiciel.</p>
+<p>Cette version possède des fonctionnalités bien plus avancées que la Community. Il est dit qu'au bout d'un moment, les avancées de la version Enterprise sont avantageux pour la community. Mais on peut se demander si ce n'est pas exactement l'inverse qui est plus réaliste.</p>
+<p>Si l'on regarde un peu les versions Community de logiciels utilisant déjà ce principes, on s'aperçoit qu'un risque majeur les touchent déjà : le seuil de fonctionnalités. Comme va l'évoquer notre très cher JP Troll dans un de ses futurs articles (scoop inside :mrgreen:  ), ceci consiste à limiter le nombre de fonctionnalités que l'on fait entrer dans la version communautaire pour toujours garder un avantage certain à la version Enterprise.</p>
+<p>Prenons deux exemples déjà utilisé dans un des deux articles cités : Zenoss et Hyperic-hq dans leurs versions communautaires. Les courbes ci-dessous sont la taille du code de ces versions fournies par <a href="https://www.ohloh.net/">ohloh</a>.</p>
+<p><a href="https://www.ohloh.net/p/zenoss/analyses/latest">Zenoss </a>:</p>
+<p><a href="/images/66/zenoss.png"><img class="alignnone size-full wp-image-525" title="zenoss" src="/images/66/zenoss.png" alt="zenoss" width="580" height="166" /></a></p>
+<p><a href="https://www.ohloh.net/p/4335/analyses/latest">Hyperic </a>:</p>
+<p><a href="/images/66/zenoss.png"></a><a href="/images/66/hyperic.png"><img class="alignnone size-full wp-image-526" title="hyperic" src="http://www.gabes.fr/jean/wp-content/uploads/2010/04/hyperic.png" alt="hyperic" width="580" height="166" /></a></p>
+<p>On note un certain plafond, tout particulièrement pour Hyperic-hq. Les développeurs se sont endormis? Certainement pas. Mais pourquoi chercher à améliorer la version <em>shareware </em>de leur outils?</p>
+<p>Oups, le terme est sorti. <em>Shareware</em>. Ne nous voilons pas la face, les versions communautaires y ressemblent fortement : limitées, elles demandent de passer à la version complète pour en profiter réellement. Au moins, ce n'est pas limité dans le temps, c'est déjà ça. De plus, il est toujours possible de forker, même si dans les faits, personne ne s'y attaque (vous avez vu un peu le nombre de lignes de code de ces outils?  ;-)  ).</p>
+<p>Mais ce modèle implique que les patchs proposés dans la version communautaire soient "laissés" à l'éditeur pour qu'il puisse les intégrer à la version privatrice.</p>
+<h2>Et Nagios ?</h2>
+<p>Mais alors où est le rapport avec Nagios finalement? Regardons un peu sa courbe de développement :</p>
+<p><a href="/images/66/nagios-codehistory.png"><img class="alignnone size-full wp-image-527" title="nagios-codehistory" src="/images/66/nagios-codehistory.png" alt="nagios-codehistory" width="580" height="166" /></a></p>
+<p>Vous allez me dire que c'est une habitude chez Ethan (l'auteur principal de Nagios) d'avoir un tel fonctionnement, ce qui est particulièrement compréhensible après tout et l'on n'a rien à y redire. Mais regardons un peu ce qu'il a annoncé sur la mailing list :</p>
+<div class="highlight"><pre><span></span>&quot;There is nothing broken or wrong with Nagios Core the way it is.&quot;
+</pre></div>
+
+
+<p>Ah.. bah rangez vos patchs, la courbe va rester plate un moment alors... </p>
+<p>Mais pourquoi refuser toute avancées majeure? Nagios XI tout simplement? (pour rappel, Nagios XI est une solution privatrice basée sur Nagios éditée par Nagios Enterprise).</p>
+<p>Après tout nous avons également "Our commercial Nagios XI solution is not 100% Open Source, and it  probably won't ever be in its entirety. [...] Most all other commercial  Nagios solutions out there go the same route." et "commercialization  of Nagios is going to expand in the future, so we can continue to  provide more great solutions for the people that need them."</p>
+<p>Le modèle "open core" est assez bien annoncé lorsque l'on met tout bout à bout. Procès d'intentions? Je pense que l'on a assez d'éléments pour dire que non.</p>
+<h2>Modèle efficace dans le cas de Nagios?</h2>
+<p>Outre le fait qu'un modèle purement open source (et non logiciel libre), et a fortiori open core, n'est pas efficace (<a href="/art-of-free-software-war/">cf article sur l'art de la guerre</a>), on peut se poser la question si l'open core va bien fonctionner dans le cas de Nagios.</p>
+<p>Pas si sûr. Contrairement à Zenoss et Hyperic, le code de Nagios est à tous ses auteurs respectifs, donc impossible de changer ou rajouter un licence. La solution XI ne peux pas rajouter un broker fermé il me semble, vu qu'il se charge dans un code GPLv2 (je peux me tromper sur ce point). Donc au pire, c'est le contour de la solution qui va être fermé. On a d'ailleurs eu une reprise en main de NDO, ce n'est pas pour en rajouter un autre, mais bien l'utiliser comme base, même si le schémas de la base justement est critiquable.</p>
+<p>Contrairement à Zenoss et Hyperic encore une fois, l'offre "Enterprise" a mis du temps à se lancer. Des solutions alternatives existent déjà, et sont de très bonnes qualités (Centreon, Op5 Monitor 5). Pour Op5, un des développeurs principal de Nagios est même de la partie, avec son couple Merlin/Ninja.</p>
+<p>Pour avoir un vrai modèle <em>open core</em> efficace, Nagios Enterprise a raté le coche. Il ne peut pas "boucler" des points clés de l'outil pour saper la concurrence, et arrive même après elle. Son auteur y pensait peut être depuis le début, mais il aurait du faire comme les autres dès ce moment là.  Maintenant au milieu du guet, on va juste avoir une dispersion des solutions. Toute basées sur le même cœur oui, mais solutions qui vont devenir (ou sont même déjà) incompatibles entre elles. Centreon va lancer son propre broker (dont les fonctionnalités font saliver d'avance :) ), Op5 lui part sur Merlin, et Nagios XI reste semble-t-il en NDO. Heureusement pour les utilisateurs, Centreon et Op5 semblent se mettre d'accord sur un modèle de base commun, ce qui est particulièrement bien pensé.</p>
+<p>Ne nous voilons pas la face, la véritable intelligence ne va plus être dans le cœur de Nagios, mais bien dans ses solutions externes. Il va rester l'ordonnanceur central avec ses petits défauts de conceptions qu'on lui connait pour les environnements distribués, mais les corrélations, la notion d'évènement et les analyses vont se faire au niveau d'au dessus. Et tant mieux après tout, ce n'est pas à un ordonnanceur de gérer cela.</p>
+<div class="highlight"><pre><span></span>NOTE 2021: en fait, l&#39;inteligence n&#39;est PAS dans le moteur, c&#39;est con mais c&#39;est pas d&#39;un moteur que les utilisateurs ont besoin
+</pre></div>
+
+
+<p>Je reste persuadé que lorsque l'on parle d'outils de supervision, l'apport de la communauté est indispensable. De plus, aucune entreprise, même de taille moyenne, ne se lancerait dans un projet de supervision sans support et surtout sans intégration. Les licences ne sont qu'un facteur limitant (le nombre de machines explosent dans les datacenters, une solution sans licence à l'agent est nettement avantagée). Nagiox XI a un intérêt, c'est l'éditeur lui même. Mais le code de Nagios n'évolue plus trop, donc l'intérêt de ce choix est limité pour les utilisateurs.</p>
+<p>Ethan avait-il seulement le choix de partir sûr cette solution? Si l'on reste pragmatique, je ne pense pas. Même en partant d'une solution libre (pardon, open source) qui existait déjà, il perdait sa légitimité d'<em>auteur principal</em> (du cœur oui, de la solution non), véritable argument marketing. Monter sa propre solution avec seulement des briques libres prends plus de temps qu'en faisant des concessions privatrices. Simple problématique de <em>time to market</em> finalement.</p>
+<h2>Est-ce dommageable ?</h2>
+<p>Dans les faits, le <em>seuil de fonctionnalités</em> est déjà présent depuis un moment pour le cœur Nagios. On n'a donc pas à avoir peur de l'avenir, on y est déjà.</p>
+<p>Heureusement, les moyens de "bloquages" d'avancées en open source ne sont pas totalement actifs, en tout cas pour les solutions. Le cœur? Il va rester ce qu'il est, un très bon ordonnanceur. Tout le monde va sortir l'intelligence de l'outil. Question de modularité après tout. La phase de transition va être pénible, mais le temps que l'utilisateur a toujours une solution libre à sa disposition, ceci reste acceptable.</p>
+<p>Nagios ne sera jamais totalement comme Zenoss finalement, et tant mieux. Il va aller vers autre chose. Il faut juste attendre vers quoi. Ou bien amorcer soit même la transformation en regardant ce qui est le plus propice à l'instant t pour arriver à une situation qui nous est avantagée, car il parait que c'est ce qu'il y a le plus efficace  ;-)</p>
+<p>Ceci va également être l'occasion de voir un peu l'affrontement des modèles <em>open  source</em> et <em>open core</em>. Cette année va décidément être marrante :)</p>
+<div class="highlight"><pre><span></span>NOTE 2021: j&#39;aimerai bien que ce soit aussi simple, mais:
+           * juste un moteur c&#39;est rigolo, mais ça marche pas dans le grand bain, faut plus de finition
+           * tu finances rien avec juste de l&#39;open source dans ce marché :(
+</pre></div>
+
+<div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
+    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>
+</div>
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jeangabes.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+        </footer>
+    </article>
+</section>
+
+<!--article.locale_date-->
+                </div> <!-- /container -->
+
+                <div class="col-md-3">
+                    <div id="SocialIcons" class="row">
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>                    </div>
+
+                    <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
+                        <h2>Archives</h2>
+                        <ul style="padding-left: 8px;">
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2015</span> <a href="/smart-agent/"> Smart agent solution </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2010</span> <a href="/retour-des-rmll/"> Retour des RMLL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2010</span> <a href="/retour-a-lecole/"> Retour à l'école </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-la-01-est-arrivee/"> Shinken : la 0.1 est arrivée! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-example-de-hack-rapide-du-code/"> Shinken : example de Hack rapide du code </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-tagguez-vos-pollers/"> Shinken : tagguez vos pollers </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/shinken-quelques-news-sur-la-prochaine-01/"> Shinken : quelques news sur la prochaine 0.1 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/nagios-de-lopen-source-a-lopen-core/"> Nagios : de l'open source à l'open core ? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war/"> Art of (free software) war </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war-fr/"> Art of (free software) war - FR </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/deduplication-bloc-fixe-vs-bloc-variable/"> Déduplication : bloc fixe VS bloc variable </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/la-reponse-de-lauteur-de-nagios/"> La réponse de l'auteur de Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/"> Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/partie-a-trois-python-__slots__-et-metaclass/"> Partie à trois : Python, __slots__ et metaclass </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/"> Les escalades de notifications enfin simples à mettre en place </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/gestion-des-exclusions-de-timeperiods/"> Gestion des exclusions de timeperiods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/apres-mysql-oracle-et-couchdb-sqlite/"> Après MySQL, Oracle et couchdb : Sqlite </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/generalisation-des-modulations-de-resultats/"> Généralisation des modulations de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/couchdb-dans-shinken/"> Couchdb dans Shinken </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-sur-zdnet/"> Shinken sur ZDNet! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/python-et-le-data-driven-programming/"> Python et le Data-Driven programming </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/il-fait-chaud-chaud-cet-hiver/"> Il fait chaud chaud cet hiver </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/hot-periods/"> Hot periods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/mes-premiers-patchs/"> Mes premiers patchs ! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-des-modulateurs-de-resultats/"> Shinken : des modulateurs de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quel-avenir-pour-nagios-shinken/"> Shinken : quel avenir pour Nagios? Shinken? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-gestion-des-noms-en-utf8/"> Shinken : gestion des noms en UTF8 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quoi-de-neuf-docteur/"> Shinken : Quoi de neuf docteur? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-lart-de-linspiration/"> Shinken : l'art de l'inspiration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-nouveau-logo/"> Shinken : un nouveau logo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-le-choix-de-la-licence-agpl/"> Shinken : le choix de la licence AGPL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/"> Shinken : un serveur? Inutile, préférez un eeepc... </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/"> Shinken : 100Kchecks? Ah désolé, il fallait lire 200K </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/"> Shinken : à oui au fait, c'est multiplate-forme </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-les-realms-sont-la/"> Shinken : les realms sont là </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-pool-realm/"> Shinken : Pool -> Realm </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/"> Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-dispatch-des-commandes-externes/"> Shinken : dispatch des commandes externes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-le-dispatching-des-configurations-et-les-spares/"> Shinken : le dispatching des configurations et les spares </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/patch-nagios-ssl-pour-ndo/"> Patch Nagios : SSL pour Ndo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/100k-checks5minutes/"> 100K checks/5minutes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-les-grandes-lignes/"> Shinken : Les grandes lignes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/sortie-de-mon-livre-sur-nagios/"> Sortie de mon livre sur Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/monter-un-cluster-filesystem-avec-ocfs2/"> Monter un cluster filesystem avec OCFS2 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/"> Patch Nagios pour une gestion plus fine de la configuration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/shinken-quand-un-python-rencontre-nagios/"> Shinken : quand un python rencontre Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/"> Patch Nagios pour un démarrage (bien plus) rapide </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/administration-et-supervision-de-heartbeatldirectordipvs/"> Administration et supervision de HeartBeat/Ldirectord/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/"> Mise en place d'une solution de load balancing hautement disponible </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/"> La haute disponiblité et la répartition de charge avec HeartBeat/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/funkyplaylist-un-script-generateur-de-playlist/"> FunkyPlayList : un script générateur de playlist </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/"> Pyndsgest : gérer vos jeux NDS facilement </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/uberlogger/"> UberLogger </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mon-blog/"> Mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/ouverture-de-mon-blog/"> Ouverture de mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/un-petit-point-sur-lauteur/"> Un petit point sur l'auteur </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/ouverture/"> Ouverture </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="clear">
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+        <div class="row text-left">
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Navigation</h5>
+
+                <ul>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#about">A propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#skills">Skills</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#experiences">Expérience</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#education">Scolarité</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#projects">Mes projets</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#recent-posts">Derniers Posts</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Me contacter:</h5>
+                <ul>
+                    <li><span>Email: </span> <span>naparuba@gmail.com</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+    <hr/>
+    <div class="container">
+        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
+        </p>
+    </div>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/theme/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/theme/js/popper.min.js"></script>
+<script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/theme/js/navbar.js"></script>
+<script type="text/javascript" src="/theme/js/plyr.js"></script>
+<script type="text/javascript" src="/theme/js/main.js"></script>
+
+
+<script src="/theme/js/itype.min.js"></script>
+<script src="/theme/js/github-button.js"></script>
+
+<script src="/theme/js/jquery.filterizr.min.js"></script>
+</body>
+</html>

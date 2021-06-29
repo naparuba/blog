@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ</title>
+
+
+    <meta name="description" content="Portfolio et blog profesionnel de Jean Gabès."/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/main.css"/>
+    <link rel="stylesheet" href="/theme/css/navigators/navbar.css"/>
+    <link rel="stylesheet" href="/theme/css/plyr.css"/>
+    <link rel="stylesheet" href="/theme/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/social.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/png" href="/theme/images/author/cadre.png"/>
+
+    <meta property="og:title" content="Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Portfolio et blog profesionnel de Jean Gabès"/>
+    <meta property="og:image" content="/theme/images/author/naparuba.gif">
+    <meta property="og:url" content="https://hugo-toha.github.io">
+
+
+    <link rel="stylesheet" href="/theme/css/style.css"/>
+
+
+    <script type="application/javascript">
+        var doNotTrack = false;
+        if ( !doNotTrack ) {
+            window.ga = window.ga || function() {
+                (ga.q = ga.q || []).push( arguments );
+            };
+            ga.l      = +new Date;
+            ga( 'create', 'UA-122321624-233', 'auto' );
+
+            ga( 'send', 'pageview' );
+        }
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            Jean Gabès</a>
+        <button
+                class="navbar-toggler navbar-dark"
+                id="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#top-nav-items"
+                aria-label="menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="top-nav-items">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#home">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">A propos</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#experiences">Expérience</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#education">Scolarité</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#projects">Projets</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/#recent-posts">Post récents</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+
+<div id="post-container" class="container-fluid section-holder d-flex bg-white">
+    <div class="container anchor p-lg-5" id="post">
+        <div class="row pt-sm-2 pt-md-4 align-self-center">
+            <div class="row">
+                <div class="container col-md-8">
+<section>
+    <article>
+        <header class="post-header">
+            <h2><a href="/monter-un-cluster-filesystem-avec-ocfs2/" rel="bookmark">Monter un cluster filesystem avec OCFS2</a></h2>
+            <span class='author'>Gabès Jean</span>
+            <span style="color: gray;font-style: italic;">( 03 Aug 2009 )</span>
+
+            <span class="tags"><a href="/tag/blog.html">blog</a></span>
+            <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
+
+
+        </header>
+
+    <!-- RELU -->
+
+<h2>Intérêt de la solution</h2>
+<p>Les architectures clusters sont de plus en plus présentes. Si nous avons vu dans de précédent post la partie réseaux avec IPVS, il reste la question des applications, et tout particulièrement du partage des données, notamment les fichiers des applications, et parfois même les datafile des bases.
+C'est justement un éditeur de base de données, Oracle, qui a mis au point un cluster filesystem développé sous licence GPLv2. Les noeuds doivent avoir accès au même device qui va être "formaté" en ocfs2 pour pouvoir être monté par plusieurs noeuds à la fois. c'est un cluster file system quoi...</p>
+<p>Pour ceux qui n'ont pas suivi, voici ce que cela donne avec deux noeuds (mais après vous pouvez en mettre bien plus) :</p>
+<p><img class="aligncenter size-medium wp-image-214" title="cluster filesystem" src="/images/30/cluster-filesystem.png" alt="cluster filesystem" width="300" height="255" /></p>
+<p>Ici, le <strong>même</strong> disque est accessible des deux machines grâce à des liens SAN qui peuvent être Fibre ou iScsi (ce dernier suffit la plupart du temps). Dans cet exemple, chaque machine voit le disque sur un nom de device différent, mais ce n'est pas obligatoire.</p>
+<p>Regardons un peu comment il fonctionner et comment on le met en place.</p>
+<!--more-->
+
+<h2>Mise en place</h2>
+<p><h3>Installation</h3>
+Il faut tout d'abord identifier la version de noyau qu'on utilise afin de récupérer les bons modules:</p>
+<div class="highlight"><pre><span></span>uname -r
+</pre></div>
+
+
+<p>Il faut ensuite aller sur le site http://oss.oracle.com/projects/ocfs2/files/ et récupérer le bon RPM ocfs2.
+Il faut faire de même pour le module ocfs2-tool <a title="http://oss.oracle.com/projects/ocfs2-tools/files/RedHat/RHEL4/" href="http://oss.oracle.com/projects/ocfs2-tools/files/RedHat/RHEL4/">http://oss.oracle.com/projects/ocfs2-tools/files/RedHat/RHEL4/</a>.</p>
+<p>Uploader les deux RPM sur les serveurs et faire:</p>
+<div class="highlight"><pre><span></span>rpm -Uvh --test ocfs2*
+rpm -Uvh ocfs2*&lt;/span&gt;
+</pre></div>
+
+
+<p>Il faut aussi que les noeuds aient accès au même device (iScsi, SAN, autre) comme dit précédement.</p>
+<h3>Configuration</h3>
+<p>Il faut ensuite lancer sur un des noeuds la commande graphique ocfs2console.
+Pour ajouter des noeuds, faire ''Cluster-&gt;Configure nodes''. Une fois tous les noeuds ajoutés, il faut envoyer la configuration sur l'ensembles des noeuds, pour cela cliquer faire ''Cluster-&gt;Propagate Configuration''.</p>
+<p>Attention, il faut que les serveurs puissent dialoguer entre eux par SSH avec des clés déjà positionnées pour le compte root si vous ne voulez pas retaper votre mot de passe à chaque fois.</p>
+<p>Le fichier de configuration principal est <em>/etc/ocfs2/cluster.conf</em>.</p>
+<p>Il faut ensuite formater le device. Le sélectionner puis faire ''Task-&gt;Format''. Attention, on peux augmenter le nombre de noeuds du cluster, mais jamais le diminuer.</p>
+<p>En ligne de commande:
+Pour formater un volume avec des blocks de 4k, 32k de cluster size sur 4 noeuds possibles:</p>
+<p>mkfs.ocfs2 -b 4K -C 32K -N 8 -L oracle_home /dev/sdf2</p>
+<p>On initialise et démarre le cluster:</p>
+<div class="highlight"><pre><span></span> /etc/init.d/o2cb configure
+ /etc/init.d/o2cb start
+ /etc/init.d/ocfs2 start
+</pre></div>
+
+
+<p>Pour monter le filesystem:</p>
+<div class="highlight"><pre><span></span>mount -t ocfs2 /dev/sdf2 /u01
+</pre></div>
+
+
+<p>Pour le démonter:</p>
+<div class="highlight"><pre><span></span>umount /u01
+</pre></div>
+
+
+<p>Pour certaines applications il faut des montages particuliers. Par exemple, les Datafiles ou tout ce qui y ressemble doivent avoir les options suivantes:
+ <em><em>datavolume</em> : force les process à avoir le flag o_direct
+ </em><em>nointr</em> : permet d'enpécher les interuptions par signaux des lectures et écritures</p>
+<p>Exemple de montage:</p>
+<div class="highlight"><pre><span></span>mount -t ocfs2 -o datavolume,nointr /dev/sdf2 /u01
+mount
+/dev/sdf2 on /u01 type ocfs2 (rw,datavolume,nointr)
+cat /etc/fstab
+/dev/sdf2 /u01 ocfs2 _netdev,datavolume,nointr 0 0
+/dev/sdg2 /orahome ocfs2 _netdev 0 0&lt;/span&gt;
+</pre></div>
+
+
+<p>L'option <em> _netdev</em> permet de demander le montage après que le réseau soit up et de même pour l'arrêt.</p>
+<p>Afin d'avoir le lancement d'ocfs2 au démarrage:</p>
+<div class="highlight"><pre><span></span>chkconfig --add ocfs2
+chkconfig --add o2cb
+/etc/init.d/o2cb configure
+Load O2CB driver on boot (y/n) [n]: y
+Cluster to start on boot (Enter &quot;none&quot; to clear) []: ocfs2
+Writing O2CB configuration: OK&lt;/span&gt;
+To mount by label, do:
+mount -L datafiles /u01
+</pre></div>
+
+
+<h2>Administration</h2>
+<p>Pour voir l'état du cluster:</p>
+<div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">o2cb</span> <span class="n">status</span>
+<span class="k">Module</span> <span class="s">&quot;configfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
+<span class="n">Filesystem</span> <span class="s">&quot;configfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">mounted</span>
+<span class="k">Module</span> <span class="s">&quot;ocfs2_nodemanager&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
+<span class="k">Module</span> <span class="s">&quot;ocfs2_dlm&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
+<span class="k">Module</span> <span class="s">&quot;ocfs2_dlmfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
+<span class="n">Filesystem</span> <span class="s">&quot;ocfs2_dlmfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">mounted</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Pour mettre le cluster online:</p>
+<div class="highlight"><pre><span></span>/etc/init.d/o2cb online ocfs2
+Starting cluster ocfs2: OK
+</pre></div>
+
+
+<p>Pour mettre le cluster offline:</p>
+<div class="highlight"><pre><span></span>/etc/init.d/o2cb offline ocfs2
+Cleaning heartbeat on ocfs2: OK
+Stopping cluster ocfs2: OK
+</pre></div>
+
+
+<p>Pour ajouter o2cb au lancement:</p>
+<div class="highlight"><pre><span></span> /etc/init.d/o2cb configure
+Configuring the O2CB driver.
+This will configure the on-boot properties of the O2CB driver.
+The following questions will determine whether the driver is loaded on
+boot. The current values will be shown in brackets (&#39;[]&#39;). Hitting
+<span class="nt">&lt;ENTER&gt;</span> without typing an answer will keep that current value. Ctrl-C
+will abort.
+Load O2CB driver on boot (y/n) [n]: y
+Cluster to start on boot (Enter &quot;none&quot; to clear) []: ocfs2
+Writing O2CB configuration: OK<span class="nt">&lt;/span&gt;</span>
+</pre></div>
+
+
+<p>Une fois configuré, le lancement/arrêt du cluster se fait par:</p>
+<div class="highlight"><pre><span></span>/etc/init.d/o2cb start
+Loading module &quot;configfs&quot;: OK
+Mounting configfs filesystem at /config: OK
+Loading module &quot;ocfs2_nodemanager&quot;: OK
+Loading module &quot;ocfs2_dlm&quot;: OK
+Loading module &quot;ocfs2_dlmfs&quot;: OK
+Mounting ocfs2_dlmfs filesystem at /dlm: OK
+Starting cluster ocfs2: OK
+/etc/init.d/o2cb stop
+Cleaning heartbeat on ocfs2: OK
+Stopping cluster ocfs2: OK
+Unmounting ocfs2_dlmfs filesystem: OK
+Unloading module &quot;ocfs2_dlmfs&quot;: OK
+Unmounting configfs filesystem: OK
+Unloading module &quot;configfs&quot;: OK
+</pre></div>
+
+
+<h3>Changer le nombre de noeuds d'un filesystem</h3>
+<p><p style="text-align: left;">Pour augmenter le nombre de montages possible d'un même filesystem OCFS, il faut utiliser la commande tunefs.ocfs2. Il faut le faire cluster arrété.</p>
+<div class="highlight"><pre><span></span>umount /montage
+/etc/init.d/ocfs2 stop
+tunefs.ocfs2 -N 16 /dev/emcpowerd
+(Répondre y)
+/etc/init.d/ocfs2 start
+mount -a&lt;/span&gt;
+</pre></div>
+
+
+<h3>Modifications sur les configurations des noeuds</h3>
+<p>La seule opération qui peut se faire à chaud est le rajout de noeuds. En cas de changement dans les IP des noeuds ou bien le changement des ports de communications, il faut que le cluster soit offline.</p>
+<h3>Rajout d'un noeud au cluster</h3>
+<p>Cette opération peut se faire à chaud. Il faut Lancer la commande suivante sur <strong>TOUS LES NOEUDS</strong>.</p>
+<div class="highlight"><pre><span></span>o2cb_ctl -C -i -n NODENAME -t node -a number=NODENUM -a ip_address=IPADDR -a ip_port=IPPORT -a cluster=CLUSTERNAME&lt;/span&gt;
+</pre></div>
+
+
+<p>Copier ensuite un fichier /<em>etc/ocfs2/cluster.conf</em> d'un des noeuds sur le nouveau.</p>
+<h3>Le cluster ne veux pas passer offline</h3>
+<p>Dans ce cas, il faut vérifier que les informations des fichiers <em>cluster.conf</em> sont bonnes.</p>
+<h3>Redimensionnement d'un file system OCFS2</h3>
+<p>On peut agrandir un filesystem OCFS2 avec la commande tunefs.ocfs2. Attention, ceci permet de resizer le filesystem, pas le volume.</p>
+<div class="highlight"><pre><span></span>tunefs.ocfs2 -S /dev/sdX
+</pre></div>
+
+
+<p>Afin de redimensionner à la taille max mais attention : le redimensionnement est offline.</p>
+<h3>Voir l'agrandissement des filesystem sur les autres noeuds</h3>
+<p>Sans avoir besoin de redémarrer:
+    blockdev --rereadpt /dev/sdX</p>
+<h3><span style="font-weight: normal; font-size: 13px;">Limitations</span></h3>
+<ul>
+<li>Le nombre de sous répertoires dans un répertoire est limité à 32000.</li>
+<li>La taille d'un file system est limité à (2 ^ 32) * blocksize. Avec des blocks à 4KB ceci donne 16TB.</li>
+</ul>
+<h3>Connectivité réseau</h3>
+<p>Un noeud va considérer un autre vivant lorsqu'il réponds sur le port TCP sans avoir un timeout d'idle de O2CB_IDLE_TIMEOUT_MS</p>
+<h3>Super blocks</h3>
+<p>Un super block est un block décrivant le filesystem. Il est indispensable, et le perdre est plus qu'embêtant. On peut donc (doit!) le backuper. Ocfs2 en fait des backup aux adresses  1G, 4G, 16G, 64G, 256G et 1T byte</p>
+<p>Pour voir ces backups:</p>
+<div class="highlight"><pre><span></span>debugfs.ocfs2 -R &quot;stats&quot; /dev/sdX | grep &quot;Feature Compat&quot;
+Feature Compat: 1 BackupSuper&lt;/span&gt;
+</pre></div>
+
+
+<p>Récupération du backup:</p>
+<div class="highlight"><pre><span></span>fsck.ocfs2 -f -r 2 /dev/sdX&lt;/span&gt;
+</pre></div>
+
+
+<h3>Configuration des timeouts</h3>
+<p>Les différents timeouts sont:</p>
+<ul>
+<li>O2CB_HEARTBEAT_THRESHOLD : timeout de didk. Nombre de ticks (2secondes) avant qu'un noeud soit déclaré mort. O2CB_HEARTBEAT_THRESHOLD = (((timeout in seconds) / 2) + 1). Par exemple, pour donner un timeout a 60 secondes, il faut le placer a 31. C'est la valeur par défaut.</li>
+<li>O2CB_IDLE_TIMEOUT_MS : timeout d'idle réseau. Nombre de millisecondes d'idle pour qu'un noeud soit déclaré unreachable. La valeur par défaut est de 30s (30000).</li>
+<li>O2CB_KEEPALIVE_DELAY_MS : timeout de keep alive réseau. C'est le délai maximum en millisecondes avant qu'un paquet keepalive soit envoyé. La valeur par défaut est de 2000ms (2s).</li>
+<li>O2CB_RECONNECT_DELAY_MS : C'est le delai minimum en millisecondes entre les tentavies de connexions. Par défaut 2000ms (2s).</li>
+</ul>
+<p>On peut voir ces valeurs dans <em>/etc/sysconfig/o2cb</em>.</p>
+<div class="highlight"><pre><span></span>cat /etc/sysconfig/o2cb&lt;/span&gt;
+</pre></div>
+
+<div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
+    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>
+</div>
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jeangabes.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+        </footer>
+    </article>
+</section>
+
+<!--article.locale_date-->
+                </div> <!-- /container -->
+
+                <div class="col-md-3">
+                    <div id="SocialIcons" class="row">
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>                    </div>
+
+                    <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
+                        <h2>Archives</h2>
+                        <ul style="padding-left: 8px;">
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2015</span> <a href="/smart-agent/"> Smart agent solution </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2010</span> <a href="/retour-des-rmll/"> Retour des RMLL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2010</span> <a href="/retour-a-lecole/"> Retour à l'école </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-la-01-est-arrivee/"> Shinken : la 0.1 est arrivée! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-example-de-hack-rapide-du-code/"> Shinken : example de Hack rapide du code </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-tagguez-vos-pollers/"> Shinken : tagguez vos pollers </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/shinken-quelques-news-sur-la-prochaine-01/"> Shinken : quelques news sur la prochaine 0.1 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/nagios-de-lopen-source-a-lopen-core/"> Nagios : de l'open source à l'open core ? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war/"> Art of (free software) war </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war-fr/"> Art of (free software) war - FR </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/deduplication-bloc-fixe-vs-bloc-variable/"> Déduplication : bloc fixe VS bloc variable </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/la-reponse-de-lauteur-de-nagios/"> La réponse de l'auteur de Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/"> Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/partie-a-trois-python-__slots__-et-metaclass/"> Partie à trois : Python, __slots__ et metaclass </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/"> Les escalades de notifications enfin simples à mettre en place </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/gestion-des-exclusions-de-timeperiods/"> Gestion des exclusions de timeperiods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/apres-mysql-oracle-et-couchdb-sqlite/"> Après MySQL, Oracle et couchdb : Sqlite </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/generalisation-des-modulations-de-resultats/"> Généralisation des modulations de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/couchdb-dans-shinken/"> Couchdb dans Shinken </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-sur-zdnet/"> Shinken sur ZDNet! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/python-et-le-data-driven-programming/"> Python et le Data-Driven programming </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/il-fait-chaud-chaud-cet-hiver/"> Il fait chaud chaud cet hiver </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/hot-periods/"> Hot periods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/mes-premiers-patchs/"> Mes premiers patchs ! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-des-modulateurs-de-resultats/"> Shinken : des modulateurs de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quel-avenir-pour-nagios-shinken/"> Shinken : quel avenir pour Nagios? Shinken? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-gestion-des-noms-en-utf8/"> Shinken : gestion des noms en UTF8 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quoi-de-neuf-docteur/"> Shinken : Quoi de neuf docteur? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-lart-de-linspiration/"> Shinken : l'art de l'inspiration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-nouveau-logo/"> Shinken : un nouveau logo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-le-choix-de-la-licence-agpl/"> Shinken : le choix de la licence AGPL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/"> Shinken : un serveur? Inutile, préférez un eeepc... </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/"> Shinken : 100Kchecks? Ah désolé, il fallait lire 200K </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/"> Shinken : à oui au fait, c'est multiplate-forme </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-les-realms-sont-la/"> Shinken : les realms sont là </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-pool-realm/"> Shinken : Pool -> Realm </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/"> Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-dispatch-des-commandes-externes/"> Shinken : dispatch des commandes externes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-le-dispatching-des-configurations-et-les-spares/"> Shinken : le dispatching des configurations et les spares </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/patch-nagios-ssl-pour-ndo/"> Patch Nagios : SSL pour Ndo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/100k-checks5minutes/"> 100K checks/5minutes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-les-grandes-lignes/"> Shinken : Les grandes lignes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/sortie-de-mon-livre-sur-nagios/"> Sortie de mon livre sur Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/monter-un-cluster-filesystem-avec-ocfs2/"> Monter un cluster filesystem avec OCFS2 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/"> Patch Nagios pour une gestion plus fine de la configuration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/shinken-quand-un-python-rencontre-nagios/"> Shinken : quand un python rencontre Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/"> Patch Nagios pour un démarrage (bien plus) rapide </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/administration-et-supervision-de-heartbeatldirectordipvs/"> Administration et supervision de HeartBeat/Ldirectord/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/"> Mise en place d'une solution de load balancing hautement disponible </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/"> La haute disponiblité et la répartition de charge avec HeartBeat/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/funkyplaylist-un-script-generateur-de-playlist/"> FunkyPlayList : un script générateur de playlist </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/"> Pyndsgest : gérer vos jeux NDS facilement </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/uberlogger/"> UberLogger </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mon-blog/"> Mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/ouverture-de-mon-blog/"> Ouverture de mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/un-petit-point-sur-lauteur/"> Un petit point sur l'auteur </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/ouverture/"> Ouverture </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="clear">
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+        <div class="row text-left">
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Navigation</h5>
+
+                <ul>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#about">A propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#skills">Skills</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#experiences">Expérience</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#education">Scolarité</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#projects">Mes projets</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#recent-posts">Derniers Posts</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Me contacter:</h5>
+                <ul>
+                    <li><span>Email: </span> <span>naparuba@gmail.com</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+    <hr/>
+    <div class="container">
+        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
+        </p>
+    </div>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/theme/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/theme/js/popper.min.js"></script>
+<script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/theme/js/navbar.js"></script>
+<script type="text/javascript" src="/theme/js/plyr.js"></script>
+<script type="text/javascript" src="/theme/js/main.js"></script>
+
+
+<script src="/theme/js/itype.min.js"></script>
+<script src="/theme/js/github-button.js"></script>
+
+<script src="/theme/js/jquery.filterizr.min.js"></script>
+</body>
+</html>
