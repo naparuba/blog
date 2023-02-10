@@ -40,7 +40,7 @@
 }
 .content {
     position : relative;
-    top      : -65%;
+    top      : -110%;
     height   : 60%;
 }
 
@@ -56,11 +56,11 @@
     transition       : all 0.5s ease;
 }
 
-/*
+
 .home .portrait img.on-top {
-    display        : none !important;
+    /*display        : none !important;*/
     z-index        : 99;
-    opacity        : 0;
+    /*opacity        : 0;*/
     transition     : all 0.5s ease;
     filter         : grayscale(0);
     -webkit-filter : grayscale(0);
@@ -84,7 +84,7 @@
     -webkit-filter : grayscale(0);
     transition     : all 0.5s ease;
 }
-*/
+
 
 .home .greeting {
     color : #F9FAFC;

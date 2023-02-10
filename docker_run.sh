@@ -16,17 +16,17 @@ fi
 
 if [ $MODE == "test" ]; then
    # -p 8000:8000
-   docker run --env-file ~/.docker_env -v /dev:/dev --rm=true --privileged --cap-add ALL -v /root/blog/output:/root/blog/output --tty --interactive --entrypoint=/bin/bash $(docker build -q -f $DF $PYTHON3_ARGS . | cut -d':' -f2)
+   docker run --env-file ~/.docker_env -v /dev:/dev --rm=true --privileged --cap-add ALL -v /root/blog/output:/root/blog/output --tty --interactive --entrypoint=/bin/bash $(docker build -t $DF -q -f $DF $PYTHON3_ARGS . | cut -d':' -f2)
    exit $?
 fi
 
 if [ $MODE == "run" ]; then
-   docker run --env-file ~/.docker_env -p 8000:8000 --rm=true --privileged --cap-add ALL -v /root/blog/output:/root/blog/output --tty --interactive $(docker build -q -f $DF $PYTHON3_ARGS . | cut -d':' -f2)
+   docker run --env-file ~/.docker_env -p 8000:8000 --rm=true --privileged --cap-add ALL -v /root/blog/output:/root/blog/output --tty --interactive $(docker build -t $DF -q -f $DF $PYTHON3_ARGS . | cut -d':' -f2)
    exit $?
 fi
 
 if [ $MODE == "build" ]; then
-   docker build -f $DF $PYTHON3_ARGS .
+   docker build -t $DF -f $DF $PYTHON3_ARGS .
    exit $?
 fi
 

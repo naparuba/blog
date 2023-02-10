@@ -19,7 +19,7 @@
             <div class="row" id="recent-post-cards">
 
                 {% for article in dates %}
-                {% if loop.index < 4 %}
+                {% if loop.index < 99 %}
                 <div class="col-lg-4 col-md-6 pt-2 post-card">
                     <a href="{{SITEURL}}/{{article.url}}" title="{{article.title}}" class="post-card-link">
                         <div class="card">
