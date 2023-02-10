@@ -45,9 +45,9 @@
 }
 
 .home .portrait img {
-    width            : 180px;
+    /*width            : 180px;
     height           : 180px;
-    background-color : #424242;
+    background-color : #424242;*/
     padding          : 5px;
     margin-bottom    : 10px;
 
@@ -56,11 +56,9 @@
     transition       : all 0.5s ease;
 }
 
+/*
 .home .portrait img.on-top {
     display        : none !important;
-    /*position: absolute;
-    top: 0;
-    left : 0;*/
     z-index        : 99;
     opacity        : 0;
     transition     : all 0.5s ease;
@@ -86,6 +84,7 @@
     -webkit-filter : grayscale(0);
     transition     : all 0.5s ease;
 }
+*/
 
 .home .greeting {
     color : #F9FAFC;

@@ -1,0 +1,16 @@
+FROM       debian:bullseye
+MAINTAINER Jean Gabes <naparuba@gmail.com>
+
+ADD        docker-helper/  /
+
+RUN        /apt_get_install   python3
+RUN        /apt_get_install   make
+RUN        /apt_get_install   pelican
+
+
+ADD        . /root/blog
+
+WORKDIR       /root/blog
+
+RUN           rm -fr output/*
+ENTRYPOINT    make html

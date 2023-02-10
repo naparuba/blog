@@ -1,0 +1,14 @@
+FROM       debian:bullseye
+MAINTAINER Jean Gabes <naparuba@gmail.com>
+
+ADD        docker-helper/  /
+
+RUN        /apt_get_install   python3
+
+
+ADD        . /root/blog
+
+WORKDIR       /root/blog/output
+EXPOSE 8000
+
+ENTRYPOINT    python3 -m http.server 8000

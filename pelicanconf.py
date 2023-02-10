@@ -56,3 +56,6 @@ MD_EXTENSIONS = ['codehilite(css_class=highlight)']
 
 GITHUB_URL = 'https://github.com/naparuba/'
 TWITTER_URL = 'https://twitter.com/naparuba'
+
+
+TEMPLATE_PAGES = {'./cv.html': './cv.html',}
