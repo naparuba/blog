@@ -44,6 +44,51 @@
     height   : 60%;
 }
 
+.home .cv img {
+
+    box-shadow: inset 0px 1px 3px 0px #91b8b3;
+    border-radius: 5px;
+    border: 1px solid #566963;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 11px 23px;
+    text-decoration: none;
+    text-shadow: 0px -1px 0px #2b665e;
+    background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+      
+    background-color: #6c7c7c;
+    height: 125px;
+    
+    margin-bottom: 10px;
+}
+
+.home .cv img:hover {
+    background: linear-gradient(to bottom, #658080 5%, #85a099 100%);
+}
+
+.home .blog img {
+    box-shadow: inset 0px 1px 3px 0px #91b8b3;
+    border-radius: 5px;
+    border: 1px solid #566963;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 11px 23px;
+    text-decoration: none;
+    text-shadow: 0px -1px 0px #2b665e;
+    background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+      background-color: rgba(0, 0, 0, 0);
+    background-color: #6c7c7c;
+    height: 125px;
+    
+    margin-bottom: 10px;
+}
+
 .home .portrait img {
     /*width            : 180px;
     height           : 180px;
