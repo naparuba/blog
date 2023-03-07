@@ -370,33 +370,7 @@ document.addEventListener('mousemove', (e) => {
 
 (function ($) {
     jQuery(document).ready(function () {
-        var split_left = $("#split-left");
-        var split_right = $("#split-right");
-
-        console.log('Split left:', split_left);
-
-        split_left.hover(function () {
-            $(this).css("background-color", "yellow");
-            $(this).addClass("hover-left");
-            split_right.addClass("hover-left");
-        }, function () {
-            $(this).removeClass("hover-left");
-            split_right.removeClass("hover-left");
-            $(this).css("background-color", "pink");
-        });
-
-
-        split_right.hover(function () {
-            $(this).css("background-color", "yellow");
-            $(this).addClass("hover-right");
-            split_left.addClass("hover-right");
-        }, function () {
-            $(this).removeClass("hover-right");
-            split_left.removeClass("hover-right");
-            $(this).css("background-color", "pink");
-        });
-
-
+        //
     });
 })(jQuery);
 

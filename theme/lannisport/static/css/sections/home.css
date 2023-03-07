@@ -429,76 +429,54 @@
 }
 
 
-/* Split the screen in half */
-.split {
+/* Split en deux parties avec une image centrale */
+.home-container {
+    display: flex;
+    height: 100vh;
+}
+
+.home-box {
+    flex: 1;
     height: 100%;
-    width: 50%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
+    transition: flex 0.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Control the left side */
-.split-left {
-    left: 0;
-    background-color: #111;
-    border-right: white solid 5px;
-    width: 50%;
+.home-box:hover {
+    flex: 3;
 }
 
-.split-left.hover-left {
-    width: 75%;
-}
-.split-left.hover-right {
-    width: 25%;
+.home-box1 {
+    background-color: #bada55;
 }
 
-/* Control the right side */
-.split-right {
-    right: 0;
+.home-box2 {
+    background-color: #5f9ea0;
+}
+
+.home-separator {
+    flex: 0 0 25px; /* largeur fixe de 50 pixels */
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-separator-img-container {
+    border-radius: 25%;
     background-color: red;
-    border-left: white solid 5px;
-    width: 50%;
-}
-.split-right.hover-left{
-    width: 25%;
-}
-.split-right.hover-right{
-    width: 75%;
-}
-
-
-/* If you want the content centered horizontally and vertically */
-.split-centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    min-height: 150px;
+    min-width: 150px;
+    position: fixed;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Style the image inside the centered container, if needed */
-.split-centered img {
-    width: 150px;
-    border-radius: 50%;
-}
-
-.central-scope {
-    z-index: 2;
-    position: inherit;
-    top: 45%;
-    width: 175px;
-    border-radius: 50%;
-    background-color: white;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 175px;
-}
-
-.central-scope img {
-
-top: 15px;
-position: inherit;
+.home-separator img {
+    max-width: 100%;
+    max-height: 100%;
 }
