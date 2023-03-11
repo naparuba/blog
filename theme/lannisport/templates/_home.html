@@ -10,7 +10,7 @@
 
         <div class="home-box home-box1">
             <div class="box1-content">
-                <div style="background-color: #3C3A3AE6;padding: 20px;">
+                <div style="background-color: #3c4858e0;padding: 20px;">
 
                     <a class="btn-cv" href="/parcours.html" aria-label="More about Jean Gabès">
                         <!-- <img src="/theme/images/sections/home/parcours.png" class="" alt="Go to cv"/>-->
@@ -32,11 +32,23 @@
             </div>
         </div>
         <div class="home-box home-box2">
-            <a href="/blog.html" aria-label="More about Jean Gabès">
-                <img src="/theme/images/sections/home/plume.png" class="" alt="Blog"/>
-            </a>
-            <h2>John Doe</h2>
-            <p>Some text here too.</p></div>
+            <div class="box2-content">
+                <div style="background-color: #3c4858e0;padding: 20px;">
+
+                    <a class="btn-blog" href="/blog.html" aria-label="Blog">
+                        <p class="char">></p>
+                    </a>
+
+                    <h2 class="sub_title">Mes derniers articles</h2>
+                    <p class="sub_title">De l'admin, du dev et un peu plus</p>
+                    {% for article in dates %}
+                    {% if loop.index <= 3 %}
+                    <p class="sub_sub_title"> - {{article.title}}</p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 
 
