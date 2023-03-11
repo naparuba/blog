@@ -359,18 +359,38 @@ var projectCards;
 /* Hexagons */
 let curs = document.querySelector('.cursor');
 
-document.addEventListener('mousemove', (e) => {
+/*document.addEventListener('mousemove', (e) => {
     let x = e.pageX;
     let y = e.pageY;
     curs.style.left = (x - 175) + "px";
     curs.style.top = (y - 175) + "px";
     curs.style.opacity = "1";
-});
+});*/
 
 
 (function ($) {
     jQuery(document).ready(function () {
-        //
+        var bloc_left = $('.home-box1');
+        var bloc_right = $('.home-box2');
+        bloc_left.hover(function () {
+                bloc_left.addClass('is_hover');
+                bloc_right.addClass('is_reduced');
+            },
+            function () {
+                bloc_left.removeClass('is_hover');
+                bloc_right.removeClass('is_reduced');
+            }
+        );
+        bloc_right.hover(function () {
+                bloc_right.addClass('is_hover');
+                bloc_left.addClass('is_reduced');
+            },
+            function () {
+                bloc_right.removeClass('is_hover');
+                bloc_left.removeClass('is_reduced');
+            }
+        );
+
     });
 })(jQuery);
 
