@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ</title>
+
+
+    <meta name="description" content="Portfolio et blog profesionnel de Jean Gabès."/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/main.css"/>
+    <link rel="stylesheet" href="/theme/css/navigators/navbar.css"/>
+    <link rel="stylesheet" href="/theme/css/plyr.css"/>
+    <link rel="stylesheet" href="/theme/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/social.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/png" href="/theme/images/author/cadre.png"/>
+
+    <meta property="og:title" content="Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Portfolio et blog profesionnel de Jean Gabès"/>
+    <meta property="og:image" content="/theme/images/author/naparuba.gif">
+    <meta property="og:url" content="https://hugo-toha.github.io">
+
+
+    <link rel="stylesheet" href="/theme/css/style.css"/>
+
+
+    <script type="application/javascript">
+        var doNotTrack = false;
+        if ( !doNotTrack ) {
+            window.ga = window.ga || function() {
+                (ga.q = ga.q || []).push( arguments );
+            };
+            ga.l      = +new Date;
+            ga( 'create', 'UA-122321624-233', 'auto' );
+
+            ga( 'send', 'pageview' );
+        }
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</head>
+<body data-spy="scroll" data-target="#top-navbar" data-offset="100">
+
+<nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
+            Jean Gabès</a>
+        <button
+                class="navbar-toggler navbar-dark"
+                id="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#top-nav-items"
+                aria-label="menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="top-nav-items">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#home">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">A propos</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#experiences">Expérience</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#education">Scolarité</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#projects">Projets</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/#recent-posts">Post récents</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+
+<link rel="stylesheet" href="/theme/css/sections/recent-posts.css"/>
+
+<div class="container-fluid section-holder d-flex bg-dimmed">
+
+    <!--
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'title', 'date', 'tags', 'slug', 'author', 'authorlogin', 'id', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2015-02-20T10:20:00+01:00 20 Feb 2015
+                <a href="/smart-agent/">              Smart agent solution            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'id', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-07-12T10:30:01+02:00 12 Jul 2010
+                <a href="/retour-des-rmll/">              Retour des RMLL            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'id', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-06-09T13:41:54+02:00 09 Jun 2010
+                <a href="/retour-a-lecole/">              Retour à l'école            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-05-31T13:47:01+02:00 31 May 2010
+                <a href="/shinken-la-01-est-arrivee/">              Shinken : la 0.1 est arrivée!            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-05-05T16:36:53+02:00 05 May 2010
+                <a href="/shinken-example-de-hack-rapide-du-code/">              Shinken : example de Hack rapide du code            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-05-05T10:10:20+02:00 05 May 2010
+                <a href="/shinken-tagguez-vos-pollers/">              Shinken : tagguez vos pollers            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-04-26T15:00:18+02:00 26 Apr 2010
+                <a href="/shinken-quelques-news-sur-la-prochaine-01/">              Shinken : quelques news sur la prochaine 0.1            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-04-20T13:29:28+02:00 20 Apr 2010
+                <a href="/nagios-de-lopen-source-a-lopen-core/">              Nagios : de l'open source à l'open core ?            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-04-18T13:43:27+02:00 18 Apr 2010
+                <a href="/art-of-free-software-war/">              Art of (free software) war            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-04-18T13:39:15+02:00 18 Apr 2010
+                <a href="/art-of-free-software-war-fr/">              Art of (free software) war - FR            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-03-14T15:43:37+01:00 14 Mar 2010
+                <a href="/deduplication-bloc-fixe-vs-bloc-variable/">              Déduplication : bloc fixe VS bloc variable            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-03-02T11:43:48+01:00 02 Mar 2010
+                <a href="/la-reponse-de-lauteur-de-nagios/">              La réponse de l'auteur de Nagios            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-02-23T12:17:00+01:00 23 Feb 2010
+                <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/">              Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!!            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-02-15T15:08:33+01:00 15 Feb 2010
+                <a href="/partie-a-trois-python-__slots__-et-metaclass/">              Partie à trois : Python, __slots__ et metaclass            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-01-25T13:48:57+01:00 25 Jan 2010
+                <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/">              Les escalades de notifications enfin simples à mettre en place            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-01-06T17:15:06+01:00 06 Jan 2010
+                <a href="/gestion-des-exclusions-de-timeperiods/">              Gestion des exclusions de timeperiods            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2010-01-04T12:23:11+01:00 04 Jan 2010
+                <a href="/apres-mysql-oracle-et-couchdb-sqlite/">              Après MySQL, Oracle et couchdb : Sqlite            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-31T12:29:27+01:00 31 Dec 2009
+                <a href="/generalisation-des-modulations-de-resultats/">              Généralisation des modulations de résultats            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-17T12:42:54+01:00 17 Dec 2009
+                <a href="/couchdb-dans-shinken/">              Couchdb dans Shinken            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-16T16:03:54+01:00 16 Dec 2009
+                <a href="/shinken-sur-zdnet/">              Shinken sur ZDNet!            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-16T11:22:34+01:00 16 Dec 2009
+                <a href="/python-et-le-data-driven-programming/">              Python et le Data-Driven programming            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-15T13:39:09+01:00 15 Dec 2009
+                <a href="/il-fait-chaud-chaud-cet-hiver/">              Il fait chaud chaud cet hiver            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-14T12:24:27+01:00 14 Dec 2009
+                <a href="/hot-periods/">              Hot periods            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-10T09:12:51+01:00 10 Dec 2009
+                <a href="/mes-premiers-patchs/">              Mes premiers patchs !            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-09T14:57:10+01:00 09 Dec 2009
+                <a href="/shinken-des-modulateurs-de-resultats/">              Shinken : des modulateurs de résultats            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-09T12:27:38+01:00 09 Dec 2009
+                <a href="/shinken-quel-avenir-pour-nagios-shinken/">              Shinken : quel avenir pour Nagios? Shinken?            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-01T15:41:47+01:00 01 Dec 2009
+                <a href="/shinken-gestion-des-noms-en-utf8/">              Shinken : gestion des noms en UTF8            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-12-01T14:45:03+01:00 01 Dec 2009
+                <a href="/shinken-quoi-de-neuf-docteur/">              Shinken : Quoi de neuf docteur?            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-14T13:56:57+01:00 14 Nov 2009
+                <a href="/shinken-lart-de-linspiration/">              Shinken : l'art de l'inspiration            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-14T13:04:18+01:00 14 Nov 2009
+                <a href="/shinken-un-nouveau-logo/">              Shinken : un nouveau logo            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-14T12:44:41+01:00 14 Nov 2009
+                <a href="/shinken-le-choix-de-la-licence-agpl/">              Shinken : le choix de la licence AGPL            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-10T14:27:04+01:00 10 Nov 2009
+                <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/">              Shinken : un serveur? Inutile, préférez un eeepc...            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-09T18:36:26+01:00 09 Nov 2009
+                <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/">              Shinken : 100Kchecks? Ah désolé, il fallait lire 200K            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-05T22:42:09+01:00 05 Nov 2009
+                <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/">              Shinken : à oui au fait, c'est multiplate-forme            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-03T18:37:23+01:00 03 Nov 2009
+                <a href="/shinken-les-realms-sont-la/">              Shinken : les realms sont là            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-11-01T10:26:06+01:00 01 Nov 2009
+                <a href="/shinken-pool-realm/">              Shinken : Pool -> Realm            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-10-29T16:29:01+01:00 29 Oct 2009
+                <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/">              Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-10-24T15:45:16+02:00 24 Oct 2009
+                <a href="/shinken-dispatch-des-commandes-externes/">              Shinken : dispatch des commandes externes            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-10-23T10:19:06+02:00 23 Oct 2009
+                <a href="/shinken-le-dispatching-des-configurations-et-les-spares/">              Shinken : le dispatching des configurations et les spares            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-10-16T11:13:33+02:00 16 Oct 2009
+                <a href="/patch-nagios-ssl-pour-ndo/">              Patch Nagios : SSL pour Ndo            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-10-13T15:05:53+02:00 13 Oct 2009
+                <a href="/100k-checks5minutes/">              100K checks/5minutes            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-10-06T07:50:30+02:00 06 Oct 2009
+                <a href="/shinken-les-grandes-lignes/">              Shinken : Les grandes lignes            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-08-26T16:27:16+02:00 26 Aug 2009
+                <a href="/sortie-de-mon-livre-sur-nagios/">              Sortie de mon livre sur Nagios            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-08-03T14:22:39+02:00 03 Aug 2009
+                <a href="/monter-un-cluster-filesystem-avec-ocfs2/">              Monter un cluster filesystem avec OCFS2            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-07-02T13:39:21+02:00 02 Jul 2009
+                <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/">              Patch Nagios pour une gestion plus fine de la configuration            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-07-02T13:31:08+02:00 02 Jul 2009
+                <a href="/shinken-quand-un-python-rencontre-nagios/">              Shinken : quand un python rencontre Nagios            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-07-02T10:08:29+02:00 02 Jul 2009
+                <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/">              Patch Nagios pour un démarrage (bien plus) rapide            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-30T15:17:45+02:00 30 Jun 2009
+                <a href="/administration-et-supervision-de-heartbeatldirectordipvs/">              Administration et supervision de HeartBeat/Ldirectord/IPVS            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-30T14:24:49+02:00 30 Jun 2009
+                <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/">              Mise en place d'une solution de load balancing hautement disponible            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-30T09:16:59+02:00 30 Jun 2009
+                <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/">              La haute disponiblité et la répartition de charge avec HeartBeat/IPVS            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-30T08:24:15+02:00 30 Jun 2009
+                <a href="/funkyplaylist-un-script-generateur-de-playlist/">              FunkyPlayList : un script générateur de playlist            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-30T08:21:10+02:00 30 Jun 2009
+                <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/">              Pyndsgest : gérer vos jeux NDS facilement            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-29T13:06:14+02:00 29 Jun 2009
+                <a href="/uberlogger/">              UberLogger            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-22T19:17:33+02:00 22 Jun 2009
+                <a href="/mon-blog/">              Mon blog            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2009-06-22T19:17:33+02:00 22 Jun 2009
+                <a href="/ouverture-de-mon-blog/">              Ouverture de mon blog            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'slug', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2005-06-24T10:00:14+02:00 24 Jun 2005
+                <a href="/un-petit-point-sur-lauteur/">              Un petit point sur l'auteur            </a>
+              </div>
+        <div> dict_keys(['settings', '_content', '_context', 'translations', 'category', 'reader', 'date', 'title', 'tags', 'slug', 'author', 'authorlogin', 'metadata', 'template', 'authors', 'in_default_lang', 'lang', 'source_path', 'date_format', 'locale_date', '_status', '_summary']) 2005-06-21T19:18:52+02:00 21 Jun 2005
+                <a href="/ouverture/">              Ouverture            </a>
+              </div>
+        -->
+
+    <div class="container-fluid anchor pb-5 recent-posts-section" id="recent-posts">
+
+        <h1 class="text-center">Derniers Posts</h1>
+
+
+        <div class="container">
+            <div class="row" id="recent-post-cards">
+
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/smart-agent/" title="Smart agent solution" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images/73/article.jpg' alt="Smart agent solution"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Smart agent solution</h5>
+                                <p class="card-text post-summary"> <p>Prennons un peu de recul sur la supervision actuelle, ses limites, et comment les dépasser</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">20 Feb, 2015</span>
+                                <a href="/smart-agent/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/retour-des-rmll/" title="Retour des RMLL" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images/72/article.jpg' alt="Retour des RMLL"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Retour des RMLL</h5>
+                                <p class="card-text post-summary"> <p>Retour des RMLL</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">12 Jul, 2010</span>
+                                <a href="/retour-des-rmll/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/retour-a-lecole/" title="Retour à l'école" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images/71/article.jpg' alt="Retour à l'école"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Retour à l'école</h5>
+                                <p class="card-text post-summary"> <p>Retour à l'école</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">09 Jun, 2010</span>
+                                <a href="/retour-a-lecole/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-la-01-est-arrivee/" title="Shinken : la 0.1 est arrivée!" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : la 0.1 est arrivée!"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : la 0.1 est arrivée!</h5>
+                                <p class="card-text post-summary"> <p>Shinken : la 0.1 est arrivée!</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">31 May, 2010</span>
+                                <a href="/shinken-la-01-est-arrivee/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-example-de-hack-rapide-du-code/" title="Shinken : example de Hack rapide du code" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : example de Hack rapide du code"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : example de Hack rapide du code</h5>
+                                <p class="card-text post-summary"> <p>Shinken : example de Hack rapide du code</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">05 May, 2010</span>
+                                <a href="/shinken-example-de-hack-rapide-du-code/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-tagguez-vos-pollers/" title="Shinken : tagguez vos pollers" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : tagguez vos pollers"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : tagguez vos pollers</h5>
+                                <p class="card-text post-summary"> <p>Shinken : tagguez vos pollers</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">05 May, 2010</span>
+                                <a href="/shinken-tagguez-vos-pollers/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-quelques-news-sur-la-prochaine-01/" title="Shinken : quelques news sur la prochaine 0.1" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : quelques news sur la prochaine 0.1"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : quelques news sur la prochaine 0.1</h5>
+                                <p class="card-text post-summary"> <p>Shinken : quelques news sur la prochaine 0.1</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">26 Apr, 2010</span>
+                                <a href="/shinken-quelques-news-sur-la-prochaine-01/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/nagios-de-lopen-source-a-lopen-core/" title="Nagios : de l'open source à l'open core ?" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Nagios : de l'open source à l'open core ?"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Nagios : de l'open source à l'open core ?</h5>
+                                <p class="card-text post-summary"> <p>Nagios : de l'open source à l'open core ?</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">20 Apr, 2010</span>
+                                <a href="/nagios-de-lopen-source-a-lopen-core/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/art-of-free-software-war/" title="Art of (free software) war" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Art of (free software) war"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Art of (free software) war</h5>
+                                <p class="card-text post-summary"> <p>Art of (free software) war</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">18 Apr, 2010</span>
+                                <a href="/art-of-free-software-war/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/art-of-free-software-war-fr/" title="Art of (free software) war - FR" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Art of (free software) war - FR"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Art of (free software) war - FR</h5>
+                                <p class="card-text post-summary"> <p>Art of (free software) war - FR</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">18 Apr, 2010</span>
+                                <a href="/art-of-free-software-war-fr/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/deduplication-bloc-fixe-vs-bloc-variable/" title="Déduplication : bloc fixe VS bloc variable" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Déduplication : bloc fixe VS bloc variable"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Déduplication : bloc fixe VS bloc variable</h5>
+                                <p class="card-text post-summary"> <p>Déduplication : bloc fixe VS bloc variable</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">14 Mar, 2010</span>
+                                <a href="/deduplication-bloc-fixe-vs-bloc-variable/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/la-reponse-de-lauteur-de-nagios/" title="La réponse de l'auteur de Nagios" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="La réponse de l'auteur de Nagios"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">La réponse de l'auteur de Nagios</h5>
+                                <p class="card-text post-summary"> <p>La réponse de l'auteur de Nagios</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">02 Mar, 2010</span>
+                                <a href="/la-reponse-de-lauteur-de-nagios/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/" title="Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!!" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!!"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!!</h5>
+                                <p class="card-text post-summary"> <p>Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!!</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">23 Feb, 2010</span>
+                                <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/partie-a-trois-python-__slots__-et-metaclass/" title="Partie à trois : Python, __slots__ et metaclass" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Partie à trois : Python, __slots__ et metaclass"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Partie à trois : Python, __slots__ et metaclass</h5>
+                                <p class="card-text post-summary"> <p>Partie à trois : Python, <strong>slots</strong> et metaclass</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">15 Feb, 2010</span>
+                                <a href="/partie-a-trois-python-__slots__-et-metaclass/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/" title="Les escalades de notifications enfin simples à mettre en place" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Les escalades de notifications enfin simples à mettre en place"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Les escalades de notifications enfin simples à mettre en place</h5>
+                                <p class="card-text post-summary"> <p>Les escalades de notifications enfin simples à mettre en place</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">25 Jan, 2010</span>
+                                <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/gestion-des-exclusions-de-timeperiods/" title="Gestion des exclusions de timeperiods" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Gestion des exclusions de timeperiods"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Gestion des exclusions de timeperiods</h5>
+                                <p class="card-text post-summary"> <p>Gestion des exclusions de timeperiods</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">06 Jan, 2010</span>
+                                <a href="/gestion-des-exclusions-de-timeperiods/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/apres-mysql-oracle-et-couchdb-sqlite/" title="Après MySQL, Oracle et couchdb : Sqlite" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Après MySQL, Oracle et couchdb : Sqlite"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Après MySQL, Oracle et couchdb : Sqlite</h5>
+                                <p class="card-text post-summary"> <p>Après MySQL, Oracle et couchdb : Sqlite</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">04 Jan, 2010</span>
+                                <a href="/apres-mysql-oracle-et-couchdb-sqlite/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/generalisation-des-modulations-de-resultats/" title="Généralisation des modulations de résultats" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Généralisation des modulations de résultats"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Généralisation des modulations de résultats</h5>
+                                <p class="card-text post-summary"> <p>Généralisation des modulations de résultats</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">31 Dec, 2009</span>
+                                <a href="/generalisation-des-modulations-de-resultats/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/couchdb-dans-shinken/" title="Couchdb dans Shinken" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Couchdb dans Shinken"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Couchdb dans Shinken</h5>
+                                <p class="card-text post-summary"> <p>Couchdb dans Shinken</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">17 Dec, 2009</span>
+                                <a href="/couchdb-dans-shinken/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-sur-zdnet/" title="Shinken sur ZDNet!" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken sur ZDNet!"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken sur ZDNet!</h5>
+                                <p class="card-text post-summary"> <p>Shinken sur ZDNet!</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">16 Dec, 2009</span>
+                                <a href="/shinken-sur-zdnet/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/python-et-le-data-driven-programming/" title="Python et le Data-Driven programming" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Python et le Data-Driven programming"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Python et le Data-Driven programming</h5>
+                                <p class="card-text post-summary"> <p>Python et le Data-Driven programming</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">16 Dec, 2009</span>
+                                <a href="/python-et-le-data-driven-programming/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/il-fait-chaud-chaud-cet-hiver/" title="Il fait chaud chaud cet hiver" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Il fait chaud chaud cet hiver"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Il fait chaud chaud cet hiver</h5>
+                                <p class="card-text post-summary"> <p>Il fait chaud chaud cet hiver</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">15 Dec, 2009</span>
+                                <a href="/il-fait-chaud-chaud-cet-hiver/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/hot-periods/" title="Hot periods" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Hot periods"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Hot periods</h5>
+                                <p class="card-text post-summary"> <p>Hot periods</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">14 Dec, 2009</span>
+                                <a href="/hot-periods/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/mes-premiers-patchs/" title="Mes premiers patchs !" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Mes premiers patchs !"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Mes premiers patchs !</h5>
+                                <p class="card-text post-summary"> <p>Mes premiers patchs !</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">10 Dec, 2009</span>
+                                <a href="/mes-premiers-patchs/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-des-modulateurs-de-resultats/" title="Shinken : des modulateurs de résultats" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : des modulateurs de résultats"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : des modulateurs de résultats</h5>
+                                <p class="card-text post-summary"> <p>Shinken : des modulateurs de résultats</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">09 Dec, 2009</span>
+                                <a href="/shinken-des-modulateurs-de-resultats/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-quel-avenir-pour-nagios-shinken/" title="Shinken : quel avenir pour Nagios? Shinken?" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : quel avenir pour Nagios? Shinken?"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : quel avenir pour Nagios? Shinken?</h5>
+                                <p class="card-text post-summary"> <p>Shinken : quel avenir pour Nagios? Shinken?</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">09 Dec, 2009</span>
+                                <a href="/shinken-quel-avenir-pour-nagios-shinken/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-gestion-des-noms-en-utf8/" title="Shinken : gestion des noms en UTF8" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : gestion des noms en UTF8"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : gestion des noms en UTF8</h5>
+                                <p class="card-text post-summary"> <p>Shinken : gestion des noms en UTF8</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">01 Dec, 2009</span>
+                                <a href="/shinken-gestion-des-noms-en-utf8/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-quoi-de-neuf-docteur/" title="Shinken : Quoi de neuf docteur?" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : Quoi de neuf docteur?"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : Quoi de neuf docteur?</h5>
+                                <p class="card-text post-summary"> <p>Shinken : Quoi de neuf docteur?</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">01 Dec, 2009</span>
+                                <a href="/shinken-quoi-de-neuf-docteur/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-lart-de-linspiration/" title="Shinken : l'art de l'inspiration" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : l'art de l'inspiration"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : l'art de l'inspiration</h5>
+                                <p class="card-text post-summary"> <p>Shinken : l'art de l'inspiration</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">14 Nov, 2009</span>
+                                <a href="/shinken-lart-de-linspiration/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-un-nouveau-logo/" title="Shinken : un nouveau logo" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : un nouveau logo"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : un nouveau logo</h5>
+                                <p class="card-text post-summary"> <p>Shinken : un nouveau logo</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">14 Nov, 2009</span>
+                                <a href="/shinken-un-nouveau-logo/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-le-choix-de-la-licence-agpl/" title="Shinken : le choix de la licence AGPL" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : le choix de la licence AGPL"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : le choix de la licence AGPL</h5>
+                                <p class="card-text post-summary"> <p>Shinken : le choix de la licence AGPL</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">14 Nov, 2009</span>
+                                <a href="/shinken-le-choix-de-la-licence-agpl/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/" title="Shinken : un serveur? Inutile, préférez un eeepc..." class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : un serveur? Inutile, préférez un eeepc..."/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : un serveur? Inutile, préférez un eeepc...</h5>
+                                <p class="card-text post-summary"> <p>Shinken : un serveur? Inutile, préférez un eeepc...</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">10 Nov, 2009</span>
+                                <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/" title="Shinken : 100Kchecks? Ah désolé, il fallait lire 200K" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : 100Kchecks? Ah désolé, il fallait lire 200K"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : 100Kchecks? Ah désolé, il fallait lire 200K</h5>
+                                <p class="card-text post-summary"> <p>Shinken : 100Kchecks? Ah désolé, il fallait lire 200K</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">09 Nov, 2009</span>
+                                <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/" title="Shinken : à oui au fait, c'est multiplate-forme" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : à oui au fait, c'est multiplate-forme"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : à oui au fait, c'est multiplate-forme</h5>
+                                <p class="card-text post-summary"> <p>Shinken : à oui au fait, c'est multiplate-forme</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">05 Nov, 2009</span>
+                                <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-les-realms-sont-la/" title="Shinken : les realms sont là" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : les realms sont là"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : les realms sont là</h5>
+                                <p class="card-text post-summary"> <p>Shinken : les realms sont là</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">03 Nov, 2009</span>
+                                <a href="/shinken-les-realms-sont-la/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-pool-realm/" title="Shinken : Pool -> Realm" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : Pool -> Realm"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : Pool -> Realm</h5>
+                                <p class="card-text post-summary"> <p>Shinken : Pool -&gt; Realm</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">01 Nov, 2009</span>
+                                <a href="/shinken-pool-realm/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/" title="Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture</h5>
+                                <p class="card-text post-summary"> <p>Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">29 Oct, 2009</span>
+                                <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-dispatch-des-commandes-externes/" title="Shinken : dispatch des commandes externes" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : dispatch des commandes externes"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : dispatch des commandes externes</h5>
+                                <p class="card-text post-summary"> <p>Shinken : dispatch des commandes externes</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">24 Oct, 2009</span>
+                                <a href="/shinken-dispatch-des-commandes-externes/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-le-dispatching-des-configurations-et-les-spares/" title="Shinken : le dispatching des configurations et les spares" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : le dispatching des configurations et les spares"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : le dispatching des configurations et les spares</h5>
+                                <p class="card-text post-summary"> <p>Shinken : le dispatching des configurations et les spares</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">23 Oct, 2009</span>
+                                <a href="/shinken-le-dispatching-des-configurations-et-les-spares/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/patch-nagios-ssl-pour-ndo/" title="Patch Nagios : SSL pour Ndo" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Patch Nagios : SSL pour Ndo"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Patch Nagios : SSL pour Ndo</h5>
+                                <p class="card-text post-summary"> <p>Patch Nagios : SSL pour Ndo</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">16 Oct, 2009</span>
+                                <a href="/patch-nagios-ssl-pour-ndo/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/100k-checks5minutes/" title="100K checks/5minutes" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="100K checks/5minutes"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">100K checks/5minutes</h5>
+                                <p class="card-text post-summary"> <p>100K checks/5minutes</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">13 Oct, 2009</span>
+                                <a href="/100k-checks5minutes/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-les-grandes-lignes/" title="Shinken : Les grandes lignes" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : Les grandes lignes"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : Les grandes lignes</h5>
+                                <p class="card-text post-summary"> <p>Shinken : Les grandes lignes</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">06 Oct, 2009</span>
+                                <a href="/shinken-les-grandes-lignes/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/sortie-de-mon-livre-sur-nagios/" title="Sortie de mon livre sur Nagios" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Sortie de mon livre sur Nagios"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Sortie de mon livre sur Nagios</h5>
+                                <p class="card-text post-summary"> <p>Sortie de mon livre sur Nagios</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">26 Aug, 2009</span>
+                                <a href="/sortie-de-mon-livre-sur-nagios/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/monter-un-cluster-filesystem-avec-ocfs2/" title="Monter un cluster filesystem avec OCFS2" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Monter un cluster filesystem avec OCFS2"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Monter un cluster filesystem avec OCFS2</h5>
+                                <p class="card-text post-summary"> <p>Monter un cluster filesystem avec OCFS2</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">03 Aug, 2009</span>
+                                <a href="/monter-un-cluster-filesystem-avec-ocfs2/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/" title="Patch Nagios pour une gestion plus fine de la configuration" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Patch Nagios pour une gestion plus fine de la configuration"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Patch Nagios pour une gestion plus fine de la configuration</h5>
+                                <p class="card-text post-summary"> <p>Patch Nagios pour une gestion plus fine de la configuration</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">02 Jul, 2009</span>
+                                <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/shinken-quand-un-python-rencontre-nagios/" title="Shinken : quand un python rencontre Nagios" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Shinken : quand un python rencontre Nagios"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Shinken : quand un python rencontre Nagios</h5>
+                                <p class="card-text post-summary"> <p>Shinken : quand un python rencontre Nagios</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">02 Jul, 2009</span>
+                                <a href="/shinken-quand-un-python-rencontre-nagios/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/" title="Patch Nagios pour un démarrage (bien plus) rapide" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Patch Nagios pour un démarrage (bien plus) rapide"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Patch Nagios pour un démarrage (bien plus) rapide</h5>
+                                <p class="card-text post-summary"> <p>Patch Nagios pour un démarrage (bien plus) rapide</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">02 Jul, 2009</span>
+                                <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/administration-et-supervision-de-heartbeatldirectordipvs/" title="Administration et supervision de HeartBeat/Ldirectord/IPVS" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Administration et supervision de HeartBeat/Ldirectord/IPVS"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Administration et supervision de HeartBeat/Ldirectord/IPVS</h5>
+                                <p class="card-text post-summary"> <p>Administration et supervision de HeartBeat/Ldirectord/IPVS</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">30 Jun, 2009</span>
+                                <a href="/administration-et-supervision-de-heartbeatldirectordipvs/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/" title="Mise en place d'une solution de load balancing hautement disponible" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Mise en place d'une solution de load balancing hautement disponible"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Mise en place d'une solution de load balancing hautement disponible</h5>
+                                <p class="card-text post-summary"> <p>Mise en place d'une solution de load balancing hautement disponible</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">30 Jun, 2009</span>
+                                <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/" title="La haute disponiblité et la répartition de charge avec HeartBeat/IPVS" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="La haute disponiblité et la répartition de charge avec HeartBeat/IPVS"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">La haute disponiblité et la répartition de charge avec HeartBeat/IPVS</h5>
+                                <p class="card-text post-summary"> <p>La haute disponiblité et la répartition de charge avec HeartBeat/IPVS</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">30 Jun, 2009</span>
+                                <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/funkyplaylist-un-script-generateur-de-playlist/" title="FunkyPlayList : un script générateur de playlist" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="FunkyPlayList : un script générateur de playlist"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">FunkyPlayList : un script générateur de playlist</h5>
+                                <p class="card-text post-summary"> <p>FunkyPlayList : un script générateur de playlist</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">30 Jun, 2009</span>
+                                <a href="/funkyplaylist-un-script-generateur-de-playlist/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/" title="Pyndsgest : gérer vos jeux NDS facilement" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Pyndsgest : gérer vos jeux NDS facilement"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Pyndsgest : gérer vos jeux NDS facilement</h5>
+                                <p class="card-text post-summary"> <p>Pyndsgest : gérer vos jeux NDS facilement</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">30 Jun, 2009</span>
+                                <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/uberlogger/" title="UberLogger" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="UberLogger"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">UberLogger</h5>
+                                <p class="card-text post-summary"> <p>UberLogger</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">29 Jun, 2009</span>
+                                <a href="/uberlogger/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/mon-blog/" title="Mon blog" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Mon blog"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Mon blog</h5>
+                                <p class="card-text post-summary"> <p>Mon blog</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">22 Jun, 2009</span>
+                                <a href="/mon-blog/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/ouverture-de-mon-blog/" title="Ouverture de mon blog" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Ouverture de mon blog"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Ouverture de mon blog</h5>
+                                <p class="card-text post-summary"> <p>Ouverture de mon blog</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">22 Jun, 2009</span>
+                                <a href="/ouverture-de-mon-blog/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/un-petit-point-sur-lauteur/" title="Un petit point sur l'auteur" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Un petit point sur l'auteur"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Un petit point sur l'auteur</h5>
+                                <p class="card-text post-summary"> <p>Un petit point sur l'auteur</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">24 Jun, 2005</span>
+                                <a href="/un-petit-point-sur-lauteur/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-2 post-card">
+                    <a href="/ouverture/" title="Ouverture" class="post-card-link">
+                        <div class="card">
+                            <div class="card-head">
+                                <img class="card-img-top" src='/images//article.jpg' alt="Ouverture"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Ouverture</h5>
+                                <p class="card-text post-summary"> <p>Ouverture du blog</p></p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="float-left">21 Jun, 2005</span>
+                                <a href="/ouverture/" title="Read" class="float-right btn btn-outline-info btn-sm">Read</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+        <div class="row text-left">
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Navigation</h5>
+
+                <ul>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#about">A propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#skills">Skills</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#experiences">Expérience</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#education">Scolarité</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#projects">Mes projets</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#recent-posts">Derniers Posts</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Me contacter:</h5>
+                <ul>
+                    <li><span>Email: </span> <span>naparuba@gmail.com</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/theme/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/theme/js/popper.min.js"></script>
+<script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/theme/js/navbar.js"></script>
+<script type="text/javascript" src="/theme/js/plyr.js"></script>
+<script type="text/javascript" src="/theme/js/main.js"></script>
+
+
+<script src="/theme/js/itype.min.js"></script>
+<script src="/theme/js/github-button.js"></script>
+
+<script src="/theme/js/jquery.filterizr.min.js"></script>
+<!-- let the home.js only on the index.html. Note: after footer so we have jquery -->
+<script src="/theme/js/home.js"></script>
+
+</body>
+</html>

@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -185,87 +185,78 @@
 <p>Notre configuration commence par celle de Heartbeat. Nous allons commencer par configurer un simple cluster actif/passif d'une adresse virtuelle, <strong>192.16.8.0.3</strong>. Elle ne sera active que sur un des frontaux à la fois. Si le maitre tombe, le second prend la main.</p>
 <p>Le fichier de configuration principal est <strong>/etc/ha.d/ha.cf</strong> sur chaque frontal. </p>
 <p>Ici sur le serveur frontal1 :</p>
-<div class="highlight"><pre><span></span>ucast         eth0 192.168.0.2
-debugfile     /var/log/ha-debug
-logfile       /var/log/ha-log
-logfacility   local0
+<div class="highlight"><pre><span></span><code><span class="n">ucast</span>         <span class="n">eth0</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.2</span>
+<span class="n">debugfile</span>     <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">ha</span><span class="o">-</span><span class="n">debug</span>
+<span class="n">logfile</span>       <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">ha</span><span class="o">-</span><span class="nb">log</span>
+<span class="n">logfacility</span>   <span class="n">local0</span>
 
-keepalive     2
-deadtime      10
-warntime      6
-initdead      60
+<span class="n">keepalive</span>     <span class="mi">2</span>
+<span class="n">deadtime</span>      <span class="mi">10</span>
+<span class="n">warntime</span>      <span class="mi">6</span>
+<span class="n">initdead</span>      <span class="mi">60</span>
 
-udpport       694
-node          frontal1
-node          frontal2
+<span class="n">udpport</span>       <span class="mi">694</span>
+<span class="n">node</span>          <span class="n">frontal1</span>
+<span class="n">node</span>          <span class="n">frontal2</span>
 
-auto_failback on
-</pre></div>
-
+<span class="n">auto_failback</span> <span class="n">on</span>
+</code></pre></div>
 
 <p>Le fichier de configuration de <strong>frontal2</strong> ne va différer que de la première ligne :</p>
-<div class="highlight"><pre><span></span>ucast         eth0 192.168.0.1
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ucast         eth0 192.168.0.1</span>
+</code></pre></div>
 
 <p>La ligne <strong>ucast</strong> permet d'aller vérifier si l'autre noeud est toujours en vie ou non. Il est possible de spécifier une autre interface que <strong>eth0</strong> si on possède un lien dédié à cette communication. Ici par soucis de facilité, nous utiliserons le lien LAN normal.</p>
 <p>Le fichier <strong>/etc/ha.d/haresources</strong> qui décrit les services mis en place par HeartBeat. Pour l'instant, nous nous contentons de l'adresse virtuelle :</p>
-<div class="highlight"><pre><span></span>frontal1 IPaddr::192.168.0.3
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">frontal1 IPaddr::192.168.0.3</span>
+</code></pre></div>
 
 <p><strong>IPaddr</strong> est un script dans <strong>/etc/ha.d/resource.d</strong> qui permet de monter une adresse sur un alias d'interface. Ici il va créer <strong>eth0:0</strong> avec comme IP <strong>192.168.0.3</strong>. Il est important de comprendre que ce script est appelé avec <strong>start</strong> sur le maitre, <strong>stop</strong> sur l'esclave. </p>
 <p>Lorsqu'une bascule s'opère, c'est tout simplement l'inverse et donc le neoud secondaire prends l'IP.</p>
 <p>Les deux noeuds ont besoin de s'authentifier. Pour cela, il faut éditer le fichier <strong>/etc/ha.d/authkeys</strong> qui décrit comment communiquent
 les deux noeuds :</p>
-<div class="highlight"><pre><span></span>auth 2
-1 md5 &quot;vive ipvs&quot;
-2 crc
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">auth 2</span>
+<span class="err">1 md5 &quot;vive ipvs&quot;</span>
+<span class="err">2 crc</span>
+</code></pre></div>
 
 <p>Faire un :</p>
-<div class="highlight"><pre><span></span>chmod 600 /etc/ha.d/authkeys
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">chmod 600 /etc/ha.d/authkeys</span>
+</code></pre></div>
 
 <p>Il faut ajouter le lancement de heartbeat au démarrage des deux frontaux :</p>
-<div class="highlight"><pre><span></span>chkconfig --add heartbeat
-chkconfig heartbeat on
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">chkconfig --add heartbeat</span>
+<span class="err">chkconfig heartbeat on</span>
+</code></pre></div>
 
 <p>Lancer les services sur les deux frontaux avec :</p>
-<div class="highlight"><pre><span></span>/etc/init.d/heartbeat start
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">/etc/init.d/heartbeat start</span>
+</code></pre></div>
 
 <p>Vous pouvez vérifier que vosu avec un alias de monté sur le noeud maitre et pas sur le noeud secondaire :</p>
-<div class="highlight"><pre><span></span>eth0      Link encap:Ethernet  HWaddr 00:50:57:85:5C:96
-inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
-[...]
-eth0:0    Link encap:Ethernet  HWaddr 00:50:57:85:5C:96
-inet addr:192.168.0.3  Bcast:192.168.0.255  Mask:255.255.255.0
-[...]
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">eth0      Link encap:Ethernet  HWaddr 00:50:57:85:5C:96</span>
+<span class="err">inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0</span>
+<span class="err">[...]</span>
+<span class="c">eth0:0    Link encap:Ethernet  HWaddr 00:50:57:85:5C:96</span>
+<span class="err">inet addr:192.168.0.3  Bcast:192.168.0.255  Mask:255.255.255.0</span>
+<span class="err">[...]</span>
+</code></pre></div>
 
 <p>On remarque que <strong>eth0</strong> est toujours disponible, mais que eth0:0 est apparu avec notre VIP.</p>
 <h3>Configuration de Ldirectord</h3>
 <p>Une fois HeartBeat de configuré, penchant nous sur la mise en place de <strong>ldirectord</strong> qui va gérer les règles de load balancing.</p>
 <p>Ldirectord utilise des fichiers de conf situé dans <strong>/etc/ha.d/conf</strong>, soit dans la configuration de Heartbeat. C'est en effet ce dernier qui le lancera sur le noeud primaire uniquement. 
 Le mieux concernant ldirectord est de faire un fichier de conf par service. Ici nous prendrons le fichier <strong>/etc/ha.d/conf/www.cf</strong> :</p>
-<div class="highlight"><pre><span></span>virtual = 192.168.0.3:80
-protocol = tcp
-scheduler = wlc
-real = 192.168.0.4:80 gate 1
-real = 192.168.0.5:80 gate 1
-checktype = connect
-quiescent = no
-persistent = 3600
-fallback = 127.0.0.1:80
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">virtual = 192.168.0.3:80</span>
+<span class="err">protocol = tcp</span>
+<span class="err">scheduler = wlc</span>
+<span class="err">real = 192.168.0.4:80 gate 1</span>
+<span class="err">real = 192.168.0.5:80 gate 1</span>
+<span class="err">checktype = connect</span>
+<span class="err">quiescent = no</span>
+<span class="err">persistent = 3600</span>
+<span class="err">fallback = 127.0.0.1:80</span>
+</code></pre></div>
 
 <p>Les paramètres sont :</p>
 <ul>
@@ -280,20 +271,21 @@ fallback = 127.0.0.1:80
 <h3>Configuration de la synchronisation de la table des sessions</h3>
 <p>La table des sessions sur le <strong>frontal1</strong> peut (doit!) être synchronisée sur le frontal2 de temps en temps (toutes les 30secondes environs). </p>
 <p>En effet, en cas de tombée du serveur1, lorsque le 2 arrive, s'il n'a pas déjà la table des sessions, les utilisateurs vont devoir se reconnecter. Un système existe afin de synchroniser les serveurs.</p>
-<p>Pour cela, créer le fichier <em>/etc/init.d/lvsstate</em> sur les deux frontaux :
-<pre class="wp-caption" style="text-align: left;">#!/bin/sh</p>
-<h1></h1>
-<h1>Created 2000-01-03 by naparuba@gmail.com</h1>
-<h1></h1>
-<h1>lvsstate      This shell script takes care of starting and stopping</h1>
-<h1>sessions managers for IPVS.</h1>
-<h1></h1>
-<h1>chkconfig: -  80 30</h1>
-<h1>description: ipvs_syncmaster is a daemon for syncronising sessions\</h1>
-<h1>between two IPVS.</h1>
-<h1>processname: ipvs_syncmaster</h1>
-<h1>config: /none.cfg</h1>
-<p>case "$1" in
+<p>Pour cela, créer le fichier <em>/etc/init.d/lvsstate</em> sur les deux frontaux :</p>
+<pre class="wp-caption" style="text-align: left;">#!/bin/sh
+#
+#  Created 2000-01-03 by naparuba@gmail.com
+#
+# lvsstate      This shell script takes care of starting and stopping
+#               sessions managers for IPVS.
+#
+# chkconfig: -  80 30
+# description: ipvs_syncmaster is a daemon for syncronising sessions\
+#              between two IPVS.
+# processname: ipvs_syncmaster
+# config: /none.cfg
+
+case "$1" in
  start)
     /sbin/ipvsadm --start-daemon backup --syncid=1
     /sbin/ipvsadm --start-daemon master --syncid=1
@@ -311,9 +303,10 @@ fallback = 127.0.0.1:80
  ;;
  *)
     echo "Usage: $0 {start|stop|restart|status}"
-esac</p>
-<p>exit 0</pre>
-Attention, il y a la paramètre <em>syncid</em> qui permet de ne pas entrechoquer plusieurs LVS sur le réseau. On peut définir par exemple :</p>
+esac
+
+exit 0</pre>
+<p>Attention, il y a la paramètre <em>syncid</em> qui permet de ne pas entrechoquer plusieurs LVS sur le réseau. On peut définir par exemple :</p>
 <ul>
 <li>3 = TEST</li>
 <li>2 = QUALIF</li>
@@ -323,36 +316,32 @@ Attention, il y a la paramètre <em>syncid</em> qui permet de ne pas entrechoque
 <p>Ainsi, si le service est en mode heartbeat primaire, il est en mode master lvs, et en mode heartbeat secondaire, il est backup dans le mode lvs.
 Pour info, seules les sessions en état <strong>ESTABLISHED</strong> sont transférées. Les sessions mortes ou non encore actives ne sont pas transmises. De plus, les deux noeuds doivent avoir la syncronisation active en même temps. Les deux peuvent avoir de lancé le backup et le master, ce ci ne pose pas de soucis.</p>
 <p>Puis on les met au démarrage de la machine :</p>
-<div class="highlight"><pre><span></span>chkconfig --add lvsstate
-chkconfig lvsstate on
-/etc/init.d/lvsstate start
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">chkconfig --add lvsstate</span>
+<span class="err">chkconfig lvsstate on</span>
+<span class="err">/etc/init.d/lvsstate start</span>
+</code></pre></div>
 
 <p>Une fois ceci réalisé, il est temps d'ajouter ldirectord dans les ressources HeartBeat afin qu'il soit lancer sur le noeud maitre et que le noeud secondaire prenne la main si besoin.</p>
 <p>Dans le fichier <strong>/etc/ha.d/haresources</strong> :</p>
-<div class="highlight"><pre><span></span>frontal1 IPaddr::192.168.0.3 ldirectord::www.cf
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">frontal1 IPaddr::192.168.0.3 ldirectord::www.cf</span>
+</code></pre></div>
 
 <p>La règle dans haressources est simple : on lancer de gauche à droite, et on arrète de droite à gauche. 
 Donc ici, on montera bien la VIP avant de lancer le load balancing.</p>
 <p>On peux vérifier que c'est bien lancé avec :</p>
-<div class="highlight"><pre><span></span>ipvsadm -L
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ipvsadm -L</span>
+</code></pre></div>
 
 <h2>Les serveurs réels</h2>
 <p>Nous avons vu dans le post précédent que les serveurs réels dans le cas du mode direct on besoin de la VIP, mais ne doivent pas répondre à l'ARP sur cette VIP. L'astuce ici est de configurer un alias d'interface avec la VIP (ici 192.168.0.3) et de bloquer les requêtes ARP sur cette adresse (car seul le loadbalanceur doit répondre pour cette VIP).</p>
 <p>Il faut monter un alias d'interface en tant que VIP. Nous considérons ici que seule l'interface eth0 est active pour le serveur. Nous allons donc créer l'alias eth0:0. Cependant, il ne faut pas que l'interface réponde à l'ARP, ne serait-ce qu'une seule réponse!</p>
 <p>On demande au noyau de ne pas répondre sur les alias d'interfaces :
 Dans le fichier <strong>/etc/sysctl.conf</strong> :</p>
-<div class="highlight"><pre><span></span>net.ipv4.conf.lo.arp_ignore = 1
-net.ipv4.conf.lo.arp_announce = 2
-net.ipv4.conf.all.arp_ignore = 1
-net.ipv4.conf.all.arp_announce = 2
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">net.ipv4.conf.lo.arp_ignore = 1</span>
+<span class="err">net.ipv4.conf.lo.arp_announce = 2</span>
+<span class="err">net.ipv4.conf.all.arp_ignore = 1</span>
+<span class="err">net.ipv4.conf.all.arp_announce = 2</span>
+</code></pre></div>
 
 <p>Pour les paramètres:
  <strong>arp_annonce</strong> : détermine les adresse ip source annoncée dans les requêtes ARP émises.
@@ -363,14 +352,13 @@ net.ipv4.conf.all.arp_announce = 2
  * 1 : utilise l'ARP seulement si elle est configurée avec l'ip cible de la requête
  * 8 : inhibe l'ARP totalement</p>
 <p>L'alias va être monté sur <strong>lo0</strong>. Pour cela, il faut créer le fichier <em>/etc/sysconfig/network-scripts/ifcfg-lo:1</em> :</p>
-<div class="highlight"><pre><span></span>DEVICE=lo:1
-IPADDR=192.168.0.3
-NETMASK=255.255.255.255
-NETWORK=192.168.0.0
-ONBOOT=yes
-ARP=no
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">DEVICE=lo:1</span>
+<span class="err">IPADDR=192.168.0.3</span>
+<span class="err">NETMASK=255.255.255.255</span>
+<span class="err">NETWORK=192.168.0.0</span>
+<span class="err">ONBOOT=yes</span>
+<span class="err">ARP=no</span>
+</code></pre></div>
 
 <p>Il faut s'assurer que le programme loadbalancé ouvre bien sur l'ensemble des interfaces son port, ou à défaut au moins sur la VIP.</p>
 <h2>Le Sorry Server</h2>
@@ -378,28 +366,25 @@ ARP=no
 C'est la clause <strong>fallback = 127.0.0.1:80</strong> du fichier de configuration dans ldirectord.
 La situation la plus courante est de le placer directement sur le loadbalanceur afin d'afficher un message comme quoi l'application est en maintenance (on est gentils, on ne va pas dire qu'elle s'est encore plantée...).</p>
 <p>Nous allons donc mettre un Apache minimum sur les frontaux qui ne va servir que pour une page. Il faut éditer le fichier <strong>/etc/httpd/conf/httpd.conf</strong> :</p>
-<div class="highlight"><pre><span></span>ErrorDocument 404 /error/404.html
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ErrorDocument 404 /error/404.html</span>
+</code></pre></div>
 
 <p>Puis générer le fichier <em>/var/www/error/404.html </em>comme souhaité (sympa quoi) puis lier l'index pour être plus propre :</p>
-<div class="highlight"><pre><span></span>ln -s /var/www/error/404.html /var/www/html/index.html
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">error</span><span class="o">/</span><span class="mf">404.</span><span class="n">html</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</code></pre></div>
 
 <p>Dans le fichier de conf d'apache, on va limiter le nombre de processus. Dans le module <strong>IfModule prefork.c</strong> :</p>
-<div class="highlight"><pre><span></span>StartServers 2
-MinSpareServers 2
-MaxSpareServer 10
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">StartServers 2</span>
+<span class="err">MinSpareServers 2</span>
+<span class="err">MaxSpareServer 10</span>
+</code></pre></div>
 
 <p>Et encore, ces valeurs sont un peu élevées, mais bon.</p>
 <h2>En conclusion</h2>
 <p>Et voila, vous avez entre les mains une solution fonctionnelle et performante pour faire de la répartition de charge hautement disponible. Nous verrons dans un prochain post comment l'administrer et surtout la superviser.</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -702,13 +687,6 @@ MaxSpareServer 10
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

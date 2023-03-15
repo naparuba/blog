@@ -53,7 +53,8 @@
 }
 
 .circular-progress .circular-progress-right {
-  right: 0;
+  /* JEAN: hack for align */
+  right: 1px;
 }
 
 .circular-progress .circular-progress-right .circular-progress-bar {

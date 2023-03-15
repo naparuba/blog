@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -133,51 +133,50 @@
         </header>
 
     <p>Ca y est, j'ai implémenté les Realms et tout ce que ça implique sur le dispatching des configurations et la gestion des spares. Une configuration l'utilisant va devenir par exemple :</p>
-<div class="highlight"><pre><span></span>define realm {
-   realm_name       All
-   realm_members    Europe,US,Asia
-   default          1    ;Est le realm par défaut. Doit être le seul dans ce cas...
-}
-define realm{
-   realm_name       Europe
-   realm_members    Paris   ;Le realm Paris est contenu dans Europe
-}
+<div class="highlight"><pre><span></span><code><span class="n">define</span> <span class="n">realm</span> <span class="err">{</span>
+   <span class="n">realm_name</span>       <span class="k">All</span>
+   <span class="n">realm_members</span>    <span class="n">Europe</span><span class="p">,</span><span class="n">US</span><span class="p">,</span><span class="n">Asia</span>
+   <span class="k">default</span>          <span class="mi">1</span>    <span class="p">;</span><span class="n">Est</span> <span class="n">le</span> <span class="n">realm</span> <span class="n">par</span> <span class="n">défaut</span><span class="p">.</span> <span class="n">Doit</span> <span class="err">ê</span><span class="n">tre</span> <span class="n">le</span> <span class="n">seul</span> <span class="n">dans</span> <span class="n">ce</span> <span class="n">cas</span><span class="p">...</span>
+<span class="err">}</span>
+<span class="n">define</span> <span class="n">realm</span><span class="err">{</span>
+   <span class="n">realm_name</span>       <span class="n">Europe</span>
+   <span class="n">realm_members</span>    <span class="n">Paris</span>   <span class="p">;</span><span class="n">Le</span> <span class="n">realm</span> <span class="n">Paris</span> <span class="n">est</span> <span class="n">contenu</span> <span class="n">dans</span> <span class="n">Europe</span>
+<span class="err">}</span>
 
-define reactionner{
-       name reactionner-All
-       address  localhost
-       port 7769
-       spare    0
-       realm    All
-       }
+<span class="n">define</span> <span class="n">reactionner</span><span class="err">{</span>
+       <span class="n">name</span> <span class="n">reactionner</span><span class="o">-</span><span class="k">All</span>
+       <span class="n">address</span>  <span class="n">localhost</span>
+       <span class="n">port</span> <span class="mi">7769</span>
+       <span class="n">spare</span>    <span class="mi">0</span>
+       <span class="n">realm</span>    <span class="k">All</span>
+       <span class="err">}</span>
 
-define poller{
-       name     poller-All
-       address  localhost
-       port     7771
-       spare    0
-       realm    All
-       manage_sub_realms  1
-}
+<span class="n">define</span> <span class="n">poller</span><span class="err">{</span>
+       <span class="n">name</span>     <span class="n">poller</span><span class="o">-</span><span class="k">All</span>
+       <span class="n">address</span>  <span class="n">localhost</span>
+       <span class="n">port</span>     <span class="mi">7771</span>
+       <span class="n">spare</span>    <span class="mi">0</span>
+       <span class="n">realm</span>    <span class="k">All</span>
+       <span class="n">manage_sub_realms</span>  <span class="mi">1</span>
+<span class="err">}</span>
 
-define broker{
-       name broker-All
-       address  localhost
-       port 7772
-       spare    0
-       realm    All
-       }
-</pre></div>
-
+<span class="n">define</span> <span class="n">broker</span><span class="err">{</span>
+       <span class="n">name</span> <span class="n">broker</span><span class="o">-</span><span class="k">All</span>
+       <span class="n">address</span>  <span class="n">localhost</span>
+       <span class="n">port</span> <span class="mi">7772</span>
+       <span class="n">spare</span>    <span class="mi">0</span>
+       <span class="n">realm</span>    <span class="k">All</span>
+       <span class="err">}</span>
+</code></pre></div>
 
 <p>Ici c'est un cas très simple, sans spare (et avec des realms un peu vide...) mais qui montre un peu la conf que cela va donner.</p>
 <p>Il ne me manque plus qu'à gérer le cas où l'administrateur n'en a défini aucun (ce qui sera pour les petites et moyennes configurations). </p>
 <p>Dans ce cas je vais en créer un à la volée et mettre tout le monde dedans tout simplement :)</p>
-<div class="highlight"><pre><span></span>NOTE 2021: créer à la volée de tel objets: idée bien claquée, qu&#39;il ne faut SURTOUT pas faire ^^
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: créer à la volée de tel objets: idée bien claquée, qu&#39;il ne faut SURTOUT pas faire ^^</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -480,13 +479,6 @@ define broker{
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -138,18 +138,18 @@
 Sqlite permet d'avoir une base de données à peu de frais, directement dans un fichier, sans tout le bordel qu'il y a autour lorsque l'on souhaite une petite base simple en local.</p>
 <p>Les applications tierces n'auront plus d'excuses pour encore utiliser les fichiers plats, là on fait du Select en un temps records, installation de la base comprise.</p>
 <p>La configuration du plugin est simple :</p>
-<div class="highlight"><pre><span></span>define plugin{
-   plugin_name      ToMerlindb_Sqlite
-   plugin_type      merlindb_sqlite
-   database_path    /data/mabase.sqlite
-}
+<div class="highlight"><pre><span></span><code><span class="n">define</span> <span class="n">plugin</span><span class="err">{</span>
+   <span class="n">plugin_name</span>      <span class="n">ToMerlindb_Sqlite</span>
+   <span class="n">plugin_type</span>      <span class="n">merlindb_sqlite</span>
+   <span class="n">database_path</span>    <span class="o">/</span><span class="k">data</span><span class="o">/</span><span class="n">mabase</span><span class="p">.</span><span class="n">sqlite</span>
+<span class="err">}</span>
 
 
-NOTE 2021: je l&#39;avais complètement oublié celui là ^^
-</pre></div>
+<span class="n">NOTE</span> <span class="mi">2021</span><span class="p">:</span> <span class="n">je</span> <span class="n">l</span><span class="err">&#39;</span><span class="n">avais</span> <span class="n">complètement</span> <span class="n">oublié</span> <span class="n">celui</span> <span class="n">là</span> <span class="o">^^</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -452,13 +452,6 @@ NOTE 2021: je l&#39;avais complètement oublié celui là ^^
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

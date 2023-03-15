@@ -14,7 +14,8 @@
 /* --- initial state start ------ */
 
 .initial-navbar {
-  background-color: transparent;
+  /* Jean: make the navbar readable now the back is white */
+  background-color: #3c4858;
 }
 
 .initial-navbar .navbar-brand {
@@ -112,7 +113,7 @@
 
 .navbar-brand img {
   width: 42px;
-  padding: 5px;
+  padding: 10px;
   margin-left: -10px;
 }
 

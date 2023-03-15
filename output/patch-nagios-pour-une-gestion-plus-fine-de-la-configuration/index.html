@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -138,26 +138,25 @@
 <p>Un tel service appliqué sur un groupe prenait systématiquement le pas sur le même service appliqué sur un noeud. On était obligé de contourner le problème avec la mise en place de MACROS spécifiques et de modifier les commandes. Ce n'est désormais plus nécessaire avec la nouvelle version de Nagios. J'ai proposé dernièrement un patch qui a été appliqué dans la <em>3.1.2</em>.</p>
 <p>Cette modification permet à un service appliqué sur un noeud de prendre le pas sur le service appliqué d'un groupe. Cette possibilité permet de définir très simplement une execptions d'un service, sans avoir à sortir un noeud d'un groupe et dupliquer tous les autres services qui y étaient acrochés.</p>
 <p>Par exemple, avec la défiition suivante :</p>
-<div class="highlight"><pre><span></span>define service{
-   use                  generic-service
-   hostgroup_name       all-server
-   service_description  service-test
-   check_command        check_ping
-   }
+<div class="highlight"><pre><span></span><code><span class="n">define</span> <span class="n">service</span><span class="err">{</span>
+   <span class="n">use</span>                  <span class="n">generic</span><span class="o">-</span><span class="n">service</span>
+   <span class="n">hostgroup_name</span>       <span class="k">all</span><span class="o">-</span><span class="n">server</span>
+   <span class="n">service_description</span>  <span class="n">service</span><span class="o">-</span><span class="n">test</span>
+   <span class="n">check_command</span>        <span class="n">check_ping</span>
+   <span class="err">}</span>
 
-   define service{
-   use                  generic-service
-   host_name            srv-1
-   service_description  service-test
-   check_command        check_local_disk
-   }
-</pre></div>
-
+   <span class="n">define</span> <span class="n">service</span><span class="err">{</span>
+   <span class="n">use</span>                  <span class="n">generic</span><span class="o">-</span><span class="n">service</span>
+   <span class="n">host_name</span>            <span class="n">srv</span><span class="o">-</span><span class="mi">1</span>
+   <span class="n">service_description</span>  <span class="n">service</span><span class="o">-</span><span class="n">test</span>
+   <span class="n">check_command</span>        <span class="n">check_local_disk</span>
+   <span class="err">}</span>
+</code></pre></div>
 
 <p style="text-align: left;">Et bien maintenant c'est la seconde définition qui va gagner, ce qui est tout de même bien pratique  :mrgreen:</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -460,13 +459,6 @@
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -135,9 +135,8 @@
     <!-- relu -->
 
 <p>On a conçu une solution de load balancing et de répartition de charge et nous l'avons mis en place. Le travail n'est pas fini pour autant. Il nous reste à administrer et superviser ces outils.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: Après pas loin de 20ans dans l&#39;informatique je dirais même que mettre en place la solution c&#39;est les 20% du travail le plus facile. Vivre avec c&#39;est clairement les 80% restant ^^
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: Après pas loin de 20ans dans l&#39;informatique je dirais même que mettre en place la solution c&#39;est les 20% du travail le plus facile. Vivre avec c&#39;est clairement les 80% restant ^^</span>
+</code></pre></div>
 
 <p>On peut administrer la solution à plusieurs niveaux :</p>
 <ul>
@@ -147,68 +146,58 @@
 <h3>HeartBeat</h3>
 <p>Heartbeat est particulièrement résilient. Il est plus que rare de le voir défaillir. Par contre il peut être utile de voir l'allocation des ressources et l'états des noeuds.</p>
 <p>Par exemple pour voir l'état d'un noeud, il faut lancer la commande :</p>
-<div class="highlight"><pre><span></span>/usr/bin/cl_status nodestatus frontal2
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">/usr/bin/cl_status nodestatus frontal2</span>
+</code></pre></div>
 
 <p>Elle va afficher :</p>
-<div class="highlight"><pre><span></span>cl_status[22045]: 2009/06/30_14:56:43 debug: optind: 1   argv[optindex+1]: frontal2
-active
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">cl_status[22045]: 2009/06/30_14:56:43 debug: optind: 1   argv[optindex+1]: frontal2</span>
+<span class="err">active</span>
+</code></pre></div>
 
 <p>=&gt; On voit ici que le second noeud est bien en vie.</p>
 <p>Nagios possède un scheck dédié pour cela, disponible sur <a href="http://www.monitoringexchange.org/cgi-bin/page.cgi?g=Detailed%2F1803.html;d=1">http://www.monitoringexchange.org/cgi-bin/page.cgi?g=Detailed%2F1803.html;d=1</a></p>
-<div class="highlight"><pre><span></span>$/usr/local/nagios/libexec/check_heartbeat_link
-Heartbeat Link OK: frontal2:eth0:up
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">$/usr/local/nagios/libexec/check_heartbeat_link</span>
+<span class="err">Heartbeat Link OK: frontal2:eth0:up</span>
+</code></pre></div>
 
 <p>Il faut le lancer sur les deux frontaux. De cette manière, vous saurez si un noeud ne réponds plus au sens cluster HeartBeat.</p>
 <p>En cas de problème avec HeartBeat, il ne faut pas hésiter à aller lire le fichier <strong>/var/log/ha-log</strong> qui est très clair.</p>
 <h3>IPVS</h3>
 <p>En ce qui concerne IPVS, la commande ipvsadm nous permet d'obtenir les infos souhaitées.
 Voir les serveurs actifs :</p>
-<div class="highlight"><pre><span></span>ipvsadm -Ln
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ipvsadm -Ln</span>
+</code></pre></div>
 
 <p>Voir le status de la table des sessions :</p>
-<div class="highlight"><pre><span></span>ipvsadm -Lnc
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ipvsadm -Lnc</span>
+</code></pre></div>
 
 <p>Voir les entrées sauvegardées :</p>
-<div class="highlight"><pre><span></span>ipvsadm -Lc | grep NONE
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ipvsadm -Lc | grep NONE</span>
+</code></pre></div>
 
 <p>Voir les infos du daemon de synchronisation :</p>
-<div class="highlight"><pre><span></span>ipvsadm -L --daemon
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ipvsadm -L --daemon</span>
+</code></pre></div>
 
 <p>Voir les stats d'utilisation :</p>
-<div class="highlight"><pre><span></span>ipvsadm -L --rate
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">ipvsadm -L --rate</span>
+</code></pre></div>
 
 <p>Pour voir l'espace mémoire utilisé par IPVS, il faut regarder l'utilisation du module noyau <strong>ip_vs</strong> du noyau, il n'est donc pas possible de voir l'utilisation mémoire de ce module depuis top. Il faut pour cela utiliser la commande :</p>
-<div class="highlight"><pre><span></span>slabtop
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">slabtop</span>
+</code></pre></div>
 
 <p>et regarder la ligne <strong>ip_vs_conn</strong>.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: slabtop, une commande tellement peu connue qui sauva pourtant tant de mes analyses de consommation mémoire...
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: slabtop, une commande tellement peu connue qui sauva pourtant tant de mes analyses de consommation mémoire...</span>
+</code></pre></div>
 
-
-<p>On peut considérer qu'une connexion prends 1/10 de Ko. Donc une machine de 512Mo peut gérer 512*1024/10=<strong>52428</strong> connexions simultanées. Ca laisse de la marge, surtout lorsqu'on voit le prix de la mémoire actuellement...</p>
-<div class="highlight"><pre><span></span>NOTE 2021: Oui clairement avec le temps la mémoire est quand même resté sacrément bon marché
-</pre></div>
+<p>On peut considérer qu'une connexion prends 1/10 de Ko. Donc une machine de 512Mo peut gérer 512<em>1024/10=</em><em>52428</em>* connexions simultanées. Ca laisse de la marge, surtout lorsqu'on voit le prix de la mémoire actuellement...</p>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: Oui clairement avec le temps la mémoire est quand même resté sacrément bon marché</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -511,13 +500,6 @@ Voir les serveurs actifs :</p>
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

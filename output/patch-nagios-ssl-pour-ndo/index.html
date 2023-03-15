@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -137,9 +137,8 @@
 <p>J'avais travaillé sur 3 patchs pour Nagios et je n'en ais évoqué ici que 2 pour la bonne raison que c'étaient les seuls à être intégrés.</p>
 <p>Et bien en fait c'est inexact : le troisième l'a été aussi :)</p>
 <p>Ce patch permet d'établir une connexion chiffrée entre le module ndomod et ndo2db.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: ndo: envoyer les infos de Nagios en base de données. Une hérésie totale, même en 2009 :)
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: ndo: envoyer les infos de Nagios en base de données. Une hérésie totale, même en 2009 :)</span>
+</code></pre></div>
 
 <p>En effet, avant tous les paquets étaient envoyés en clair sur le réseau. 
 Ceci a beau être de la supervision, il y a tout de même le nom de toute nos machines, c'est assez embêtant. </p>
@@ -148,11 +147,11 @@ Ceci a beau être de la supervision, il y a tout de même le nom de toute nos ma
 <p>Une fois passée à <strong>1</strong>, la communication sur socket (uniquement celle en réseau, pas cette sur le socket unix) est chiffrée.</p>
 <p>Je n'ai pas réinventé la roue, j'ai emprunté le code à <strong>NRPE</strong> tout simplement. Je l'ai juste un peu adapté et mis au bon endroit.</p>
 <p>Et voila, je suis dans le fichier THANKS de ndoutils maintenant :)</p>
-<div class="highlight"><pre><span></span>NOTE 2021: j&#39;avais bien aimé ce patch à l&#39;époque. Jusque qu&#39;en y repensant, je crois que c&#39;était un chiffrement très faible, mais je n&#39;ai jamais vérifié depuis.
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: j&#39;avais bien aimé ce patch à l&#39;époque. Jusque qu&#39;en y repensant, je crois que c&#39;était un chiffrement très faible, mais je n&#39;ai jamais vérifié depuis.</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -455,13 +454,6 @@ Ceci a beau être de la supervision, il y a tout de même le nom de toute nos ma
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

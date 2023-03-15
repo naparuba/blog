@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -146,7 +146,7 @@
 <p><img class="aligncenter size-full wp-image-249" title="nagios-architecture" src="/images/32/nagios-architecture.png" alt="nagios-architecture" width="580" height="410" /></p>
 <h3>Architecture de Shinken</h3>
 <p>Shinken propose une solution à ces problèmes : le découplage des rôles de Nagios. Ces rôles sont éparpillés sur différents processus. Voici le schémas global, le rôle de chaque élément sera précisé plus bas:</p>
-<p><img class="aligncenter size-full wp-image-256" title="shinken-architecture" src="/images/32/shinken-architecture.png" alt="shinken-architecture" width="580" height="352" />
+<p><img class="aligncenter size-full wp-image-256" title="shinken-architecture" src="/images/32/shinken-architecture.png" alt="shinken-architecture" width="580" height="352" /></p>
 <ul>
     <li>Arbiter : lit la configuration, la découpe en N partie et l'envoi vers les autres processus. Il lit l'unique fichier nagios.cmd de l'architecture, et transmet les ordres à qui il faut. Il est également le garant de la haute disponibilité et la répartition de charge.</li>
     <li>Schedulers (nom de processus Shinken) : il lit la conf que lui envoi Arbiter. Il peux y avoir N schedulers, chacun avec ses propres éléments (hôtes/services). Il est en charge d'ordonnancer les checks, de les proposer aux autres éléments, récupère le retour des checks, et propose des notifications/event handlers si besoin qui seront lancé par des éléments externes.</li>
@@ -155,24 +155,23 @@
     <li>Broker : Unique avec un spare, Les schedulers exportent des informations dans des 'broks', des morceaux d'informations. Ils sont récupérés par le Broker qui en fait ce qu'il veut après, suivant les plugins qu'il a. Chaque plugin traite l'information comme il le veut. Les plugins actuellement développés sont l'export du fichier service-perfdata et l'export dans la base merlin. La base ndo ne devrait pas tarder, mais ca sera plus long que pour celle de merlin, car elle est vraiment mal fichue!</li>
     <li>Bah c'est tout. C'est déjà pas mal non? :)</li>
 </ul>
-Les éléments de charge sont éclatés d'où le load balancing. L'arbiter est le garant de la haute dispo, il réparti les conf aux vivants, et envoi les conf des éléments morts aux spare si un membre actif vient à mourrir (bah ca peut arriver hein, personne n'est parfait). L'administrateur n'a pas à se soucier de quel scheduler va gérer son élément (hôte), l'arbiter va découper la conf pour lui de manière automatique, et en faire des paquets les plus équilibrés possible en terme de charge. Shinken tiens son nom de là d'ailleurs :)</p>
+<p>Les éléments de charge sont éclatés d'où le load balancing. L'arbiter est le garant de la haute dispo, il réparti les conf aux vivants, et envoi les conf des éléments morts aux spare si un membre actif vient à mourrir (bah ca peut arriver hein, personne n'est parfait). L'administrateur n'a pas à se soucier de quel scheduler va gérer son élément (hôte), l'arbiter va découper la conf pour lui de manière automatique, et en faire des paquets les plus équilibrés possible en terme de charge. Shinken tiens son nom de là d'ailleurs :)</p>
 <h2>La configuration</h2>
 <p>Qui dit nouveaux éléments dit nouvelle configuration. L'arbiter mis à part, chaque élément a un élément de configuration qui lui est dédié. Elle est de la forme (par exemple ici pour les scheduler):</p>
-<div class="highlight"><pre><span></span>define scheduler{
-   name     scheduler-main
-   address      192.168.0.1
-   port      7768
-   spare        0
-}
+<div class="highlight"><pre><span></span><code><span class="n">define</span> <span class="n">scheduler</span><span class="err">{</span>
+   <span class="n">name</span>     <span class="n">scheduler</span><span class="o">-</span><span class="n">main</span>
+   <span class="n">address</span>      <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span>
+   <span class="n">port</span>      <span class="mi">7768</span>
+   <span class="n">spare</span>        <span class="mi">0</span>
+<span class="err">}</span>
 
-define poller{
-   name      poller-main
-   schedulers     scheduler-main, scheduler-spare
-   address      192.168.0.1
-   port      7771
-}
-</pre></div>
-
+<span class="n">define</span> <span class="n">poller</span><span class="err">{</span>
+   <span class="n">name</span>      <span class="n">poller</span><span class="o">-</span><span class="n">main</span>
+   <span class="n">schedulers</span>     <span class="n">scheduler</span><span class="o">-</span><span class="n">main</span><span class="p">,</span> <span class="n">scheduler</span><span class="o">-</span><span class="n">spare</span>
+   <span class="n">address</span>      <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span>
+   <span class="n">port</span>      <span class="mi">7771</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Ceci doit être donné à l'arbiter dans le fichier nagios.cfg, comme n'importe quel autre configuration d'éléments dans Nagios. Ceci va permettre à l'Arbiter d'envoyer les configuration et de gérer les liens avec les schedulers, pollers and co. Je n'ai pas encore prévu de configuration locale au poller and co. Mais à part le port d'ouverture, il n'y aura pas gand chose à configurer.</p>
 <p>Je prévois de faire en sorte de créer automatiquement un élément en local s'il n'est pas défini dans la configuration, genre dans le cas de l'import d'une configuration existante sans avoir à la modifier.</p>
@@ -186,7 +185,7 @@ define poller{
 <p>Par contre ce n'est pas parfait : le lancement de l'Arbiter est légèrement plus lent que Nagios pour la lecture de la configuration, mais rien de rédhibitoire. Je vois revenir les gros sabots pour la consommation mémoire : Oui, ceci consomme plus de RAM que Nagios. Nagios est vraiment bien optimisé sur ce point, Shinken est "seulement" 3 fois plus consommateur, genre 250Mo pour les 50000 checks. C'est tout à fait acceptable à mon goût.</p>
 <p>Bref, c'est testable même avec des grands environnements. Et ca veut dire que l'on peut encore améliorer Nagios. Bon reste à faire la partie Worker en C. Je l'aurais bien prise chez Apache, mais question de licence, ça le fait pas je pense. Puis le code est .. complexe pour juste une gestion de worker, mais bon c'est le C hein...</p>
 <h2>Ce qui est déjà fait</h2>
-<p>Les fonctionnalités principales de Nagios sont déjà dans Shinken:
+<p>Les fonctionnalités principales de Nagios sont déjà dans Shinken:</p>
 <ul>
     <li>ordonnancement de Nagios (HARD, SOFT, etc)</li>
     <li>gestion des périodes de temps Nagios (sauf les exclusions)</li>
@@ -201,13 +200,13 @@ define poller{
     <li>services volatiles (pour les logs)</li>
     <li>gestion du fichier de rétention</li>
 </ul>
-Pas si mal hein?</p>
+<p>Pas si mal hein?</p>
 <h2>Ce qu'il reste à faire</h2>
 <p>Avant de le présenter "officiellement" aux auteurs de Nagios, je tiens à ce que la gestion des spares soient complète. De même que l'export vers la base ndo. Après je le présente, avec dans l'espoir de voir les bonnes idées s'il y en a (comme le pool de process) intégrée dans Nagios si c'est possible. (Bon tout est possible, mais en C ça devient beaucoup plus long à faire... beaucoup plus long à faire même...et pourtant j'aime le C, faut pas croire).</p>
 <p>Ah oui, il faut que je fasse une VM de type VirtualBox avec Shiken et Ninja pour l'interface. En fait plusieurs VM seraient mieux pour l'aspect distribué.</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -510,13 +509,6 @@ Pas si mal hein?</p>
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

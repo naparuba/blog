@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -132,9 +132,8 @@
 
         </header>
 
-    <div class="highlight"><pre><span></span>NOTE 2021: SPOILER: j&#39;au du faire de l&#39;open core également, je n&#39;ai pas réussi autrement :(
-</pre></div>
-
+    <div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: SPOILER: j&#39;au du faire de l&#39;open core également, je n&#39;ai pas réussi autrement :(</span>
+</code></pre></div>
 
 <!-- relu -->
 
@@ -157,9 +156,8 @@
 <p>Mais alors où est le rapport avec Nagios finalement? Regardons un peu sa courbe de développement :</p>
 <p><a href="/images/66/nagios-codehistory.png"><img class="alignnone size-full wp-image-527" title="nagios-codehistory" src="/images/66/nagios-codehistory.png" alt="nagios-codehistory" width="580" height="166" /></a></p>
 <p>Vous allez me dire que c'est une habitude chez Ethan (l'auteur principal de Nagios) d'avoir un tel fonctionnement, ce qui est particulièrement compréhensible après tout et l'on n'a rien à y redire. Mais regardons un peu ce qu'il a annoncé sur la mailing list :</p>
-<div class="highlight"><pre><span></span>&quot;There is nothing broken or wrong with Nagios Core the way it is.&quot;
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">&quot;There is nothing broken or wrong with Nagios Core the way it is.&quot;</span>
+</code></pre></div>
 
 <p>Ah.. bah rangez vos patchs, la courbe va rester plate un moment alors... </p>
 <p>Mais pourquoi refuser toute avancées majeure? Nagios XI tout simplement? (pour rappel, Nagios XI est une solution privatrice basée sur Nagios éditée par Nagios Enterprise).</p>
@@ -171,9 +169,8 @@
 <p>Contrairement à Zenoss et Hyperic encore une fois, l'offre "Enterprise" a mis du temps à se lancer. Des solutions alternatives existent déjà, et sont de très bonnes qualités (Centreon, Op5 Monitor 5). Pour Op5, un des développeurs principal de Nagios est même de la partie, avec son couple Merlin/Ninja.</p>
 <p>Pour avoir un vrai modèle <em>open core</em> efficace, Nagios Enterprise a raté le coche. Il ne peut pas "boucler" des points clés de l'outil pour saper la concurrence, et arrive même après elle. Son auteur y pensait peut être depuis le début, mais il aurait du faire comme les autres dès ce moment là.  Maintenant au milieu du guet, on va juste avoir une dispersion des solutions. Toute basées sur le même cœur oui, mais solutions qui vont devenir (ou sont même déjà) incompatibles entre elles. Centreon va lancer son propre broker (dont les fonctionnalités font saliver d'avance :) ), Op5 lui part sur Merlin, et Nagios XI reste semble-t-il en NDO. Heureusement pour les utilisateurs, Centreon et Op5 semblent se mettre d'accord sur un modèle de base commun, ce qui est particulièrement bien pensé.</p>
 <p>Ne nous voilons pas la face, la véritable intelligence ne va plus être dans le cœur de Nagios, mais bien dans ses solutions externes. Il va rester l'ordonnanceur central avec ses petits défauts de conceptions qu'on lui connait pour les environnements distribués, mais les corrélations, la notion d'évènement et les analyses vont se faire au niveau d'au dessus. Et tant mieux après tout, ce n'est pas à un ordonnanceur de gérer cela.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: en fait, l&#39;inteligence n&#39;est PAS dans le moteur, c&#39;est con mais c&#39;est pas d&#39;un moteur que les utilisateurs ont besoin
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: en fait, l&#39;inteligence n&#39;est PAS dans le moteur, c&#39;est con mais c&#39;est pas d&#39;un moteur que les utilisateurs ont besoin</span>
+</code></pre></div>
 
 <p>Je reste persuadé que lorsque l'on parle d'outils de supervision, l'apport de la communauté est indispensable. De plus, aucune entreprise, même de taille moyenne, ne se lancerait dans un projet de supervision sans support et surtout sans intégration. Les licences ne sont qu'un facteur limitant (le nombre de machines explosent dans les datacenters, une solution sans licence à l'agent est nettement avantagée). Nagiox XI a un intérêt, c'est l'éditeur lui même. Mais le code de Nagios n'évolue plus trop, donc l'intérêt de ce choix est limité pour les utilisateurs.</p>
 <p>Ethan avait-il seulement le choix de partir sûr cette solution? Si l'on reste pragmatique, je ne pense pas. Même en partant d'une solution libre (pardon, open source) qui existait déjà, il perdait sa légitimité d'<em>auteur principal</em> (du cœur oui, de la solution non), véritable argument marketing. Monter sa propre solution avec seulement des briques libres prends plus de temps qu'en faisant des concessions privatrices. Simple problématique de <em>time to market</em> finalement.</p>
@@ -182,13 +179,13 @@
 <p>Heureusement, les moyens de "bloquages" d'avancées en open source ne sont pas totalement actifs, en tout cas pour les solutions. Le cœur? Il va rester ce qu'il est, un très bon ordonnanceur. Tout le monde va sortir l'intelligence de l'outil. Question de modularité après tout. La phase de transition va être pénible, mais le temps que l'utilisateur a toujours une solution libre à sa disposition, ceci reste acceptable.</p>
 <p>Nagios ne sera jamais totalement comme Zenoss finalement, et tant mieux. Il va aller vers autre chose. Il faut juste attendre vers quoi. Ou bien amorcer soit même la transformation en regardant ce qui est le plus propice à l'instant t pour arriver à une situation qui nous est avantagée, car il parait que c'est ce qu'il y a le plus efficace  ;-)</p>
 <p>Ceci va également être l'occasion de voir un peu l'affrontement des modèles <em>open  source</em> et <em>open core</em>. Cette année va décidément être marrante :)</p>
-<div class="highlight"><pre><span></span>NOTE 2021: j&#39;aimerai bien que ce soit aussi simple, mais:
-           * juste un moteur c&#39;est rigolo, mais ça marche pas dans le grand bain, faut plus de finition
-           * tu finances rien avec juste de l&#39;open source dans ce marché :(
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: j&#39;aimerai bien que ce soit aussi simple, mais:</span>
+<span class="err">           * juste un moteur c&#39;est rigolo, mais ça marche pas dans le grand bain, faut plus de finition</span>
+<span class="err">           * tu finances rien avec juste de l&#39;open source dans ce marché :(</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -491,13 +488,6 @@
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

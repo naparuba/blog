@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -142,21 +142,18 @@ C'est justement un éditeur de base de données, Oracle, qui a mis au point un c
 <p>Ici, le <strong>même</strong> disque est accessible des deux machines grâce à des liens SAN qui peuvent être Fibre ou iScsi (ce dernier suffit la plupart du temps). Dans cet exemple, chaque machine voit le disque sur un nom de device différent, mais ce n'est pas obligatoire.</p>
 <p>Regardons un peu comment il fonctionner et comment on le met en place.</p>
 <!--more-->
-
 <h2>Mise en place</h2>
-<p><h3>Installation</h3>
-Il faut tout d'abord identifier la version de noyau qu'on utilise afin de récupérer les bons modules:</p>
-<div class="highlight"><pre><span></span>uname -r
-</pre></div>
-
+<h3>Installation</h3>
+<p>Il faut tout d'abord identifier la version de noyau qu'on utilise afin de récupérer les bons modules:</p>
+<div class="highlight"><pre><span></span><code><span class="err">uname -r</span>
+</code></pre></div>
 
 <p>Il faut ensuite aller sur le site http://oss.oracle.com/projects/ocfs2/files/ et récupérer le bon RPM ocfs2.
 Il faut faire de même pour le module ocfs2-tool <a title="http://oss.oracle.com/projects/ocfs2-tools/files/RedHat/RHEL4/" href="http://oss.oracle.com/projects/ocfs2-tools/files/RedHat/RHEL4/">http://oss.oracle.com/projects/ocfs2-tools/files/RedHat/RHEL4/</a>.</p>
 <p>Uploader les deux RPM sur les serveurs et faire:</p>
-<div class="highlight"><pre><span></span>rpm -Uvh --test ocfs2*
-rpm -Uvh ocfs2*&lt;/span&gt;
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">rpm -Uvh --test ocfs2*</span>
+<span class="err">rpm -Uvh ocfs2*&lt;/span&gt;</span>
+</code></pre></div>
 
 <p>Il faut aussi que les noeuds aient accès au même device (iScsi, SAN, autre) comme dit précédement.</p>
 <h3>Configuration</h3>
@@ -169,172 +166,155 @@ Pour ajouter des noeuds, faire ''Cluster-&gt;Configure nodes''. Une fois tous le
 Pour formater un volume avec des blocks de 4k, 32k de cluster size sur 4 noeuds possibles:</p>
 <p>mkfs.ocfs2 -b 4K -C 32K -N 8 -L oracle_home /dev/sdf2</p>
 <p>On initialise et démarre le cluster:</p>
-<div class="highlight"><pre><span></span> /etc/init.d/o2cb configure
- /etc/init.d/o2cb start
- /etc/init.d/ocfs2 start
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err"> /etc/init.d/o2cb configure</span>
+<span class="err"> /etc/init.d/o2cb start</span>
+<span class="err"> /etc/init.d/ocfs2 start</span>
+</code></pre></div>
 
 <p>Pour monter le filesystem:</p>
-<div class="highlight"><pre><span></span>mount -t ocfs2 /dev/sdf2 /u01
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">mount -t ocfs2 /dev/sdf2 /u01</span>
+</code></pre></div>
 
 <p>Pour le démonter:</p>
-<div class="highlight"><pre><span></span>umount /u01
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">umount /u01</span>
+</code></pre></div>
 
 <p>Pour certaines applications il faut des montages particuliers. Par exemple, les Datafiles ou tout ce qui y ressemble doivent avoir les options suivantes:
  <em><em>datavolume</em> : force les process à avoir le flag o_direct
  </em><em>nointr</em> : permet d'enpécher les interuptions par signaux des lectures et écritures</p>
 <p>Exemple de montage:</p>
-<div class="highlight"><pre><span></span>mount -t ocfs2 -o datavolume,nointr /dev/sdf2 /u01
-mount
-/dev/sdf2 on /u01 type ocfs2 (rw,datavolume,nointr)
-cat /etc/fstab
-/dev/sdf2 /u01 ocfs2 _netdev,datavolume,nointr 0 0
-/dev/sdg2 /orahome ocfs2 _netdev 0 0&lt;/span&gt;
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">mount -t ocfs2 -o datavolume,nointr /dev/sdf2 /u01</span>
+<span class="err">mount</span>
+<span class="err">/dev/sdf2 on /u01 type ocfs2 (rw,datavolume,nointr)</span>
+<span class="err">cat /etc/fstab</span>
+<span class="err">/dev/sdf2 /u01 ocfs2 _netdev,datavolume,nointr 0 0</span>
+<span class="err">/dev/sdg2 /orahome ocfs2 _netdev 0 0&lt;/span&gt;</span>
+</code></pre></div>
 
 <p>L'option <em> _netdev</em> permet de demander le montage après que le réseau soit up et de même pour l'arrêt.</p>
 <p>Afin d'avoir le lancement d'ocfs2 au démarrage:</p>
-<div class="highlight"><pre><span></span>chkconfig --add ocfs2
-chkconfig --add o2cb
-/etc/init.d/o2cb configure
-Load O2CB driver on boot (y/n) [n]: y
-Cluster to start on boot (Enter &quot;none&quot; to clear) []: ocfs2
-Writing O2CB configuration: OK&lt;/span&gt;
-To mount by label, do:
-mount -L datafiles /u01
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">chkconfig</span><span class="w"> </span><span class="o">--</span><span class="k">add</span><span class="w"> </span><span class="n">ocfs2</span><span class="w"></span>
+<span class="n">chkconfig</span><span class="w"> </span><span class="o">--</span><span class="k">add</span><span class="w"> </span><span class="n">o2cb</span><span class="w"></span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">o2cb</span><span class="w"> </span><span class="n">configure</span><span class="w"></span>
+<span class="k">Load</span><span class="w"> </span><span class="n">O2CB</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="n">Cluster</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">start</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="p">(</span><span class="n">Enter</span><span class="w"> </span><span class="ss">&quot;none&quot;</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">clear</span><span class="p">)</span><span class="w"> </span><span class="err">[]:</span><span class="w"> </span><span class="n">ocfs2</span><span class="w"></span>
+<span class="n">Writing</span><span class="w"> </span><span class="n">O2CB</span><span class="w"> </span><span class="nl">configuration</span><span class="p">:</span><span class="w"> </span><span class="n">OK</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="w"></span>
+<span class="k">To</span><span class="w"> </span><span class="n">mount</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">label</span><span class="p">,</span><span class="w"> </span><span class="nl">do</span><span class="p">:</span><span class="w"></span>
+<span class="n">mount</span><span class="w"> </span><span class="o">-</span><span class="n">L</span><span class="w"> </span><span class="n">datafiles</span><span class="w"> </span><span class="o">/</span><span class="n">u01</span><span class="w"></span>
+</code></pre></div>
 
 <h2>Administration</h2>
 <p>Pour voir l'état du cluster:</p>
-<div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">o2cb</span> <span class="n">status</span>
+<div class="highlight"><pre><span></span><code><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">o2cb</span> <span class="n">status</span>
 <span class="k">Module</span> <span class="s">&quot;configfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
 <span class="n">Filesystem</span> <span class="s">&quot;configfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">mounted</span>
 <span class="k">Module</span> <span class="s">&quot;ocfs2_nodemanager&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
 <span class="k">Module</span> <span class="s">&quot;ocfs2_dlm&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
 <span class="k">Module</span> <span class="s">&quot;ocfs2_dlmfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">loaded</span>
 <span class="n">Filesystem</span> <span class="s">&quot;ocfs2_dlmfs&quot;</span><span class="p">:</span> <span class="k">Not</span> <span class="n">mounted</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Pour mettre le cluster online:</p>
-<div class="highlight"><pre><span></span>/etc/init.d/o2cb online ocfs2
-Starting cluster ocfs2: OK
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">/etc/init.d/o2cb online ocfs2</span>
+<span class="err">Starting cluster ocfs2: OK</span>
+</code></pre></div>
 
 <p>Pour mettre le cluster offline:</p>
-<div class="highlight"><pre><span></span>/etc/init.d/o2cb offline ocfs2
-Cleaning heartbeat on ocfs2: OK
-Stopping cluster ocfs2: OK
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">/etc/init.d/o2cb offline ocfs2</span>
+<span class="err">Cleaning heartbeat on ocfs2: OK</span>
+<span class="err">Stopping cluster ocfs2: OK</span>
+</code></pre></div>
 
 <p>Pour ajouter o2cb au lancement:</p>
-<div class="highlight"><pre><span></span> /etc/init.d/o2cb configure
-Configuring the O2CB driver.
-This will configure the on-boot properties of the O2CB driver.
-The following questions will determine whether the driver is loaded on
-boot. The current values will be shown in brackets (&#39;[]&#39;). Hitting
-<span class="nt">&lt;ENTER&gt;</span> without typing an answer will keep that current value. Ctrl-C
-will abort.
-Load O2CB driver on boot (y/n) [n]: y
-Cluster to start on boot (Enter &quot;none&quot; to clear) []: ocfs2
-Writing O2CB configuration: OK<span class="nt">&lt;/span&gt;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">o2cb</span><span class="w"> </span><span class="n">configure</span><span class="w"></span>
+<span class="n">Configuring</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">O2CB</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="w"></span>
+<span class="n">This</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">configure</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">on</span><span class="o">-</span><span class="n">boot</span><span class="w"> </span><span class="n">properties</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">O2CB</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="w"></span>
+<span class="n">The</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">questions</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">determine</span><span class="w"> </span><span class="n">whether</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">loaded</span><span class="w"> </span><span class="k">on</span><span class="w"></span>
+<span class="n">boot</span><span class="p">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">current</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">shown</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">brackets</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;[]&#39;</span><span class="p">).</span><span class="w"> </span><span class="n">Hitting</span><span class="w"></span>
+<span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">ENTER</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="w"> </span><span class="k">without</span><span class="w"> </span><span class="n">typing</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">answer</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="k">current</span><span class="w"> </span><span class="k">value</span><span class="p">.</span><span class="w"> </span><span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span><span class="w"></span>
+<span class="n">will</span><span class="w"> </span><span class="n">abort</span><span class="p">.</span><span class="w"></span>
+<span class="k">Load</span><span class="w"> </span><span class="n">O2CB</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="n">Cluster</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">start</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="p">(</span><span class="n">Enter</span><span class="w"> </span><span class="ss">&quot;none&quot;</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">clear</span><span class="p">)</span><span class="w"> </span><span class="err">[]:</span><span class="w"> </span><span class="n">ocfs2</span><span class="w"></span>
+<span class="n">Writing</span><span class="w"> </span><span class="n">O2CB</span><span class="w"> </span><span class="nl">configuration</span><span class="p">:</span><span class="w"> </span><span class="n">OK</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="w"></span>
+</code></pre></div>
 
 <p>Une fois configuré, le lancement/arrêt du cluster se fait par:</p>
-<div class="highlight"><pre><span></span>/etc/init.d/o2cb start
-Loading module &quot;configfs&quot;: OK
-Mounting configfs filesystem at /config: OK
-Loading module &quot;ocfs2_nodemanager&quot;: OK
-Loading module &quot;ocfs2_dlm&quot;: OK
-Loading module &quot;ocfs2_dlmfs&quot;: OK
-Mounting ocfs2_dlmfs filesystem at /dlm: OK
-Starting cluster ocfs2: OK
-/etc/init.d/o2cb stop
-Cleaning heartbeat on ocfs2: OK
-Stopping cluster ocfs2: OK
-Unmounting ocfs2_dlmfs filesystem: OK
-Unloading module &quot;ocfs2_dlmfs&quot;: OK
-Unmounting configfs filesystem: OK
-Unloading module &quot;configfs&quot;: OK
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">o2cb</span> <span class="n">start</span>
+<span class="n">Loading</span> <span class="n">module</span> <span class="s2">&quot;configfs&quot;</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Mounting</span> <span class="n">configfs</span> <span class="n">filesystem</span> <span class="n">at</span> <span class="o">/</span><span class="n">config</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Loading</span> <span class="n">module</span> <span class="s2">&quot;ocfs2_nodemanager&quot;</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Loading</span> <span class="n">module</span> <span class="s2">&quot;ocfs2_dlm&quot;</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Loading</span> <span class="n">module</span> <span class="s2">&quot;ocfs2_dlmfs&quot;</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Mounting</span> <span class="n">ocfs2_dlmfs</span> <span class="n">filesystem</span> <span class="n">at</span> <span class="o">/</span><span class="n">dlm</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Starting</span> <span class="n">cluster</span> <span class="n">ocfs2</span><span class="p">:</span> <span class="n">OK</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">o2cb</span> <span class="n">stop</span>
+<span class="n">Cleaning</span> <span class="n">heartbeat</span> <span class="n">on</span> <span class="n">ocfs2</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Stopping</span> <span class="n">cluster</span> <span class="n">ocfs2</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Unmounting</span> <span class="n">ocfs2_dlmfs</span> <span class="n">filesystem</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Unloading</span> <span class="n">module</span> <span class="s2">&quot;ocfs2_dlmfs&quot;</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Unmounting</span> <span class="n">configfs</span> <span class="n">filesystem</span><span class="p">:</span> <span class="n">OK</span>
+<span class="n">Unloading</span> <span class="n">module</span> <span class="s2">&quot;configfs&quot;</span><span class="p">:</span> <span class="n">OK</span>
+</code></pre></div>
 
 <h3>Changer le nombre de noeuds d'un filesystem</h3>
-<p><p style="text-align: left;">Pour augmenter le nombre de montages possible d'un même filesystem OCFS, il faut utiliser la commande tunefs.ocfs2. Il faut le faire cluster arrété.</p>
-<div class="highlight"><pre><span></span>umount /montage
-/etc/init.d/ocfs2 stop
-tunefs.ocfs2 -N 16 /dev/emcpowerd
-(Répondre y)
-/etc/init.d/ocfs2 start
-mount -a&lt;/span&gt;
-</pre></div>
+<p style="text-align: left;">Pour augmenter le nombre de montages possible d'un même filesystem OCFS, il faut utiliser la commande tunefs.ocfs2. Il faut le faire cluster arrété.
 
+    umount /montage
+    /etc/init.d/ocfs2 stop
+    tunefs.ocfs2 -N 16 /dev/emcpowerd
+    (Répondre y)
+    /etc/init.d/ocfs2 start
+    mount -a</span>
+### Modifications sur les configurations des noeuds
+La seule opération qui peut se faire à chaud est le rajout de noeuds. En cas de changement dans les IP des noeuds ou bien le changement des ports de communications, il faut que le cluster soit offline.
+### Rajout d'un noeud au cluster
+Cette opération peut se faire à chaud. Il faut Lancer la commande suivante sur <strong>TOUS LES NOEUDS</strong>.
 
-<h3>Modifications sur les configurations des noeuds</h3>
-<p>La seule opération qui peut se faire à chaud est le rajout de noeuds. En cas de changement dans les IP des noeuds ou bien le changement des ports de communications, il faut que le cluster soit offline.</p>
-<h3>Rajout d'un noeud au cluster</h3>
-<p>Cette opération peut se faire à chaud. Il faut Lancer la commande suivante sur <strong>TOUS LES NOEUDS</strong>.</p>
-<div class="highlight"><pre><span></span>o2cb_ctl -C -i -n NODENAME -t node -a number=NODENUM -a ip_address=IPADDR -a ip_port=IPPORT -a cluster=CLUSTERNAME&lt;/span&gt;
-</pre></div>
+    o2cb_ctl -C -i -n NODENAME -t node -a number=NODENUM -a ip_address=IPADDR -a ip_port=IPPORT -a cluster=CLUSTERNAME</span>
 
+Copier ensuite un fichier /<em>etc/ocfs2/cluster.conf</em> d'un des noeuds sur le nouveau.
+### Le cluster ne veux pas passer offline
+Dans ce cas, il faut vérifier que les informations des fichiers <em>cluster.conf</em> sont bonnes.
+### Redimensionnement d'un file system OCFS2
+On peut agrandir un filesystem OCFS2 avec la commande tunefs.ocfs2. Attention, ceci permet de resizer le filesystem, pas le volume.
 
-<p>Copier ensuite un fichier /<em>etc/ocfs2/cluster.conf</em> d'un des noeuds sur le nouveau.</p>
-<h3>Le cluster ne veux pas passer offline</h3>
-<p>Dans ce cas, il faut vérifier que les informations des fichiers <em>cluster.conf</em> sont bonnes.</p>
-<h3>Redimensionnement d'un file system OCFS2</h3>
-<p>On peut agrandir un filesystem OCFS2 avec la commande tunefs.ocfs2. Attention, ceci permet de resizer le filesystem, pas le volume.</p>
-<div class="highlight"><pre><span></span>tunefs.ocfs2 -S /dev/sdX
-</pre></div>
+    tunefs.ocfs2 -S /dev/sdX
+Afin de redimensionner à la taille max mais attention : le redimensionnement est offline.
+### Voir l'agrandissement des filesystem sur les autres noeuds
+Sans avoir besoin de redémarrer:
+    blockdev --rereadpt /dev/sdX
+### <span style="font-weight: normal; font-size: 13px;">Limitations</span>
 
+ * Le nombre de sous répertoires dans un répertoire est limité à 32000.
+ * La taille d'un file system est limité à (2 ^ 32) * blocksize. Avec des blocks à 4KB ceci donne 16TB.
 
-<p>Afin de redimensionner à la taille max mais attention : le redimensionnement est offline.</p>
-<h3>Voir l'agrandissement des filesystem sur les autres noeuds</h3>
-<p>Sans avoir besoin de redémarrer:
-    blockdev --rereadpt /dev/sdX</p>
-<h3><span style="font-weight: normal; font-size: 13px;">Limitations</span></h3>
-<ul>
-<li>Le nombre de sous répertoires dans un répertoire est limité à 32000.</li>
-<li>La taille d'un file system est limité à (2 ^ 32) * blocksize. Avec des blocks à 4KB ceci donne 16TB.</li>
-</ul>
-<h3>Connectivité réseau</h3>
-<p>Un noeud va considérer un autre vivant lorsqu'il réponds sur le port TCP sans avoir un timeout d'idle de O2CB_IDLE_TIMEOUT_MS</p>
-<h3>Super blocks</h3>
-<p>Un super block est un block décrivant le filesystem. Il est indispensable, et le perdre est plus qu'embêtant. On peut donc (doit!) le backuper. Ocfs2 en fait des backup aux adresses  1G, 4G, 16G, 64G, 256G et 1T byte</p>
-<p>Pour voir ces backups:</p>
-<div class="highlight"><pre><span></span>debugfs.ocfs2 -R &quot;stats&quot; /dev/sdX | grep &quot;Feature Compat&quot;
-Feature Compat: 1 BackupSuper&lt;/span&gt;
-</pre></div>
+### Connectivité réseau
+Un noeud va considérer un autre vivant lorsqu'il réponds sur le port TCP sans avoir un timeout d'idle de O2CB_IDLE_TIMEOUT_MS
+### Super blocks
+Un super block est un block décrivant le filesystem. Il est indispensable, et le perdre est plus qu'embêtant. On peut donc (doit!) le backuper. Ocfs2 en fait des backup aux adresses  1G, 4G, 16G, 64G, 256G et 1T byte
 
+Pour voir ces backups:
 
-<p>Récupération du backup:</p>
-<div class="highlight"><pre><span></span>fsck.ocfs2 -f -r 2 /dev/sdX&lt;/span&gt;
-</pre></div>
+    debugfs.ocfs2 -R "stats" /dev/sdX | grep "Feature Compat"
+    Feature Compat: 1 BackupSuper</span>
 
+Récupération du backup:
 
-<h3>Configuration des timeouts</h3>
-<p>Les différents timeouts sont:</p>
-<ul>
-<li>O2CB_HEARTBEAT_THRESHOLD : timeout de didk. Nombre de ticks (2secondes) avant qu'un noeud soit déclaré mort. O2CB_HEARTBEAT_THRESHOLD = (((timeout in seconds) / 2) + 1). Par exemple, pour donner un timeout a 60 secondes, il faut le placer a 31. C'est la valeur par défaut.</li>
-<li>O2CB_IDLE_TIMEOUT_MS : timeout d'idle réseau. Nombre de millisecondes d'idle pour qu'un noeud soit déclaré unreachable. La valeur par défaut est de 30s (30000).</li>
-<li>O2CB_KEEPALIVE_DELAY_MS : timeout de keep alive réseau. C'est le délai maximum en millisecondes avant qu'un paquet keepalive soit envoyé. La valeur par défaut est de 2000ms (2s).</li>
-<li>O2CB_RECONNECT_DELAY_MS : C'est le delai minimum en millisecondes entre les tentavies de connexions. Par défaut 2000ms (2s).</li>
-</ul>
-<p>On peut voir ces valeurs dans <em>/etc/sysconfig/o2cb</em>.</p>
-<div class="highlight"><pre><span></span>cat /etc/sysconfig/o2cb&lt;/span&gt;
-</pre></div>
+    fsck.ocfs2 -f -r 2 /dev/sdX</span>
+### Configuration des timeouts
+Les différents timeouts sont:
+
+ * O2CB_HEARTBEAT_THRESHOLD : timeout de didk. Nombre de ticks (2secondes) avant qu'un noeud soit déclaré mort. O2CB_HEARTBEAT_THRESHOLD = (((timeout in seconds) / 2) + 1). Par exemple, pour donner un timeout a 60 secondes, il faut le placer a 31. C'est la valeur par défaut.
+ * O2CB_IDLE_TIMEOUT_MS : timeout d'idle réseau. Nombre de millisecondes d'idle pour qu'un noeud soit déclaré unreachable. La valeur par défaut est de 30s (30000).
+ * O2CB_KEEPALIVE_DELAY_MS : timeout de keep alive réseau. C'est le délai maximum en millisecondes avant qu'un paquet keepalive soit envoyé. La valeur par défaut est de 2000ms (2s).
+ * O2CB_RECONNECT_DELAY_MS : C'est le delai minimum en millisecondes entre les tentavies de connexions. Par défaut 2000ms (2s).
+
+On peut voir ces valeurs dans <em>/etc/sysconfig/o2cb</em>.
+
+    cat /etc/sysconfig/o2cb</span>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -637,13 +617,6 @@ Feature Compat: 1 BackupSuper&lt;/span&gt;
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

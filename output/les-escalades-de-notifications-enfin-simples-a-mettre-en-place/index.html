@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -136,51 +136,48 @@
 
 <p>J'ai rajouté dernièrement le support des escalades de notifications. </p>
 <p>Pour rappel, elles permettent d'envoyer à d'autres contacts les notifications lorsqu'un problème persiste. Par exemple, vous pouvez définir pour le service CPU sur main-server un escalade qui va prévenir les chefs si au bout de 3 notifications le problème n'est pas résolu :</p>
-<div class="highlight"><pre><span></span>define serviceescalation{
-    host_name main-server
-    service_description Load
-    contacts chef, grandchecf, coupeurdetete
-    first_notification 3
-    last_notification 0
-    notification_interval 20
-    escalation_period 24x7
-    escalation_options w,u,c,r
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define serviceescalation{</span>
+<span class="err">    host_name main-server</span>
+<span class="err">    service_description Load</span>
+<span class="err">    contacts chef, grandchecf, coupeurdetete</span>
+<span class="err">    first_notification 3</span>
+<span class="err">    last_notification 0</span>
+<span class="err">    notification_interval 20</span>
+<span class="err">    escalation_period 24x7</span>
+<span class="err">    escalation_options w,u,c,r</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Cependant, cette forme de définition pose un problème : elle va s'appliquer sur des éléments, ici des services, au lieu d'être appelée par ces éléments.</p>
 <p>Par clair? </p>
 <p>Disons qu'ici pour l'utiliser sur un service c'est sympa, mais en général on aimerait bien l'avoir pour un groupe de service, ou un groupe d'hôte, saufs certains service ou hôtes, etc. Bien sûr on a la possibilité de mettre * ou hostgroup_name, mais c'est vite limité. Bref, avoir la possibilité d'avoir une véritable gestion par des techniques d'héritages pourrait être utile (additif et implicite notamment).</p>
 <p>De plus, quand on y pense, ici encore on a bien souvent un héritage host-&gt; service non? Genre si la machine serveur-1 tombe, on aimerait bien avoir cette même règle sur les services de cette machine. Mais Nagios ne pospose ue serviceescalation et hostescalation, donc c'est pardu pour l"héritage, surtout quand c'est une application sur des éléments, et non un appel de ces éléments.</p>
 <p>C'est pourquoi j'ai rajouté un nouvel object dans Shinken : escalation. Bah oui, ni service, ni host. Ca a un air de déjà vu pour la définition :</p>
-<div class="highlight"><pre><span></span>define escalation{
-    escalation_name ToBoss
-    contacts chef, grandchecf, coupeurdetete
-    first_notification 3
-    last_notification 0
-    notification_interval 20
-    escalation_period 24x7
-    escalation_options w,u,c,r
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define escalation{</span>
+<span class="err">    escalation_name ToBoss</span>
+<span class="err">    contacts chef, grandchecf, coupeurdetete</span>
+<span class="err">    first_notification 3</span>
+<span class="err">    last_notification 0</span>
+<span class="err">    notification_interval 20</span>
+<span class="err">    escalation_period 24x7</span>
+<span class="err">    escalation_options w,u,c,r</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Et après on l'appel depuis un hôte :</p>
-<div class="highlight"><pre><span></span>define host{
-    [...]
-    escalations ToBoss
-    [...]
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define host{</span>
+<span class="err">    [...]</span>
+<span class="err">    escalations ToBoss</span>
+<span class="err">    [...]</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Après si on ne défini rien sur les services de cet hôte, ce paramètre sera automatiquement hérité (TODO : rajouter une option pour hériter implicitement ou non certains champs). Et avec une telle définition, c'est ultra simple de le rajouter dans les templates qu'il faut, et hop, la gestion des escalade faciles. Ceci me permettra peut être de réellement les utiliser un jour, car dans leur état actuel, leur définition est un véritable cauchemars sur les grands environnements...</p></p>
-<div class="highlight"><pre><span></span>NOTE 2021: TODO: ça a été fait, ouf ^^
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: TODO: ça a été fait, ouf ^^</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -483,13 +480,6 @@
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

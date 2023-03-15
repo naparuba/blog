@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -134,11 +134,10 @@
 
     <!-- relu -->
 
-<div class="highlight"><pre><span></span>NOTE 2021: grand merci à la voiture de ma femme qui a eu besoin d&#39;aller se faire réparer à l&#39;époque, le temps d&#39;attente
-           pour la réparation a été utile, avec un petit café et un cachier, j&#39;ai mis sur papier ce que vous voyez ci-dessous
-           et qui restera LE gros ajout de Shinken jusqu&#39;à encore aujourd&#39;hui, les royaumes (appelé Pool au début)
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: grand merci à la voiture de ma femme qui a eu besoin d&#39;aller se faire réparer à l&#39;époque, le temps d&#39;attente</span>
+<span class="err">           pour la réparation a été utile, avec un petit café et un cachier, j&#39;ai mis sur papier ce que vous voyez ci-dessous</span>
+<span class="err">           et qui restera LE gros ajout de Shinken jusqu&#39;à encore aujourd&#39;hui, les royaumes (appelé Pool au début)</span>
+</code></pre></div>
 
 <h2>L'illumination du jour</h2>
 <p>Bonjour,</p>
@@ -168,44 +167,41 @@
 <p>Comme vous pouvez le voir, les éléments sont raccrochés à un seul pool. suivant l'héritage qu'on leur a donné, ils utilisent les ordonnanceurs des sous-pool ou non.</p>
 <h3>Et dans la conf, ça donne quoi?</h3>
 <p>Voici ce que ça devrait donner pour le second cas :</p>
-<div class="highlight"><pre><span></span>define pool {
-   pool_name   All
-   pools       Europe, US, Asia
-}
-define pool{
-   pool_name  Europe
-   pools      Paris
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define pool {</span>
+<span class="err">   pool_name   All</span>
+<span class="err">   pools       Europe, US, Asia</span>
+<span class="err">}</span>
+<span class="err">define pool{</span>
+<span class="err">   pool_name  Europe</span>
+<span class="err">   pools      Paris</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>(je ne sais pas encore si c'est bien utile de forcer la définition des autres pools même s'ils n'ont qu'un nom...).</p>
-<div class="highlight"><pre><span></span>define scheduler{
-  scheduler_name  sched Paris
-  pool            Paris
-}
-define reactionner{
-  reactionner_name   reactionner-maitre
-  pool               All
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define scheduler{</span>
+<span class="err">  scheduler_name  sched Paris</span>
+<span class="err">  pool            Paris</span>
+<span class="err">}</span>
+<span class="err">define reactionner{</span>
+<span class="err">  reactionner_name   reactionner-maitre</span>
+<span class="err">  pool               All</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Et dans les hôtes :</p>
-<div class="highlight"><pre><span></span>define host{
-  host_name  serveur-paris
-  pool       Paris
-  [...]
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define host{</span>
+<span class="err">  host_name  serveur-paris</span>
+<span class="err">  pool       Paris</span>
+<span class="err">  [...]</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Pour ces derniers ce paramètre sera géré par l'héritage comme toutes les propriétés des hôtes.</p>
 <h2>Ce qui est susceptible de changer</h2>
 <p>Il me reste quelques petits points à voir : doit-on faire le lien entre les schedulers/pollers/reactionners/broker et les pools au niveaux du define des pools, ou bien comme ci-dessus au niveau des éléments? Les deux? Mais quoi faire en cas d'incompatibilité des deux types de configuration? Je prends tout commentaires :)</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -508,13 +504,6 @@ define reactionner{
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

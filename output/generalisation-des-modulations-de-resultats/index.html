@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -136,31 +136,29 @@
 
 <p>Comme vu dans des posts précédents, le fait de pouvoir changer des retours à la volée avant de les analyser peut être pratique, comme changer un critical en warning, ou bien un ok en critical. Sur la mailing list, Thomas Guyot-Sionnest a proposé de généraliser cela. C'est pourquoi je pense implémenter un nouvel objet dans Shinken (et oui, encore un :) ) : <strong>resultmodulation</strong>.</p>
 <p>Ceci va ressembler à :</p>
-<div class="highlight"><pre><span></span>define resultmodulation{
-   resultmodulation_name     critical_is_warning ;required
-   exit_codes_match          2 ;optionnal, list of code to change
-   output_match                     //                ;optionnal, regexp for activation of exit_code if output match
-   exit_code_modulation      1 ;code that will be put if the code match
-   output_modulation         s/// ;optionnal regexp to change output
-   longoutput_modulation     s/// ;optionnal regexp to change long_output
-   modulation_period         24x7 ;period when to apply the modulation
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define resultmodulation{</span>
+<span class="err">   resultmodulation_name     critical_is_warning ;required</span>
+<span class="err">   exit_codes_match          2 ;optionnal, list of code to change</span>
+<span class="err">   output_match                     //                ;optionnal, regexp for activation of exit_code if output match</span>
+<span class="err">   exit_code_modulation      1 ;code that will be put if the code match</span>
+<span class="err">   output_modulation         s/// ;optionnal regexp to change output</span>
+<span class="err">   longoutput_modulation     s/// ;optionnal regexp to change long_output</span>
+<span class="err">   modulation_period         24x7 ;period when to apply the modulation</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Puis après dans les hôtes et service, on appelle le modulation, qui pourra être hérité de manière implicite: </p>
-<div class="highlight"><pre><span></span>define host{
-    [...]
-    resultmodulations                 critical_is_warning
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define host{</span>
+<span class="err">    [...]</span>
+<span class="err">    resultmodulations                 critical_is_warning</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>On peut remarquer le s de resultmodulations. En effet, on peut avoir besoin de plusieurs modulations. Elles vont seulement être appliquées les unes à la suite des autres.</p>
 <p>Il ne reste plus qu'à implémenter alors, et enlever les paramètres spécifiques comme hotperiod (dommage j'aimais bien ce nom :) )</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -463,13 +461,6 @@
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

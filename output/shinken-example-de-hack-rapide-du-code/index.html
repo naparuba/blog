@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -141,60 +141,53 @@
 <p>Et bien plus maintenant  :mrgreen: !</p>
 <p>Je l'ai rajouté dans Shinken en quelques lignes qui vont vous monter à quel point c'est simple d'aller hacker dans ce code, 5 lignes seulement dans notre cas  :-D</p>
 <h2>La modification</h2>
-<p>Tout se joue dans deux fichiers sources :
+<p>Tout se joue dans deux fichiers sources :</p>
 <ul>
     <li><strong>config.py</strong> : qui gère les paramètres de configurations globaux</li>
     <li><strong>schedulingitem.py</strong> : qui gère les algorithmes d'ordonnancement, des demandes de checks et autres.</li>
 </ul>
-Dans le premier (<em>config.py</em>) on remarque un tableau nommé <em>properties </em>vers le début du fichier avec toutes les propriétés possibles pour le fichier principal (nagios.cfg).</p>
+<p>Dans le premier (<em>config.py</em>) on remarque un tableau nommé <em>properties </em>vers le début du fichier avec toutes les propriétés possibles pour le fichier principal (nagios.cfg).</p>
 <p>Qu'à cela ne tienne, on va rajouter notre nouvelle propriété :</p>
-<div class="highlight"><pre><span></span>&#39;flap_history&#39; : {&#39;required&#39;:False, &#39;default&#39;:&#39;20&#39;, &#39;pythonize&#39;: to_int, &#39;class_inherit&#39; : [(Host, None), (Service, None)]},
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">&#39;flap_history&#39; : {&#39;required&#39;:False, &#39;default&#39;:&#39;20&#39;, &#39;pythonize&#39;: to_int, &#39;class_inherit&#39; : [(Host, None), (Service, None)]},</span>
+</code></pre></div>
 
 <p>On rajoute donc le paramètre <em>flap_history</em>, qui n'est pas obligatoire (required=False), vaut par défaut 20, se transforme en objet <em>int </em>depuis la lecture de la chaîne de caractère dans le fichier, et va être présentée aux classes <em>Host </em>et <em>Service </em>avec ce même nom de <em>flap_history</em> (rôle de None, expliqué un peu plus haut dans le code, si vous mettez un nouveau nom, c'est lui qui sera utilisé pour cette classe).</p>
 <p>Et voila, c'est tout pour la configuration ! Et oui, rien de plus. L'Arbiter va lire la configuration, transformer en entier la valeur, mettre 20 si elle est absente et va la fournir aux configurations envoyées aux schedulers automatiquement ! Là, ne pas hacker un tel code, c'est plus que de la fainéantise  :lol:</p>
-<div class="highlight"><pre><span></span>NOTE 2021: ça reste encore une de mes réalisations favorite du code de Shinken
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: ça reste encore une de mes réalisations favorite du code de Shinken</span>
+</code></pre></div>
 
 <p>On a réglé le problème de la configuration, maintenant on va utiliser notre nouvelle propriété. Ceci se passe dans deux fonctions du fichier <em>schedulingitem.py</em> : <em>add_flapping_change</em> et <em>update_flapping</em>. La première rajoute le changement d'état sur la pile de 20 éléments et s'assure que la pile fait toujours au plus 20 éléments. La seconde fait le calcul de <em>pourcentage de changement</em> à proprement parlé.</p>
 <p>Les <em>schedulingitems </em>sont les hosts/services (une classe commune pour factoriser le code), et l'objet est nommé <strong>self </strong>en Python. On a dit que la propriété a été envoyée sur les classes <em>Host </em>et <em>Service </em>car c'est un paramètre global à tous les hôtes et services, pas la peine de le multiplier par le nombre d'hôtes et services. En Python, pour accéder à sa classe (qui est un objet comme un autre), il suffit de faire :</p>
-<div class="highlight"><pre><span></span>self.__class__
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">self.__class__</span>
+</code></pre></div>
 
 <p>Donc là pour obtenir notre valeur, il suffit de faire :</p>
-<div class="highlight"><pre><span></span>flap_history = self.__class__.flap_history
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">flap_history = self.__class__.flap_history</span>
+</code></pre></div>
 
 <p>On remplace les trois occurrences de 20 qui trainent dans le code par <em>flap_history</em> et c'est réglé, on peut tester/commiter  8-)  :</p>
-<div class="highlight"><pre><span></span>if len(self.flapping_changes) &gt; flap_history:
-    r += i*(1.2-0.8)/flap_history + 0.8
-    r = r / flap_history
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">if len(self.flapping_changes) &gt; flap_history:</span>
+<span class="err">    r += i*(1.2-0.8)/flap_history + 0.8</span>
+<span class="err">    r = r / flap_history</span>
+</code></pre></div>
 
 <h2>Au final</h2>
 <p>Nous avons vu la définition et l'utilisation d'un paramètre global dans Shinken. C'est très simple, et il ne faut pas se priver  :-) Nous verrons une autre fois le rajout d'un paramétrage dans un service ou un hôte, c'est encore plus simple qu'ici car il n'y a pas besoin de passer par l'accrochage dans les classes <em>Host </em>et <em>Service</em>. Mais ce sera pour une prochaine fois, j'ai un git push à faire.</p>
 <p>Si vous souhaitez hacker vous aussi, n'hésitez pas :</p>
-<div class="highlight"><pre><span></span>git clone git://github.com/naparuba/shinken.git
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">git clone git://github.com/naparuba/shinken.git</span>
+</code></pre></div>
 
 <p>J'accepte volontiers les patchs :)</p>
 <p>Juste pour info, dans le code de Nagios, si on voulait faire la même chose, il faudrait changer la macro <strong>MAX_STATE_HISTORY_ENTRIES</strong> en simple variable :</p>
-<div class="highlight"><pre><span></span> grep -r MAX_STATE_HISTORY_ENTRIES * | wc -l
- 30
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err"> grep -r MAX_STATE_HISTORY_ENTRIES * | wc -l</span>
+<span class="err"> 30</span>
+</code></pre></div>
 
 <p>30 lignes au minimum juste pour la partie traitement! Je n'ose même pas regarder combien de lignes ceci va coûter pour la configuration, mais bien plus d'une, ça c'est sûr...  :-?</p>
 <p>Notez bien que je ne dis pas ça pour me moquer des développeurs de Nagios, comme quoi le code est imbitable non, car je n'aurais sûrement pas fait mieux en C. C'est juste pour illustrer que parfois, utiliser des techniques de développements avancées (le <em>développement dynamique </em>qui a un peu irrité lors de l'annonce de Shinken sur la mailing list), ça ne fait pas de mal à l'efficacité...</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -497,13 +490,6 @@ Dans le premier (<em>config.py</em>) on remarque un tableau nommé <em>propertie
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

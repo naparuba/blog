@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -137,7 +137,7 @@
 <h2>Elle est enfin là, et elle envoie déjà du gros</h2>
 <p>Bonjour,</p>
 <p><strong>La version 0.1 de Shinken est enfin arrivée</strong></p>
-<p>On va dire que c'est une <em>bonne grosse </em>0.1 car mine de rien elle possède pas mal de fonctionnalités :
+<p>On va dire que c'est une <em>bonne grosse </em>0.1 car mine de rien elle possède pas mal de fonctionnalités :</p>
 <ul>
     <li>prise en compte de la configuration de Nagios quasi complète</li>
     <li>reprise des sondes de supervisions et de notifications</li>
@@ -151,13 +151,14 @@
     <li>support des exports classiques (Mysql avec NDO et Merlin, Oracle avec NDO, Livestatus et même Couchdb  8-) )</li>
     <li>plein d'autres trucs qui vont me revenir une fois que j'airai publié ce post....</li>
 </ul>
-Les manques par rapport à Nagios existent, mais ne sont pas loquant pour la quasi totalité des utilisateurs :
+<p>Les manques par rapport à Nagios existent, mais ne sont pas loquant pour la quasi totalité des utilisateurs :</p>
 <ul>
     <li>manque les / N de saut de jours pour les timeperiods (mais bon, Shinken a les exclusions de timeriods LUI, même si je comprends pourquoi ce n'est toujours pas OK dans Nagios..)</li>
     <li>pas de variables d'environnements _NAGIOS* lors du lancement des sondes (c'est un oubli tout simplement car je n'utilise pas cette fonctionnalité chez moi), mais peu de sondes l'utilisent de toute manière</li>
     <li>pas de commandes de types OCSP : dans Nagios elles ne servent qu'à la partie distribuée, donc bon...</li>
     <li>10 ans de tests de l'application derrière elle... bon ça je ne vais pas le régler du jour au lendemain je crois...  :lol:</li>
-</ul></p>
+</ul>
+
 <h2>Mais comment on la teste?</h2>
 <p>Le code est dispo sur le site officiel du projet : <a href="http://www.shinken-monitoring.org" target="_blank">http://www.shinken-monitoring.org</a>. Outre le classique tarball installable très facilement (Python + Pyro en apt-get et hop, c'est parti :) ), j'ai tout prévu pour les feignants (qui à dit "administrateurs efficaces"?) : une VM toute prête à être lancée est disponbile sur le site. Elle est importable sous VirtualBox et VMWare.</p>
 <p>Mais comment on peut tester facilement un service daemon? Bah avec les interfaces wbe préinstallé pardi  ;-)</p>
@@ -166,23 +167,21 @@ Les manques par rapport à Nagios existent, mais ne sont pas loquant pour la qua
 <p>Le fichier README_FIRST.txt vous aidera d'ailleurs lors de ces tests en proposant des kill et moyens de vérifier que ça tourne toujours.</p>
 <h2>Et ensuite? Seedcamp!</h2>
 <p>Ok, la 0.1 est sortie, elle est chaude, possède sûrement un ou deux bugs, mais après, il se passe quoi? Et bien vous serez ravi d'aprendre que Nagios lance seedcamp, un concours pour des propositions d'amélirations de Nagios ou d'addons. La description complète est dispo sur le <a href="http://www.nagios.org/seedcamp" target="_blank">site de Nagios</a>. Et bien vous avez devinez, Shinken va participer! Il est lancé demain 1er juin. Shinken compte bien être le premier projet proposé  :mrgreen:</p>
-<p>Outre le fait que ça me fait bien marrer de participer (en plus si je gagne, ça me financera assez pour aller présenter Shinken un peu partout), c'est l'occasion rêvée de voir un peu comment est vu Shinken par rapport au <em>Nagios Corporate</em> : les participants sont évalués par la communauté. Bien entendu, si vous liez en bas le réglement de seedcamp, il y a des possibilité d'exclusions pour les projets farfelus. Je pense (espère) que Shinken ne rentre pas là dedans. Je pense donc que Shinken sera évalué de manière pertinente par celle à qui il est destiné : la communauté Nagios.
+<p>Outre le fait que ça me fait bien marrer de participer (en plus si je gagne, ça me financera assez pour aller présenter Shinken un peu partout), c'est l'occasion rêvée de voir un peu comment est vu Shinken par rapport au <em>Nagios Corporate</em> : les participants sont évalués par la communauté. Bien entendu, si vous liez en bas le réglement de seedcamp, il y a des possibilité d'exclusions pour les projets farfelus. Je pense (espère) que Shinken ne rentre pas là dedans. Je pense donc que Shinken sera évalué de manière pertinente par celle à qui il est destiné : la communauté Nagios.</p>
 <h3>Si exclu?</h3>
-Et s'il est exclu? Bah là le message sera clair : les possibilités d'inclusions dans le projet officiel Nagios sont morts. Shinken sera dès à présents libres (enfin encore plus que maintenant) par rapport au projet Nagios. La compatibilité des interfaces, sondes et configurations seront conservées, mais il n'y aura plus aucune retenue quand à rajouter des modules qui sont trop inovants par rapport à Nagios (comme un module de configuration en base par exemple).
+<p>Et s'il est exclu? Bah là le message sera clair : les possibilités d'inclusions dans le projet officiel Nagios sont morts. Shinken sera dès à présents libres (enfin encore plus que maintenant) par rapport au projet Nagios. La compatibilité des interfaces, sondes et configurations seront conservées, mais il n'y aura plus aucune retenue quand à rajouter des modules qui sont trop inovants par rapport à Nagios (comme un module de configuration en base par exemple).</p>
 <h3>Si écrasé?</h3>
-S'il ne gagne pas et fait un score minable? Bah je me retire au tîbet... nan je blague, fait trop froid pour moi là bas. Mais je continuerai à l'améliorer jusqu'à ce qu'il remporte les suffrages de la communauté Nagios je pense.
+<p>S'il ne gagne pas et fait un score minable? Bah je me retire au tîbet... nan je blague, fait trop froid pour moi là bas. Mais je continuerai à l'améliorer jusqu'à ce qu'il remporte les suffrages de la communauté Nagios je pense.</p>
 <h3>Et si c'est le champion?</h3>
-S'il gagne haut la main? Là, ça va être drôle. Le fait de revenir sur le choix du Python sera un niet ferme s'il n'est pas motivé techniquement, et puis bon le C c'est bien dans un noyau, mais en dehors faut vraiment en avoir besoin hein... Ceci dépendra des conditions d'inclusion de Shinken dans Nagios en fait.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: spoiler: il a perdu ^^
-</pre></div>
-
+<p>S'il gagne haut la main? Là, ça va être drôle. Le fait de revenir sur le choix du Python sera un niet ferme s'il n'est pas motivé techniquement, et puis bon le C c'est bien dans un noyau, mais en dehors faut vraiment en avoir besoin hein... Ceci dépendra des conditions d'inclusion de Shinken dans Nagios en fait.</p>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: spoiler: il a perdu ^^</span>
+</code></pre></div>
 
 <h3>Les vraies chances de réussites</h3>
 <p>En fait au vu de l'histoire récente, je serai le premier étonné de la victoire de Shinken. Pas pour ses qualités techniques ou ses nouvelles possibiltiés d'architecture. En elles j'ai toute confiance. Non, c'est sur le plan humain que je pense que c'est difficile : Ethan n'a jamais pris officiellement position sur Shinken, même en privé. Une exclusion de seedcamp m'effrai un peu, mais au moins on y verra plus clair.</p>
 <p>Mais qui sait, la réunification tant attendue est peu être au bout du chemin, en tout cas, le proposition va être faite, on sera vite fixé.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: j&#39;ai toujours pas de positonnement officiel. Par contre du non officiel j&#39;en ais eu à la pelle ^^
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: j&#39;ai toujours pas de positonnement officiel. Par contre du non officiel j&#39;en ais eu à la pelle ^^</span>
+</code></pre></div>
 
 <h2>Et ensuite seedcamp?</h2>
 <p>Peu importe seedcamp et ses résultats, de nombreuses choses sont encore en cours pour Shinken. Si d'ailleurs vous souhaitez filez un coup de main, c'est sans aucun problème  :mrgreen:</p>
@@ -190,7 +189,7 @@ S'il gagne haut la main? Là, ça va être drôle. Le fait de revenir sur le cho
 <p>Bon test de cette première version. dites moi un peu ce que vous en pensez, ainsi que du tout nouveau site de Shinken d'ailleurs  :-)</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -493,13 +492,6 @@ S'il gagne haut la main? Là, ça va être drôle. Le fait de revenir sur le cho
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

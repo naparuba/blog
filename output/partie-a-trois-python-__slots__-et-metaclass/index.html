@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -132,9 +132,8 @@
 
         </header>
 
-    <div class="highlight"><pre><span></span>NOTE 2021: je savais trouvé mes titres quand même ^^
-</pre></div>
-
+    <div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: je savais trouvé mes titres quand même ^^</span>
+</code></pre></div>
 
 <p>Les langages dynamiques sont pratiques pour se frotter facilement à de nouveaux paradigmes de programmations. Aucune technique n'étant parfaite, l'aspect dynamique se paye.</p>
 <h2>Le prix à payer pour les langages dynamiques</h2>
@@ -142,22 +141,20 @@
 Là où un accès à une structure est en 0(1) en C ou C++, il peut être plus élevé dans des langages où les propriétés des objets ne sont pas identiques entre les instances. </p>
 <p>Il en est de même pour la RAM : les objets pouvant avoir de nouvelles propriétés à chaud, leur accès se fait en vérifiant le dictionnaire <em><strong>dict</strong></em> des objets. </p>
 <p>Le dictionnaire est fort simple:</p>
-<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Test</span>:
-   <span class="kt">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span><span class="o">:</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span>
-<span class="nx">point</span> <span class="o">=</span> <span class="nx">Test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="nx">print</span> <span class="s1">&#39;Initialement&#39;</span><span class="p">,</span> <span class="nx">point</span><span class="p">.</span><span class="nx">__dict__</span>
-<span class="nx">point</span><span class="p">.</span><span class="nx">z</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="nx">print</span> <span class="s1">&#39;Apres&#39;</span><span class="p">,</span> <span class="nx">point</span><span class="p">.</span><span class="nx">__dict__</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">class Test:</span>
+<span class="err">   def __init__(self, x, y):</span>
+<span class="err">      self.x = x</span>
+<span class="err">      self.y = y</span>
+<span class="err">point = Test(1, 2)</span>
+<span class="err">print &#39;Initialement&#39;, point.__dict__</span>
+<span class="err">point.z = 3</span>
+<span class="err">print &#39;Apres&#39;, point.__dict__</span>
+</code></pre></div>
 
 <p>Donne :</p>
-<div class="highlight"><pre><span></span>Initialement {&#39;y&#39;: 2, &#39;x&#39;: 1}
-Apres {&#39;y&#39;: 2, &#39;x&#39;: 1, &#39;z&#39;: 3}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">Initialement {&#39;y&#39;: 2, &#39;x&#39;: 1}</span>
+<span class="err">Apres {&#39;y&#39;: 2, &#39;x&#39;: 1, &#39;z&#39;: 3}</span>
+</code></pre></div>
 
 <p>C'est sympa, c'est dynamique. 
 Mais ceci a un coût en Mémoire : </p>
@@ -169,58 +166,53 @@ Mais ceci a un coût en Mémoire : </p>
 <p>Si nous prenons des classes avec des noms de propriétés plus grandes que 'x', on peut atteindre des sommets en terme de consommation de RAM pour finalement pas grand chose.</p>
 <p>Le module guppy (disponible sur pypi de mémoire) peut être très pratique pour observer qui consomme de la RAM dans notre application. </p>
 <p>Son utilisation est fort simple :</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">guppy</span> <span class="kn">import</span> <span class="n">hpy</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">guppy</span> <span class="kn">import</span> <span class="n">hpy</span>
 <span class="n">hp</span><span class="o">=</span><span class="n">hpy</span><span class="p">()</span>
 <span class="k">print</span> <span class="n">hp</span><span class="o">.</span><span class="n">heap</span><span class="p">()</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Sa sortie est (relativement) éloquente :</p>
-<div class="highlight"><pre><span></span>Partition of a set of 2024657 objects. Total size = 173885852 bytes.
-Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
-0 999999  49 135999864  78 135999864  78 dict of __main__.Test
-1 999999  49 31999968  18 167999832  97 __main__.Test
-2    127   0  4073248   2 172073080  99 list
-3  10686   1   744928   0 172818008  99 str
-4   5540   0   203368   0 173021376 100 tuple
-5    347   0   115160   0 173136536 100 dict (no owner)
-6   1539   0   104652   0 173241188 100 types.CodeType
-7     64   0   100480   0 173341668 100 dict of module
-8    175   0    94840   0 173436508 100 dict of type
-9    194   0    86040   0 173522548 100 type
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">Partition of a set of 2024657 objects. Total size = 173885852 bytes.</span>
+<span class="err">Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)</span>
+<span class="err">0 999999  49 135999864  78 135999864  78 dict of __main__.Test</span>
+<span class="err">1 999999  49 31999968  18 167999832  97 __main__.Test</span>
+<span class="err">2    127   0  4073248   2 172073080  99 list</span>
+<span class="err">3  10686   1   744928   0 172818008  99 str</span>
+<span class="err">4   5540   0   203368   0 173021376 100 tuple</span>
+<span class="err">5    347   0   115160   0 173136536 100 dict (no owner)</span>
+<span class="err">6   1539   0   104652   0 173241188 100 types.CodeType</span>
+<span class="err">7     64   0   100480   0 173341668 100 dict of module</span>
+<span class="err">8    175   0    94840   0 173436508 100 dict of type</span>
+<span class="err">9    194   0    86040   0 173522548 100 type</span>
+</code></pre></div>
 
 <p>78% de la consommation mémoire est due aux<em> <strong>dict</strong></em> de nos points, les valeurs de ces instances consommant quant à elles 18%.</p>
 <h2><strong>slots</strong> : c'est les soldes pour Python</h2>
 <p>Lorsque l'on sait à l'avance quelles vont être les possibilités des noms de propriétés de nos instances, il peut être pratique de recourir à l'utilisation des <em><strong>slots</strong></em>. C'est un tuple dans la classe où les noms des propriétés vont être mises en commun pour toutes les instances de la classe. Attention, son utilisation est fort simple, mais elle limite certaines possibilités de Python par la suite, comme certains problèmes avec tout ce qui touche la sérialisation d'objet par exemple.</p>
 <p>Si vous souhaitez l'utiliser, c'est fort simple, il suffit de rajouter le tuple à la classe si elle hérite d'<em>object</em> :</p>
-<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Test</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
-   <span class="nx">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
-   <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span><span class="o">:</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">class Test(object):</span>
+<span class="err">   __slots__ = (&#39;x&#39;, &#39;y&#39;, &#39;z&#39;)</span>
+<span class="err">   def __init__(self, x, y):</span>
+<span class="err">      self.x = x</span>
+<span class="err">      self.y = y</span>
+</code></pre></div>
 
 <p>Si simple? Non en fait. le <em><strong>slots</strong></em> va remplacer <em><strong>dict</strong></em> qui va tout simplement disparaitre! </p>
 <p>Notre code va lamentablement échouer avec:</p>
-<div class="highlight"><pre><span></span>Initialement
-Traceback (most recent call last):
-File &quot;test_slot.py&quot;, line 10, in &lt;module&gt;
-print &#39;Initialement&#39;, point.__dict__
-AttributeError: &#39;Test&#39; object has no attribute &#39;__dict__&#39;
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">Initialement</span>
+<span class="err">Traceback (most recent call last):</span>
+<span class="err">File &quot;test_slot.py&quot;, line 10, in &amp;lt;module&amp;gt;</span>
+<span class="err">print &#39;Initialement&#39;, point.__dict__</span>
+<span class="c">AttributeError: &#39;Test&#39; object has no attribute &#39;__dict__&#39;</span>
+</code></pre></div>
 
 <p>Pour contourner cela, il suffit de rajouter <strong>dict</strong> au slots:</p>
-<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Test</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
-   <span class="nx">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__dict__&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
-   <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span><span class="o">:</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">class Test(object):</span>
+<span class="err">   __slots__ = (&#39;__dict__&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;)</span>
+<span class="err">   def __init__(self, x, y):</span>
+<span class="err">      self.x = x</span>
+<span class="err">      self.y = y</span>
+</code></pre></div>
 
 <p>On relance, la consommation passe à 47Mo. (Les gains sont encore plus importants avec des chaînes de plus d'un caractère :) ).
 Pour Shinken par exemple, avec 100000 services, j'étais à plus de 2Go de RAM consommée, avec les slots, je suis tombé à moins 50Mo environs...</p></p>
@@ -234,34 +226,32 @@ Autant dire qu'une fois sur deux, j'oubliais. De plus, ça fait un gros pâté e
 <p>Je suis tombé sur <a href="http://code.activestate.com/recipes/435880/">http://code.activestate.com/recipes/435880/</a> qui présente comment générer automatiquement le tuple <em><strong>slots</strong></em> pour ses classes en regardant tout simplement les variables fournies à <em><strong>init</strong></em> (il semble créer d'ailleurs une liste qui doit être changée en tuple par l'interpréteur). Bon pour les Host et Service, il n'y a qu'un seul paramètre, un tableau de construction. Mais ça m'a donné l'idée d'adapter ce code pour qu'il utilise les tableaux <em>properties </em>et <em>running_properties</em> de mes classes qui contiennent toutes les propriétés de mes objets.</p>
 <p>Edit : Merci à Bertrand Mathieu pour la simplification du code par set.</p>
 <p>Ceci donne au final la classe <em>AutoSlots</em> suivante :</p>
-<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">AutoSlots</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span><span class="o">:</span>
-   <span class="nx">def</span> <span class="nx">__new__</span><span class="p">(</span><span class="nx">cls</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">bases</span><span class="p">,</span> <span class="nx">dct</span><span class="p">)</span><span class="o">:</span>
-      <span class="nx">slots</span> <span class="o">=</span> <span class="nx">dct</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;__slots__&#39;</span><span class="p">,</span> <span class="nx">set</span><span class="p">())</span>
-      <span class="err">#</span><span class="nx">Now</span> <span class="nx">get</span> <span class="nx">properties</span> <span class="nx">from</span> <span class="nx">properties</span> <span class="nx">and</span> <span class="nx">running_properties</span>
-      <span class="k">if</span> <span class="s1">&#39;properties&#39;</span> <span class="k">in</span> <span class="nx">dct</span>:
-         <span class="kt">slots.update</span><span class="p">((</span><span class="nx">p</span> <span class="k">for</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">dct</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]))</span>
-      <span class="k">if</span> <span class="s1">&#39;running_properties&#39;</span> <span class="k">in</span> <span class="nx">dct</span>:
-         <span class="kt">lots.update</span><span class="p">((</span><span class="nx">p</span> <span class="k">for</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">dct</span><span class="p">[</span><span class="s1">&#39;running_properties&#39;</span><span class="p">]))</span>
-      <span class="nx">dct</span><span class="p">[</span><span class="s1">&#39;__slots__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">tuple</span><span class="p">(</span><span class="nx">slots</span><span class="p">)</span>
-      <span class="k">return</span> <span class="nx">type</span><span class="p">.</span><span class="nx">__new__</span><span class="p">(</span><span class="nx">cls</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">bases</span><span class="p">,</span> <span class="nx">dct</span><span class="p">)</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">class AutoSlots(type):</span>
+<span class="err">   def __new__(cls, name, bases, dct):</span>
+<span class="err">      slots = dct.get(&#39;__slots__&#39;, set())</span>
+<span class="err">      #Now get properties from properties and running_properties</span>
+<span class="err">      if &#39;properties&#39; in dct:</span>
+<span class="err">         slots.update((p for p in dct[&#39;properties&#39;]))</span>
+<span class="err">      if &#39;running_properties&#39; in dct:</span>
+<span class="err">         lots.update((p for p in dct[&#39;running_properties&#39;]))</span>
+<span class="err">      dct[&#39;__slots__&#39;] = tuple(slots)</span>
+<span class="err">      return type.__new__(cls, name, bases, dct)</span>
+</code></pre></div>
 
 <p>Qui est appelée avec :</p>
-<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Service</span><span class="p">(</span><span class="nx">SchedulingItem</span><span class="p">)</span><span class="o">:</span>
-   <span class="err">#</span><span class="nx">AutoSlots</span> <span class="nx">create</span> <span class="nx">the</span> <span class="nx">__slots__</span> <span class="kd">with</span> <span class="nx">properties</span> <span class="nx">and</span>
-   <span class="err">#</span><span class="nx">running_properties</span> <span class="nx">names</span>
-   <span class="nx">__metaclass__</span> <span class="o">=</span> <span class="nx">AutoSlots</span>
-   <span class="p">[..]</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">class Service(SchedulingItem):</span>
+<span class="err">   #AutoSlots create the __slots__ with properties and</span>
+<span class="err">   #running_properties names</span>
+<span class="err">   __metaclass__ = AutoSlots</span>
+<span class="err">   [..]</span>
+</code></pre></div>
 
 <p>Maintenant les <em><strong>slots</strong></em> sont construits à la volée, et il n'y a plus de risque d'oublier des paramètres et mes classes Host/Service se re-concentrent un peu sur ce qu'elles doivent faire, et non sur une astuce pour contourner une consommation excessive de RAM par Python.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: c&#39;est quand même con de devoir en arriver là pour gagner de la ram non?
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: c&#39;est quand même con de devoir en arriver là pour gagner de la ram non?</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -564,13 +554,6 @@ Autant dire qu'une fois sur deux, j'oubliais. De plus, ça fait un gros pâté e
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

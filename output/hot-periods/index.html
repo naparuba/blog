@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -134,12 +134,12 @@
 
     <!-- relu -->
 
-<p>Ce post fait suite à celui des modulateurs de code retour. Pour rappel, ils permettent pour des services de modifier les codes retours suivants ce que l'on veut. Les deux proposés sont:
+<p>Ce post fait suite à celui des modulateurs de code retour. Pour rappel, ils permettent pour des services de modifier les codes retours suivants ce que l'on veut. Les deux proposés sont:</p>
 <ul>
-    <li><strong>inverse_ok_critical</strong> : pour les services actifs/passifs</li>
-    <li><strong>critical_is_warning</strong> : pour les services sur des machines de priorités plus faibles comme celles de QUALIFICATION.</li>
+    <li>**inverse_ok_critical** : pour les services actifs/passifs</li>
+    <li>**critical_is_warning** : pour les services sur des machines de priorités plus faibles comme celles de QUALIFICATION.</li>
 </ul>
-Pour les machines de Qualif, nous avons aussi le cas de machines de production faible : ce n'est pas de la production 70% du temps, mais critique les 30% restant. On peut mettre un <em>critical_is_warning</em> pour ne pas être pollué visuellement en rouge pendant une période de faible activité, mais on perd l'avantage de la visibilité en période chaude.</p>
+<p>Pour les machines de Qualif, nous avons aussi le cas de machines de production faible : ce n'est pas de la production 70% du temps, mais critique les 30% restant. On peut mettre un <em>critical_is_warning</em> pour ne pas être pollué visuellement en rouge pendant une période de faible activité, mais on perd l'avantage de la visibilité en période chaude.</p>
 <p>...</p>
 <p>Personne ne voit où je veux en venir? Et bien oui, ces périodes chaudes justement :)</p>
 <p>Déjà tout comme <em>critical_is_warning</em> est settable sur un host et héritable implicitement sur les services, cette période chaude est portée par l'hôte, et si l'administrateur le veut, est settable sur le service tout de même. Cette période chaude dé-inhibe le <em>critical_is_warning</em> : pendant la période chaude, on repasse sur un comportement normal, avec "critical is critical".</p>
@@ -148,7 +148,7 @@ Pour les machines de Qualif, nous avons aussi le cas de machines de production f
 <p>Bon reste à coder cela, mais ça ne va pas être très long, mais déjà je vire la dépendance à <em>python-graph-core</em>... (et hop, retour dans le monde merveilleux des graphs orienté et des parcours en profondeur).</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -451,13 +451,6 @@ Pour les machines de Qualif, nous avons aussi le cas de machines de production f
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -144,21 +144,20 @@
 <h2>Cloisonnement technique</h2>
 <p>C'est pour cela que dans un même realm, il doit être possible de cloisonner "techniquement" les commandes sur des pollers. Ce cloisonnement, qui va être optionnel bien sûr, se fera dans la configuration avec une nouvelle option : <strong>poller_tag</strong>. Comme son nom l'indique, un poller va avoir un ou plusieurs tags, et les checks vont pouvoir également être <em>taggués</em>.</p>
 <p>Si le tag au niveau des pollers est simple, se pose la question du tag des commandes : à quel niveau doit-on tagguer? commands, services, hosts? Et pourquoi pas les 3 finalement? L'héritage serait host-&gt;service-&gt;commands.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: je crois qu&#39;on a eu un bug dessus l&#39;année dernière, c&#39;était pas si clair au final.
-           je vois donc que le bug a duré 10ans, pas mal ^^
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: je crois qu&#39;on a eu un bug dessus l&#39;année dernière, c&#39;était pas si clair au final.</span>
+<span class="err">           je vois donc que le bug a duré 10ans, pas mal ^^</span>
+</code></pre></div>
 
 <p>Le tag des commands est simple : une commande définie comme un exe au sens windows (PE et non pas ELF) sera naturellement tagguée "windows-poller". Les tags au niveau service/hosts seraient un peu comme un "mini-realm" : au lieu de définir un realm complet (avec un couple scheduler/poller) pour une DMZ par exemple, il peut être pratique de juste dédier un poller (ou deux) dans cet environnement, et de <em>tagguer </em>les hôtes/services.</p>
 <h2>Un mini-realm?</h2>
 <p>Ceci n'est pas complètement orthogonal aux realms je l'admets, mais c'est plus une réponse aux "proxy nrpe windows" qu'à un réel besoin organisationnel que proposent les Realms.</p>
 <p>Au passage, cette implémentation va être un bon exemple de "Hack" possible de Shinken. Je vais essayer de noter/expliquer l'implémentation dans un document afin de montrer que développer pour Shinken n'est pas complexe, loin de là :)</p>
-<div class="highlight"><pre><span></span>NOTE 2021: ça l&#39;est encore dans le coeur, je suis content :)
-           c&#39;est pas trivial, mais pas non plus ultra complexe
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: ça l&#39;est encore dans le coeur, je suis content :)</span>
+<span class="err">           c&#39;est pas trivial, mais pas non plus ultra complexe</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -461,13 +460,6 @@
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

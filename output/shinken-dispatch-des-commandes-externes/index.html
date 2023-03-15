@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -135,12 +135,12 @@
     <p>&lt;--! relu --&gt;</p>
 <h2>Des commandes importantes</h2>
 <p>Nous avons déjà vu le dispatch des configurations vers les schedulers et les satellites, regardons désormais comment se passe l'envoi de commandes externes par le client. Dans la philosophie Shinken, celui-ci n'a besoin d'envoyer ses ordres que d'un seul endroit, à côté de l'Arbiter.</p>
-<p>Il faut séparer les commandes en deux catégories :
+<p>Il faut séparer les commandes en deux catégories :</p>
 <ul>
     <li>les commandes globales à tous les ordonnanceurs;</li>
     <li>les commandes spécifiques à un élément (host/service/contact).</li>
 </ul>
-En fait une partie des deuxièmes commandes est en fait globale : les contacts sont partout et les commandes les concernant sont envoyées partout.</p>
+<p>En fait une partie des deuxièmes commandes est en fait globale : les contacts sont partout et les commandes les concernant sont envoyées partout.</p>
 <h2>Comment shinken les dispatch</h2>
 <p>En fait ce n'est pas sorcier. Pour chaque type de commande Shinken sait s'il elles sont globales ou non. Pour les globales, il ne se pose pas de question, il envoie à tout le monde et voila.</p>
 <p>Pour les spécifiques, il faut qu'il trouve quel est l'ordonnanceur en question. Il cherche pour cela dans les N configurations l'élément impacté (hôte ou service). Une fois trouvé, il sait à qui envoyer l'ordre et il le fait.</p>
@@ -151,7 +151,7 @@ En fait une partie des deuxièmes commandes est en fait globale : les contacts s
 <p><a href="/images/36/shinken-external-commands.png"><img class="aligncenter size-full wp-image-291" title="shinken-external-commands" src="/images/36/shinken-external-commands.png" alt="shinken-external-commands" width="580" height="315" /></a></p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -454,13 +454,6 @@ En fait une partie des deuxièmes commandes est en fait globale : les contacts s
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

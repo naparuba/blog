@@ -73,6 +73,8 @@
     width         : 100%;
     position      : relative;
     border-radius : 15px;
+    /* Jean: hack for align all */
+    height: 39.5px;
 }
 
 .top-left {

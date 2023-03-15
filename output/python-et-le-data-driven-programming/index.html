@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -146,13 +146,13 @@
 </li>
 </ul>
 <h2>Et les 80% restant?</h2>
-<p>On peu un peu se demander ce qu'il y a dans les 80% restant. Outre le fait que le langage ne pique pas les yeux (et évite les nœuds ... au cerveau), et qu'il a d'intégré un module pour la gestion des pools de process (lancement des checks en parallèle), il a de réelles qualités sur son dynamisme qui permettent d'utiliser une vaste panoplie de paradigme de programmation. Il ne les fait pas tous bien entendu (genre la programmation logique (et le prolog)), mais il permets déjà d'utiliser les principaux:
+<p>On peu un peu se demander ce qu'il y a dans les 80% restant. Outre le fait que le langage ne pique pas les yeux (et évite les nœuds ... au cerveau), et qu'il a d'intégré un module pour la gestion des pools de process (lancement des checks en parallèle), il a de réelles qualités sur son dynamisme qui permettent d'utiliser une vaste panoplie de paradigme de programmation. Il ne les fait pas tous bien entendu (genre la programmation logique (et le prolog)), mais il permets déjà d'utiliser les principaux:</p>
 <ul>
     <li>programmation itérative et récursive</li>
     <li>programmation orientée objet</li>
     <li>programmation orientée aspect (<em>decorator</em>)</li>
 </ul>
-Bon c'est bien, mais le rapport avec la choucroute il et où? Et bien suivant la situation, avec Python on peut choisir, c'est plutôt sympa. Lorsque vous gérez des graphes, le récursif s'impose de lui même (ou alors vous être vraiment tordu...), en règle général c'est de l'objet, et dans quelques cas particuliers l'aspect.</p>
+<p>Bon c'est bien, mais le rapport avec la choucroute il et où? Et bien suivant la situation, avec Python on peut choisir, c'est plutôt sympa. Lorsque vous gérez des graphes, le récursif s'impose de lui même (ou alors vous être vraiment tordu...), en règle général c'est de l'objet, et dans quelques cas particuliers l'aspect.</p>
 <h2>Une matrice de création nommée ADN</h2>
 <p>Concernant l'objet, la création des objets n'est pas classique pour la plupart des types dans Shinken. Nagios utilise des techniques d'héritages sur des objets (hosts/services) qui ont de multiples propriétés (et c'est rien de le dire). Alors m'amuser à faire des constructeurs de 5 lignes non extensibles facilement, non merci. Si c'est pour faire ça, autant rester à faire du C.</p>
 <p>C'est là que vient le <em>data-driven</em> (enfin je crois que c'est comme ça que ca s'appelle) : vous décrivez votre objet dans un tableau quelconque, et au lieu de coder ce que vous devez faire pour chaque propriétés, vous faire une boucle sur votre tableau de description pour faire l'action, avec outre le nom de la propriété, les informations dans ce tableau sur quoi faire pour telle propriété. C'est tout (bah oui, c'est tout con, d'ailleurs je l'ai fait avant de savoir comment ça s'appelait...). L'intérêt? Aucun si vote objet a trois pauvres propriétés, mais énorme si elles commencent à devenir nombreuses (genre une bonne vingtaine).</p>
@@ -162,12 +162,12 @@ Bon c'est bien, mais le rapport avec la choucroute il et où? Et bien suivant la
 <p>Si on rajoute ceci à un héritage de nos objets à une classe "Item" qui va faire le travail de construction, on obtient une fabrique de n'importe quel objet le temps que l'on définisse son ADN dans la classe de l'objet. Pratique non? C'est diablement efficace pour factoriser le code à sa plus simple expression.</p>
 <h2>Et au final on y gagne beaucoup?</h2>
 <p>Vous voulez un exemple? Le code de Nagios pour juste la fabrication des objets avec les techniques d'héritages and co prends à lui seul plus de 11K lignes. Shinken dans son entier (architecture distribuée, configuration, envoi dans les bases de données, ordonnancement, etc) en prends un peu plus de 8K. <em>Owned</em> comme dirait l'autre.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: en effet, par contre purée ce que ça coute chez en temps d&#39;éxécution au run ^^
-           un petit language compilé qui me permettrait de faire la même chose? :p
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: en effet, par contre purée ce que ça coute chez en temps d&#39;éxécution au run ^^</span>
+<span class="err">           un petit language compilé qui me permettrait de faire la même chose? :p</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -470,13 +470,6 @@ Bon c'est bien, mais le rapport avec la choucroute il et où? Et bien suivant la
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

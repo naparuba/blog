@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -139,43 +139,41 @@
 <p>Cette partie du code n'est pas celle que je préfère, car il faut dire que les problèmes des dates et de calcul d'intervalle, c'est touffu, surtout lorsque l'intervalle ressemble à '<em>monday 3 - thursday 4      00:00-11:00,12:00-24:00</em>' (soit entre le troisième lundi du mois et le 4ième jeudi).</p>
 <p>Et puis le plus marrant dans ces définitions, c'est que c'est relatif par rapport au moment où vous calculer...</p>
 <p>Mine de rien, c'est sûrement la partie la plus complexe de l'outil. </p>
-<div class="highlight"><pre><span></span>NOTE 2021: 12 ans après, je suis encore avec ça, c&#39;est clairement ce qui m&#39;a demandé le plus de taf et d&#39;algorithmes
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: 12 ans après, je suis encore avec ça, c&#39;est clairement ce qui m&#39;a demandé le plus de taf et d&#39;algorithmes</span>
+</code></pre></div>
 
 <p>Bon je ne vais pas me plaindre, le module <strong>time </strong>de python a bien aidé. Bref, vous pouvez faire une déclaration du genre :</p>
-<div class="highlight"><pre><span></span>define timeperiod{
-   timeperiod_name                 24x7
-   alias                           24_Hours_A_Day,_7_Days_A_Week
-   sunday                          00:00-24:00
-   monday                          00:00-24:00
-   tuesday                         00:00-24:00
-   wednesday                               00:00-24:00
-   thursday                                00:00-24:00
-   friday                          00:00-24:00
-   saturday                                00:00-24:00
-   exclude                         workhours
-}
-# &#39;workhours&#39; timeperiod definition
-define timeperiod{
-   timeperiod_name workhours
-   alias           Normal Work Hours
-   monday          09:00-17:00
-   tuesday         09:00-17:00
-   wednesday       09:00-17:00
-   thursday        09:00-17:00
-   friday          09:00-17:00
-}
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">define timeperiod{</span>
+<span class="err">   timeperiod_name                 24x7</span>
+<span class="err">   alias                           24_Hours_A_Day,_7_Days_A_Week</span>
+<span class="err">   sunday                          00:00-24:00</span>
+<span class="err">   monday                          00:00-24:00</span>
+<span class="err">   tuesday                         00:00-24:00</span>
+<span class="err">   wednesday                               00:00-24:00</span>
+<span class="err">   thursday                                00:00-24:00</span>
+<span class="err">   friday                          00:00-24:00</span>
+<span class="err">   saturday                                00:00-24:00</span>
+<span class="err">   exclude                         workhours</span>
+<span class="err">}</span>
+<span class="err"># &#39;workhours&#39; timeperiod definition</span>
+<span class="err">define timeperiod{</span>
+<span class="err">   timeperiod_name workhours</span>
+<span class="err">   alias           Normal Work Hours</span>
+<span class="err">   monday          09:00-17:00</span>
+<span class="err">   tuesday         09:00-17:00</span>
+<span class="err">   wednesday       09:00-17:00</span>
+<span class="err">   thursday        09:00-17:00</span>
+<span class="err">   friday          09:00-17:00</span>
+<span class="err">}</span>
+</code></pre></div>
 
 <p>Donc ici<em> 24x7</em> sera sans les <em>workhours </em>(bon bah c'est un exemple hein, à vous de trouver quelque chose de plus utile....). </p>
 <p>Donc un check en <em>24x7</em> voulant être lancé vers 10h le sera à 17h en fait. Ceci gère aussi si les <em>timeperiods </em>dans <em>exclude </em>ont elles même des <em>exclude </em>bien sûr.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: vous savez c&#39;est quoi le pire: quelques années après, je me suis apperçu qu&#39;en fait Nagios ne gérait pas du tout ça...
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: vous savez c&#39;est quoi le pire: quelques années après, je me suis apperçu qu&#39;en fait Nagios ne gérait pas du tout ça...</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -478,13 +476,6 @@ define timeperiod{
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

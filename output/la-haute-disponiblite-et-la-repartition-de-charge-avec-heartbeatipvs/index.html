@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -141,13 +141,14 @@
 <h2>Fonctionnement</h2>
 <p>Des solutions logicielles existent, on va en voir : IPVS, le module du noyau Linux dédié a cette tache. La qualité de la pile réseau de Linux n'est plus à démonter, et ce module l'illustre parfaitement. Associé au programme HeartBeat, il permet de bâtir une solution de haute disponibilité et répartition de charge fiable. Ce premier post présente le fonctionnement global. D'autres posts suivront pour présenter la mise en place effective.</p>
 <p>Deux frontaux se partagent (en fail over) une VIP grâce à l'application HeartBeat. Le client va s'adresser à ces frontaux (un seul à la fois, ils sont en fail over). Le frontal maitre va alors décider suivant une table de sessions basées sur les IP sources et du nombre de connexions actives vers quel serveur réels  il va adresser la requête. Le second frontal reçoit régulièrement les nouvelles sessions de l'actif et met à jour sa propre table de session. De cette manière, s'il doit passer actif, les connexions ne seront pas perdues.</p>
-<p>Les règles de répartitions sont les grandes classiques (round robin, serveur le moins chargé en terme de connexions, etc). Le frontal « transfère » la requête, et là deux solutions sont possibles :
+<p>Les règles de répartitions sont les grandes classiques (round robin, serveur le moins chargé en terme de connexions, etc). Le frontal « transfère » la requête, et là deux solutions sont possibles :</p>
 <ul>
     <li> la requête est envoyée vers le serveur, puis revient au frontal pour repartir au client. Du Nat en gros. Donc le frontal se prend toute la charge réseau. C'est moyen. On verra un peu plus loin que suivant l'application, ceci peux être loin d'être optimal.</li>
 </ul>
 <ul>
     <li> la requête est envoyée vers le serveur qui a une interface réseau ayant comme ip la VIP. Le serveur étant poli, il répond en tant que la VIP, directement au client, sans passer par la case frontal. C'est le mode direct. Pour ceux qui ont suivis, OUI, il y aura un problème ARP car plusieurs machines auront la VIP sur le réseau. Mais ce problème à une (plusieurs en fait…) solution (acceptable) que ce soit sur un serveur Windows ou Linux. On les verra par la suite.</li>
-</ul></p>
+</ul>
+
 <h3>Fonctionnement NAT</h3>
 <p>Voici un schéma simplifié du mode NAT :</p>
 <p><a href="/images/23/LVS-nat.png"><img class="size-medium wp-image-76" title="LVS-nat" src="/images/23/LVS-nat.png" alt="LVS-nat" width="241" height="300" /></a></p>
@@ -160,7 +161,7 @@
 <p>Voyons donc une version complète du fonctionnement:</p>
 <p><a href="/images/23/LVS-direct-detaille.png"><img class="size-medium wp-image-86" title="LVS-direct-detaille" src="/images/23/LVS-direct-detaille.png" alt="LVS-direct-detaille" width="244" height="300" /></a></p>
 <p>On voit ici que le point principal dans le fonctionnement en mode direct se situe en fait sur les serveurs appli, les vrais serveurs. Il faut monter un alias d'interface avec une IP égale à la VIP qui ne répond pas aux requêtes ARP (point 2 bis du schéma). Ainsi seul le frontal répond aux requêtes ARP. Ceci a été testé avec succès sur des Linux (règle arptables ou configuration du noyau) et sur un Windows 2k (alias sur interface de loopback qui n'a pas le droit de faire de l'ARP :) ).</p>
-<p>Le travail au niveau du frontal est on ne peut plus simple et élégant :
+<p>Le travail au niveau du frontal est on ne peut plus simple et élégant :</p>
 <ul>
     <li> vu qu'il est le seul à répondre à l'ARP sur la VIP, il reçoit le paquet du client</li>
 </ul>
@@ -175,10 +176,11 @@
 </ul>
 <ul>
     <li> Pour le client, il a parlé à la VIP avec une adresse MAC A, la VIP lui répond avec une adresse MAC B, mais il s'en fiche, la couche IP est bonne (numéro de séquence OK), TCP/UDP pareil (numéro de séquence ok). C'est comme si la réponse provenait d'un autre chemin que celui par lequel il est parti, mais ce n'est pas un problème. Les seules modifications se font donc au niveau Ethernet. Merci la séparation des couches.</li>
-</ul></p>
+</ul>
+
 <h2>En résumé</h2>
 <h3>Les plus</h3>
-<p><ul>
+<ul>
     <li> Ceci permet d'avoir de la haute dispo + loadbalancing</li>
 </ul>
 <ul>
@@ -195,20 +197,21 @@
 </ul>
 <ul>
     <li> Ça fonctionne très bien sur des VM pour les frontaux, et VM ou réels pour les serveurs d'applis</li>
-</ul></p>
+</ul>
+
 <h3>Les moins</h3>
-<p><ul>
+<ul>
     <li>Il faut que les serveurs réels et les frontaux soient sur le même réseau, si on imagine un firewall entre eux, il le faut en mode bridge, mais a priori si firewall il y a, il devrait être placé avant le frontal</li>
 </ul>
 <ul>
     <li> Même mineure, la modification des serveurs réels existe</li>
-</ul></p>
+</ul>
+
 <h3>Les performances</h3>
 <p>Cette solution est en place sur notre serveur de production (un gros ERP pour plus de 300 utilisateurs). Et ce avec une VM sur une seule carte réseau, et un système non taillé pour faire office de « routeur » (taille des stacks réseaux et cie). Les tests de performances n'ont pas réussi à faire frémir les load balanceurs : les applications sont tombées avant!</p>
-<div class="highlight"><pre><span></span>NOTE 2021: vu qu&#39;il ya prescription je peux l&#39;avouer: j&#39;ai déjà fait tombé un serveur de qualif (pas la prod faut pas être fou) lors d&#39;un test de perf. La petit VM avec
-           LVS a tenu sans problème, alors que le gros serveur apache derrière s&#39;est éffondré ^^
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: vu qu&#39;il ya prescription je peux l&#39;avouer: j&#39;ai déjà fait tombé un serveur de qualif (pas la prod faut pas être fou) lors d&#39;un test de perf. La petit VM avec</span>
+<span class="err">           LVS a tenu sans problème, alors que le gros serveur apache derrière s&#39;est éffondré ^^</span>
+</code></pre></div>
 
 <h3>La réaction face à la perte d'un noeud</h3>
 <p>On a vu qu'il y a deux frontaux. Ils sont en actif-passif. Régulièrement, le frontal maître synchronise sa table de session avec le second noeud. En cas de non réponse du premier nœud, l'esclave prends la main sur la VIP et peux loadbalancer sans perdre de sessions. A ce niveau aucun problème donc.</p>
@@ -216,7 +219,7 @@
 <p>Dans un prochain post, nous verrons la mise en place effective de cette solution avec la méthode directe qui est la plus recommandée.</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -519,13 +522,6 @@
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 

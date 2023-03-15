@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/theme/images/author/cadre.png" id="logo" alt="Logo">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
             Jean Gabès</a>
         <button
                 class="navbar-toggler navbar-dark"
@@ -141,13 +141,14 @@
 <p>Elle est complémentaire de la compression. Là où vous aller gagner sur un fichier avec la compression, si vous en avez deux, vous aller stocker deux fois la taille compressée. Avec une passe de dé-duplication avant, vous n'aurez qu'une fois chaque bloc, puis vous pouvez compresser ce qui reste.</p>
 <h2>Deux méthodes : bloc de taille fixe ou variable</h2>
 <h3>Taille fixe</h3>
-<p>Les blocs justement. Dans lessfs, ce sont des blocs de taille fixe. Donc on applique un algorithme très simple :
+<p>Les blocs justement. Dans lessfs, ce sont des blocs de taille fixe. Donc on applique un algorithme très simple :</p>
 <ul>
     <li>on coupe la donnée en bloc de NKo (prenons 4Ko)</li>
     <li>on fait un hash de chaque bloc</li>
     <li>si on a déjà un hash, on change le bloc par un simple pointeur vers le bloc déjà sauvegardé</li>
     <li>sinon on sauvegarde le bloc et son hash</li>
-</ul></p>
+</ul>
+
 <p>Simple.</p>
 <p>Efficace? Pas si sûr. Bien entendu, si vous faites une copie d'un fichier, celle-ci ne va quasiment rien vous coûter. Mais faire des copies intactes de vos fichiers arrive parfois avec des sauvegardes, et encore...</p>
 <h3>Taille variable</h3>
@@ -155,16 +156,15 @@
 <p>Bien sûr, ce genre de recherche est bien plus couteux en terme de CPU, 4K calculs fois plus. (En fait un peu moins, dès que vous raccrochez un wagon de blocs déjà connu, un seul calcul suffit).</p>
 <h2>Exemple de gain</h2>
 <p>Un exemple?</p>
-<p>J'ai codé rapidement un petit script en Python qui réalise ces deux types de dé-duplications :
+<p>J'ai codé rapidement un petit script en Python qui réalise ces deux types de dé-duplications :</p>
 <ul>
     <li>recherche des mêmes blocs de 4Ko avec recherche par fenêtre glissante</li>
     <li>recherche brut de frondrie, bloc de 4k</li>
 </ul>
-Voici les résultats sur un répertoire plein de fichiers de type office and co:</p>
-<div class="highlight"><pre><span></span>****** Stats Varible: Deplicated 342756761/465877423 = 73.00% Dedup+compress 426510002 =91.00%
-****** Stats Fix: Deplicated 59596755/465877423 = 12.00% Dedup+compress 68349038 =14.00%
-</pre></div>
-
+<p>Voici les résultats sur un répertoire plein de fichiers de type office and co:</p>
+<div class="highlight"><pre><span></span><code><span class="err">****** Stats Varible: Deplicated 342756761/465877423 = 73.00% Dedup+compress 426510002 =91.00%</span>
+<span class="err">****** Stats Fix: Deplicated 59596755/465877423 = 12.00% Dedup+compress 68349038 =14.00%</span>
+</code></pre></div>
 
 <p>On a donc <strong>73%</strong> de gain avec des tailles de blocs variables, <strong>91%</strong> si on les compresse par dessus. </p>
 <p>La méthode fixe bourrine n'arrive elle qu'à un faible <strong>12%</strong>.</p>
@@ -175,11 +175,11 @@ Pas si simple:</p>
 <li>Et surtout l'algo utilisé semble avoir été breveté par EMC... Et après ça qu'on vienne encore me sortir que les brevets sont fait pour protéger l'innovation.... l'investissement oui, l'innovation non...</li>
 </ul>
 <p>Pour ceux qui ont la chance de ne pas habiter dans ce merveilleux pays des brevets logiciels, vous pouvez tester le script<a href="/images/63/dedup.py">là</a>.</p>
-<div class="highlight"><pre><span></span>NOTE 2021: j&#39;aime toujours aussi peu les brevets logiciels, surtout sur des algos aussi triviaux...
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NOTE 2021: j&#39;aime toujours aussi peu les brevets logiciels, surtout sur des algos aussi triviaux...</span>
+</code></pre></div>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
-    <img style='width: 48px;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/cadre.png"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
 <ul class="social-link d-flex">
     <li>
         <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
@@ -482,13 +482,6 @@ Pas si simple:</p>
 
 
         </div>
-    </div>
-
-    <hr/>
-    <div class="container">
-        <p id="disclaimer">Theme from <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/theme/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png" alt="Toha Theme Logo"> Toha </a>
-        </p>
     </div>
 
 
