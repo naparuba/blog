@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ</title>
+
+
+    <meta name="description" content="Portfolio et blog profesionnel de Jean Gabès."/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/main.css"/>
+    <link rel="stylesheet" href="/theme/css/navigators/navbar.css"/>
+    <link rel="stylesheet" href="/theme/css/plyr.css"/>
+    <link rel="stylesheet" href="/theme/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/social.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/png" href="/theme/images/author/cadre.png"/>
+
+    <meta property="og:title" content="Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Portfolio et blog profesionnel de Jean Gabès"/>
+    <meta property="og:image" content="/theme/images/author/naparuba.gif">
+    <meta property="og:url" content="https://hugo-toha.github.io">
+
+
+    <link rel="stylesheet" href="/theme/css/style.css"/>
+
+
+    <script type="application/javascript">
+        var doNotTrack = false;
+        if ( !doNotTrack ) {
+            window.ga = window.ga || function() {
+                (ga.q = ga.q || []).push( arguments );
+            };
+            ga.l      = +new Date;
+            ga( 'create', 'UA-122321624-233', 'auto' );
+
+            ga( 'send', 'pageview' );
+        }
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
+            Jean Gabès</a>
+        <button
+                class="navbar-toggler navbar-dark"
+                id="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#top-nav-items"
+                aria-label="menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="top-nav-items">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#home">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">A propos</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#experiences">Expérience</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#education">Scolarité</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#projects">Projets</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/#recent-posts">Post récents</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+
+<div id="post-container" class="container-fluid section-holder d-flex bg-white">
+    <div class="container anchor p-lg-5" id="post">
+        <div class="row pt-sm-2 pt-md-4 align-self-center">
+            <div class="row">
+                <div class="container col-md-8">
+<section>
+    <article>
+        <header class="post-header">
+            <h2><a href="/drafts/strace-outil-derniere-chance.html" rel="bookmark">Strace, l'outil de la dernière chance</a></h2>
+            <span class='author'>Jean Gabès</span>
+            <span style="color: gray;font-style: italic;">( 24 Mar 2023 )</span>
+
+            <span class="tags"><a href="/tag/linux.html">linux</a> / <a href="/tag/debug.html">debug</a> / <a href="/tag/admin.html">admin</a></span>
+            <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
+
+
+        </header>
+
+    <h1>Les applications, ça plante (souvent) (╥﹏╥)</h1>
+<p>Tout administrateur l'apprend assez vite à ses dépens: les applications ça plante, et ça plante souvent. Point de magie à cela, 
+elles sont de plus en plus complexes, avec de plus en plus de fonctionalités. De plus, vu qu'il faut les produire de plus en plus vite, 
+on a recours à des frameworks tout faits qui rajoutent leur propre couche de complexité.</p>
+<p>Et qui dit complexe, dit moins stable. Bien sûr, on peut rajouter des mécanismes de hautes disponibilités si l'application
+le permets, mais parfois ceci rajoute lui-même une grosse couche de complexité qui va avoir ses propres problèmes
+si elle n'est pas bien maitrisée.</p>
+<p><center><img src='/images/common/fail3.gif'></center></p>
+<p>Bref, ça va planter. Et d'un certain côté tant mieux, ça donne du travail à ceux qui font des outils de supervision <code>٩(^‿^)۶</code></p>
+<h1>Sans logs point de solution, ou presque</h1>
+<p>Quand ça va planter (et on a vu que ce n'est qu'une question de temps), les administrateurs n'ont pas un milliard de solutions. Nous ne sommes
+pas surhumains ou des magiciens, on va faire avec les erreurs que l'application donne, soit directement à l'écran, soit côté backend.</p>
+<p>Peu importe qu'ils soient sous forme de logs locaux, centralisés, ou bien trace, ça revient grosso modo au même: l'application nous 
+donne l'erreur comme elle le voit, avec son interprétation.</p>
+<p>L'erreur peut être volumineuse (coucou Java et ses grosses stacks inparsables....), ou bien sommaire, mais elle donne quelque chose à se mettre sous la dent pour l'administrateur. 
+La suite va dépendre si l'erreur est assez claire. Un <code>Failed to connect to srv-mysql port 3306: Connection refused</code> va être assez 
+simple: votre serveur mysql est arrété (si c'était un firewall, on aurait plus un timeout, moins de chance d'avoir un refused du firewall). </p>
+<p>L'admin sait où chercher, et va voir du côté de la base ce qui se passe. Là encore, les logs/traces vont être déterminants.</p>
+<p>Bon là, c'est pour les cas un peu simples. Heureusement, d'expérience ça représente bien 90/95% des cas: on part rarement avec juste rien. Bon j'inclu aussi
+les cas où les utilisateurs arrivent avec "ça ne marche pas", sans autre détail, mais une petite prise de main à distance plus tard, soit l'utilisateur 
+a découvert qu'en fait il faisait n'importe quoi (bien 1/4 des cas), soit on arrive à avoir le message où commencer à investiguer.</p>
+<h1>Les derniers 5%: l'enfer sur Terre</h1>
+<h2>Ca se trouve, c'est pas si grave, un reboot et on repart</h2>
+<p>Bon vous me voyez venir, il reste les autres cas. Ceux où juste ça ne marche plus, mais sans message clair. Juste on lance, et rien ne se passe. Aucune
+erreur, juste: rien.</p>
+<p>Bon là en général un admin avec un peu d'expérience va faire une première action en priorité numéro 1: il va prendre un café, car dans pas longtemps il risque de ne plus avoir le temps d'aller en prendre un <code>\̅_̅/̷̚ʾ(•◡•)</code></p>
+<p><center><img src='/images/common/café.gif'></center></p>
+<p>Après la seconde étape va dépendre un peu de l'admin, de la récurrence du problème (déjà arrivé ou pas), et si l'application doit vraiment repartir MAINTENANT (en majuscule, à ne
+pas confondre avec le "maintenant" des chefs de projets qui est en fait un "dès que possible" mais déguisé).</p>
+<p>Si le problème est récurrent, qu'on a jamais trouvé d'où ça vient, et qu'il faut vraiment que la production reparte, point de solution: on relance l'application
+et ses dépendances en totalités. Cette solution (aussi nommée "méthode Windows", allez savoir pourquoi... non je blague, tout le monde sait pourquoi) a le grand
+avantage de régler la quasi-totalité des problèmes. Bon par contre on ne sait pas d'où vient le problème à la source, mais on a au moins un contournement.</p>
+<p>Je mets de côté le cas où c'est la première fois qu'on rencontre le problème, car dans ce cas on pars directement en analyse en ne touchant à rien pour ne pas empirer la situation. </p>
+<h2>On est mal ^^</h2>
+<p>Mais parfois, même le massive reboot ne suffit pas. Aucun message, logs ou trace ne nous aiguille vers la source du problème (qui peut venir de 3 stacks en dessous de l'application, sinon ce n'est pas drôle).</p>
+<p>Dans ce cas, l'application ne nous aidant pas, il va falloir se passer d'elle et tenter de "deviner" ce qui ne lui plait pas. (Une autre solution est de balancer le problème chez les développeurs de l'application
+si vous les avez sous la main, mais si ça permet de calmer votre chef car le problème est ailleurs désormais, ça ne relance pas votre production pour autant ^^')</p>
+<p>Ici, celui qui ne m'a jamais laissé tombé porte un nom: <code>strace</code>.</p>
+<p><center><img src='/images/common/deal with it.gif'></center></p>
+<h2>strace, quand le problème est entre l'application et l'OS</h2>
+<p><code>strace</code> s'installe nativement sur votre système, c'est à portée d'un dnf/apt. Cette commande n'est en rien magique. Elle est même au final
+assez simple dans son fonctionnement: elle va tracer les appels systèmes entre vos applications (qu'elles soient déjà lancées ou pas) et l'OS.</p>
+<p>On va y voir tout ce qui se passe entre votre application et le système. Mais, le problème, c'est que quand je dis tout, c'est TOUT. Sa sortie est verbeuse, car
+les applications font un MAX d'appels systèmes tout le temps, et principalement au lancement, là où en général vous avez des problèmes <code>(╯︵╰,)</code></p>
+<p><center><img src='/images/75/article.jpg'></center></p>
+<p>Le cas simple de strace est de lancer la commande avec par exemple:</p>
+<div class="highlight"><pre><span></span><code><span class="err">strace ls -thor</span>
+</code></pre></div>
+
+<p>On va avoir une sortie de la sorte:</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span> <span class="n">strace</span> <span class="n">ls</span> <span class="o">-</span><span class="n">thor</span>
+<span class="n">execve</span><span class="p">(</span><span class="s2">&quot;/usr/bin/ls&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ls&quot;</span><span class="p">,</span> <span class="s2">&quot;-thor&quot;</span><span class="p">],</span> <span class="mh">0x7fffbd60f428</span> <span class="o">/*</span> <span class="mi">43</span> <span class="n">vars</span> <span class="o">*/</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">brk</span><span class="p">(</span><span class="n">NULL</span><span class="p">)</span>                               <span class="o">=</span> <span class="mh">0x1ca9000</span>
+<span class="n">mmap</span><span class="p">(</span><span class="n">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7f6578ed3000</span>
+<span class="n">access</span><span class="p">(</span><span class="s2">&quot;/etc/ld.so.preload&quot;</span><span class="p">,</span> <span class="n">R_OK</span><span class="p">)</span>      <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s2">&quot;/etc/ld.so.cache&quot;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">fstat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="n">st_mode</span><span class="o">=</span><span class="n">S_IFREG</span><span class="o">|</span><span class="mi">0644</span><span class="p">,</span> <span class="n">st_size</span><span class="o">=</span><span class="mi">40994</span><span class="p">,</span> <span class="o">...</span><span class="p">})</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">mmap</span><span class="p">(</span><span class="n">NULL</span><span class="p">,</span> <span class="mi">40994</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7f6578ec8000</span>
+<span class="n">close</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                                <span class="o">=</span> <span class="mi">0</span>
+<span class="n">open</span><span class="p">(</span><span class="s2">&quot;/lib64/libselinux.so.1&quot;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">read</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\177</span><span class="s2">ELF</span><span class="se">\2\1\1\0\0\0\0\0\0\0\0\0\3\0</span><span class="s2">&gt;</span><span class="se">\0\1\0\0\0\220</span><span class="s2">j</span><span class="se">\0\0\0\0\0\0</span><span class="s2">&quot;</span><span class="o">...</span><span class="p">,</span> <span class="mi">832</span><span class="p">)</span> <span class="o">=</span> <span class="mi">832</span>
+<span class="o">...</span>
+<span class="n">openat</span><span class="p">(</span><span class="n">AT_FDCWD</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_NONBLOCK</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="o">|</span><span class="n">O_DIRECTORY</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">getdents</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">/*</span> <span class="mi">84</span> <span class="n">entries</span> <span class="o">*/</span><span class="p">,</span> <span class="mi">32768</span><span class="p">)</span>    <span class="o">=</span> <span class="mi">3240</span>
+</code></pre></div>
+
+<p><center><img src='/images/common/reading.gif'></center></p>
+<p>On voit l'appel au lancement du binaire. Puis après pas mal de chargement de fichiers et librairies et le listing du répertoire "."</p>
+<p>Ce qui va nous intéresser le plus, ce sont les erreurs, du genre:</p>
+<div class="highlight"><pre><span></span><code><span class="n">connect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_UNIX</span><span class="p">,</span> <span class="n">sun_path</span><span class="o">=</span><span class="s2">&quot;/var/run/nscd/socket&quot;</span><span class="p">},</span> <span class="mi">110</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">)</span>
+</code></pre></div>
+
+<p>nscd est un démon de cache qui peut ou pas exister sur la machine. Ici, c'est la négative. Est-ce un problème dans notre cas? Non, ce n'est
+qu'un cache. Et là vous voyez le problème: il y a les bonnes erreurs, et les mauvaises erreurs.</p>
+<p>Ici malheureusement, il va falloir montrer les muscles, et apprendre un peu tous ces rouages de l'OS afin de les identifier, et les filtrer rapidement.</p>
+<p>Prennons un vrai cas avec une erreur:</p>
+<div class="highlight"><pre><span></span><code><span class="err">strace ls -thor /n-existe-pas</span>
+</code></pre></div>
+
+<p>L'appel qui va nous intéresser va etre celui-ci:</p>
+<div class="highlight"><pre><span></span><code><span class="err">lstat(&quot;/n-existe-pas&quot;, 0x1f84600)       = -1 ENOENT (No such file or directory)</span>
+</code></pre></div>
+
+<p><code>strace</code> vous donne des données brutes, mais ça va rester à vous de faire le travail in-fine. Rien de magique.</p>
+<p>Par contre, ce qui est intéressant, c'est que vous êtes quasi sûr que l'erreur est dedans. Juste qu'un simple <code>ls</code> génère 150 lignes, alors imaginez un lancement
+d'un <code>apache</code> récalcitrant.</p>
+<p>Ce que je vous recommande d'ailleurs pour son lancement:</p>
+<ul>
+<li>mettre la sortie dans un fichier (<code>-o</code>)</li>
+<li>tracer également les threads et autre processus fils (<code>-f</code>)</li>
+<li>ne pas limiter la taille des strings dans les arguments des appels, ça aide (<code>-s 999999</code>)</li>
+</ul>
+<p>Ceci nous donne donc:</p>
+<div class="highlight"><pre><span></span><code><span class="err">strace -o /tmp/trace.txt -f -s 999999 ls -thor /n-existe-pas</span>
+</code></pre></div>
+
+<p>Vu sa verbosité, c'est à utiliser en dernier recours, mais ça peut sauver des productions.</p>
+<h2>Le jour où strace a débloqué plus de 300 personnes, et calmé mon chef</h2>
+<p>Dans mon cas, en 2008 ou 2009, nous avions un GROS erp Oracle, avec plusieurs <code>apaches</code> intégrés (chacun sa version, sa gestion de log, etc, un véritable enfer à administrer avec
+une surcouche xml d'Oracle qui n'aidait pas). </p>
+<p>Et un jour en production, une partie de l'application ne démarrait plus. Rien dans les nombreux logs:</p>
+<ul>
+<li>espace disque ok</li>
+<li>pas de soucis réseaux</li>
+<li>dns OK également (flute, souvent un bon bouc émissaire)</li>
+<li>cluster Oracle OK</li>
+<li>reboot fait, mais n'a rien changé </li>
+</ul>
+<p><center><img src='/images/common/oups.gif'></center></p>
+<p>Aucun des suspects habituels. Ça faisait déjà bien 3/4h que 300 utilisateurs attendaient leur ERP, dans une société de l'industrie, c'est long, TRES long.</p>
+<p><center><img src='/images/common/wait.gif'></center></p>
+<p>Je sors donc mon copain <code>strace</code>, en désespoir de cause. Vu qu'il nous manquait un des démons <code>apache</code>, je me suis concentré sur ce dernier:</p>
+<ul>
+<li>j'ai trouvé son lancement sur un appel <code>execve</code>, j'avais donc son PID</li>
+<li>j'ai grep tout ce qui concenait de PID d'apache dans la sortie de <code>strace</code></li>
+<li>j'ai vu un <code>open()</code> sur un obscur log qui retournait en erreur (je n'ai plus le code d'erreur préci, mais ce n'était pas un succès ^^)</li>
+<li>en allant voir le log, il faisait pile-poil 2Go. Pas un octet de plus ou de moins. Louche</li>
+<li>je regarde l'appel systèe en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre <code>open64()</code></li>
+<li>je clean le log avec un bon vieux <code>&gt; fichier-log</code></li>
+<li>ça redémarre enfin <code>♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓ ♪</code></li>
+</ul>
+<p><center><img src='/images/common/youpi.gif'></center></p>
+<p>J'avais découvert <code>strace</code> peu de temps avant. Sans lui, on aurait du faire appel au support Oracle, et vu la qualité de leurs réponses à l'époque, la
+production attendrait encore de redémarrer, nos 300 utilisateurs au chômage technique <code>ლ(ಠ益ಠლ)</code></p>
+<h2>strace sur un processus qui tourne déjà</h2>
+<p>Un dernier cas où je trouve <code>strace</code> pratique, c'est pour aller s'accrocher sur un processus qui est bloqué. Par exemple:</p>
+<div class="highlight"><pre><span></span><code><span class="err"> strace -o /tmp/trace.txt -f -s 999999 -p PID</span>
+</code></pre></div>
+
+<p>On pourra avoir par exemple un:</p>
+<div class="highlight"><pre><span></span><code><span class="err"> select(5, NULL, NULL, NULL, {tv_sec=0, tv_usec=50000} &lt;unfinished ...&gt;</span>
+</code></pre></div>
+
+<ul>
+<li>là on sait que le processus attend le filre descriptor <code>5</code></li>
+<li>on va voir qui est ce file descriptor <code>5</code> dans le processus via <code>ls -thor /proc/PID/fd</code> <ul>
+<li>et on trouve ainsi sur quelle socket/fichier il bloque</li>
+</ul>
+</li>
+</ul>
+<h1>Pas le seul outil dans son domaine, mais réponds toujours présent</h1>
+<p><code>strace</code> n'est pas le seul à opérer dans cette couche pour trouver les appels systèmes qui posent des problèmes. Un de ses sucesseurs est le fameux <code>eBPF</code> dont on parlera
+peut-être un jour.</p>
+<p>Ce dernier est un <code>strace</code> sous stéroïdes, qui ralenti beaucoup moins que strace, est capable de filtrage bien plus précis, etc. Mais le problème, c'est que ce n'est
+pas encore d'une stabilité à toute épreuve, et que son API évolue beaucoup, donc on n'est pas forcément sûr que son "script" de debug va bien fonctionner sur
+un ancien serveur par exemple (si tant est qu'il soit disponible, ce qui est loin d'être certain).</p>
+<p>Nul doute qu'<code>eBPF</code> rendra obsolète <code>strace</code> un jour, mais ce dernier a encore l'avantage d'être toujours là, peu importe les situations ou les règles de sécurité.</p>
+<p><center><img src='/images/common/hero 4.gif'></center></p>
+<h1>La couche système que j'apprécie tout particulèrement</h1>
+<p>Comme vous avez pu le voir au fil de ce post, c'est une couche que j'apprécie énormément. Cette couche des appels systèmes révèle tous les petits détails
+croustillant sur les trucs et astuces du système, sur comment les différents blocs fonctionnent entre eux.</p>
+<p><code>strace</code> est justement un moyen de trouver des problèmes, mais également découvrir tous pleins de nouveaux mécanismes systèmes. </p>
+<p>Quand je fais appel à <code>strace</code>, c'est
+que j'ai un gros problème, mais une chose est sûre: même après quasi 20 ans à faire du Linux, je vais sûrement découvrir encore un ou deux trucs que je ne 
+connais pas encore.</p>
+<p>Et rien que pour ça, je sais que je vais passer un bon moment <code>༼ つ ◕_◕ ༽つ</code></p>
+<p><center><img src='/images/common/hype.png'></center></p>
+
+<div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>
+</div>
+
+<hr/>
+
+<!--
+<div id="disqus_thread"></div>
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jeangabes.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
+
+        </footer>
+    </article>
+</section>
+
+<!--article.locale_date-->
+                </div> <!-- /container -->
+
+                <div class="col-md-3">
+                    <div id="SocialIcons" class="row">
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>                    </div>
+
+                    <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
+                        <h2>Archives</h2>
+                        <ul style="padding-left: 8px;">
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2023</span> <a href="/depuis-open-source-vers-editeur/"> Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2015</span> <a href="/smart-agent/"> Smart agent solution </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2010</span> <a href="/retour-des-rmll/"> Retour des RMLL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2010</span> <a href="/retour-a-lecole/"> Retour à l'école </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-la-01-est-arrivee/"> Shinken : la 0.1 est arrivée! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-example-de-hack-rapide-du-code/"> Shinken : example de Hack rapide du code </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-tagguez-vos-pollers/"> Shinken : tagguez vos pollers </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/shinken-quelques-news-sur-la-prochaine-01/"> Shinken : quelques news sur la prochaine 0.1 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/nagios-de-lopen-source-a-lopen-core/"> Nagios : de l'open source à l'open core ? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war/"> Art of (free software) war </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war-fr/"> Art of (free software) war - FR </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/deduplication-bloc-fixe-vs-bloc-variable/"> Déduplication : bloc fixe VS bloc variable </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/la-reponse-de-lauteur-de-nagios/"> La réponse de l'auteur de Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/"> Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/partie-a-trois-python-__slots__-et-metaclass/"> Partie à trois : Python, __slots__ et metaclass </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/"> Les escalades de notifications enfin simples à mettre en place </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/gestion-des-exclusions-de-timeperiods/"> Gestion des exclusions de timeperiods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/apres-mysql-oracle-et-couchdb-sqlite/"> Après MySQL, Oracle et couchdb : Sqlite </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/generalisation-des-modulations-de-resultats/"> Généralisation des modulations de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/couchdb-dans-shinken/"> Couchdb dans Shinken </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-sur-zdnet/"> Shinken sur ZDNet! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/python-et-le-data-driven-programming/"> Python et le Data-Driven programming </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/il-fait-chaud-chaud-cet-hiver/"> Il fait chaud chaud cet hiver </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/hot-periods/"> Hot periods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/mes-premiers-patchs/"> Mes premiers patchs ! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-des-modulateurs-de-resultats/"> Shinken : des modulateurs de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quel-avenir-pour-nagios-shinken/"> Shinken : quel avenir pour Nagios? Shinken? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-gestion-des-noms-en-utf8/"> Shinken : gestion des noms en UTF8 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quoi-de-neuf-docteur/"> Shinken : Quoi de neuf docteur? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-lart-de-linspiration/"> Shinken : l'art de l'inspiration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-nouveau-logo/"> Shinken : un nouveau logo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-le-choix-de-la-licence-agpl/"> Shinken : le choix de la licence AGPL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/"> Shinken : un serveur? Inutile, préférez un eeepc... </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/"> Shinken : 100Kchecks? Ah désolé, il fallait lire 200K </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/"> Shinken : à oui au fait, c'est multiplate-forme </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-les-realms-sont-la/"> Shinken : les realms sont là </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-pool-realm/"> Shinken : Pool -> Realm </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/"> Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-dispatch-des-commandes-externes/"> Shinken : dispatch des commandes externes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-le-dispatching-des-configurations-et-les-spares/"> Shinken : le dispatching des configurations et les spares </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/patch-nagios-ssl-pour-ndo/"> Patch Nagios : SSL pour Ndo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/100k-checks5minutes/"> 100K checks/5minutes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-les-grandes-lignes/"> Shinken : Les grandes lignes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/sortie-de-mon-livre-sur-nagios/"> Sortie de mon livre sur Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/monter-un-cluster-filesystem-avec-ocfs2/"> Monter un cluster filesystem avec OCFS2 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/"> Patch Nagios pour une gestion plus fine de la configuration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/shinken-quand-un-python-rencontre-nagios/"> Shinken : quand un python rencontre Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/"> Patch Nagios pour un démarrage (bien plus) rapide </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/administration-et-supervision-de-heartbeatldirectordipvs/"> Administration et supervision de HeartBeat/Ldirectord/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/"> Mise en place d'une solution de load balancing hautement disponible </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/"> La haute disponiblité et la répartition de charge avec HeartBeat/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/funkyplaylist-un-script-generateur-de-playlist/"> FunkyPlayList : un script générateur de playlist </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/"> Pyndsgest : gérer vos jeux NDS facilement </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/uberlogger/"> UberLogger </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mon-blog/"> Mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/ouverture-de-mon-blog/"> Ouverture de mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/un-petit-point-sur-lauteur/"> Un petit point sur l'auteur </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/ouverture/"> Ouverture </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="clear">
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+        <div class="row text-left">
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Navigation</h5>
+
+                <ul>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#about">A propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#skills">Skills</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#experiences">Expérience</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#education">Scolarité</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#projects">Mes projets</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#recent-posts">Derniers Posts</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Me contacter:</h5>
+                <ul>
+                    <li><span>Email: </span> <span>naparuba@gmail.com</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/theme/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/theme/js/popper.min.js"></script>
+<script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/theme/js/navbar.js"></script>
+<script type="text/javascript" src="/theme/js/plyr.js"></script>
+<script type="text/javascript" src="/theme/js/main.js"></script>
+
+
+<script src="/theme/js/itype.min.js"></script>
+<script src="/theme/js/github-button.js"></script>
+
+<script src="/theme/js/jquery.filterizr.min.js"></script>
+</body>
+</html>
