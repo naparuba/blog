@@ -122,175 +122,174 @@
 <section>
     <article>
         <header class="post-header">
-            <h2><a href="/drafts/depuis-open-source-vers-editeur.html" rel="bookmark">Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances</a></h2>
+            <h2><a href="/drafts/test-published.html" rel="bookmark">Strace, l'outil de la dernière chance</a></h2>
             <span class='author'>Jean Gabès</span>
-            <span style="color: gray;font-style: italic;">( 17 Mar 2023 )</span>
+            <span style="color: gray;font-style: italic;">( 31 Mar 2023 )</span>
 
-            <span class="tags"><a href="/tag/entreprenariat.html">entreprenariat</a> / <a href="/tag/open-source.html">open-source</a></span>
+            <span class="tags"><a href="/tag/linux.html">linux</a> / <a href="/tag/debug.html">debug</a> / <a href="/tag/admin.html">admin</a></span>
             <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
 
 
         </header>
 
-    <p>Ce post fait suite aux réflexions que j'ai eu lors de mon entretient avec <a href="https://fr.linkedin.com/in/imranedessai">Imrane Dessaï</a> que vous pouvez retrouver sur <a href="https://www.youtube.com/watch?v=kM42WE0Sa4c">Youtube</a></p>
-<h1>De simple consommateur Open Source à contributeur</h1>
-<p>Petit retour rapide sur l'histoire dont on va parler ici: Shinken était parti comme un simple POC sans nom pour rajouter le côté 
-distribué à Nagios. Suite au refus de Nagios d'incorporer les amélorations dans le projet "mère" (car utilisant un nouveau
-langage, le Python), <a href="http://www.shinken-monitoring.org/">Shinken</a> était né.</p>
-<p>J'avais toujours vu l'open source depuis mon point de vue de "simple consommateur, un peu contributeur"
-à quelques projets. J'avais déjà participé au projet Nagios avec quelques patchs/améliorations par exemple,
-ou le projet <a href="https://www.getmangos.eu/">Mangos</a> (serveur WoW). </p>
-<p>Mais c'était du classique: j'avais un problème,
-et hop un peu de C après et quelques recompilations, le problème était réglé. Passé mes patchs, je retournais
-dans mon côté consommateur, sans participer plus que ça aux projets, m'inpliquer et régler des problèmes que
-je n'avais pas par exemple.</p>
-<h1>Lancer son propre projet</h1>
-<p>Shinken a changé cela. J'avais mon propre projet. Vu que j'avais déjà écrit des articles sur Nagios dans <a href="https://connect.ed-diamond.com/auteur/gabes-jean">LinuxMag</a>
-à l'époque, c'était l'occasion de faire connaitre mon projet à d'autres afin d'avoir des utilisateurs. Et ils sont
-venus, avec des questions et (beaucoup) de demandes. Donc l'article avait rammené des consommateurs, logiques et
-je n'étais pas plus surpris de ça.</p>
-<p>Par contre, j'ai également eu des quelques contributions, petites au début, puis de plus en plus nombreuses au fur
-et à mesure. Arrivé à un moment, je pense qu'on pouvait considérer qu'on était deux à quasi-égalité sur le projet,
-avec <a href="https://github.com/lausser">Gerhard</a> (que je remercie chaleureusement!). Vu qu'il était allemand, ça m'a forcé à mettre tout le projet en
-anglais par défaut, pas un mal.</p>
-<p>Et là, de proche en proche, j'étais en train de gérer un projet communautaire sans trop l'avoir recherché au départ,
-mais pourquoi pas :)</p>
-<p><center><img src='/images/common/allow.gif'></center></p>
-<h2>Le projet s'organise tranquillement</h2>
-<p>Au début, on avait la mailinglist, mais qui n'était pas pratique du tout je trouve (je n'aime pas les emails,
-question de goût). Github et ses tickets ont pris le relais rapidement.</p>
-<p>L'organisation restait cependant très centralisée. J'ai toujours gardé la main sur le projet, sans avoir à demander
-à d'autres avant de faire les choses. Ce qui me plaisait dans le projet, c'était de rajouter de nouvelles fonctionalités,
-et corriger des bugs en faisant en sorte qu'ils ne reviennent pas. C'était très satisfaisant de se dire qu'on avançait
-vers une version "sans bugs". Et je n'allais pas demander d'autorisation pour améliorer mon propre projet ┌(▀Ĺ̯ ▀-͠ )┐</p>
-<p>Ce controle absolu est une force pour un petit projet, mais il se révèlera un problème quand il grandira par la suite.</p>
-<h1>Quand les demandes de support se font de plus en plus présentes</h1>
-<p>Vers mi-2012, une grande étape arrive: on écrit à plusieurs un <a href="https://connect.ed-diamond.com/GNU-Linux-Magazine/glmfhs-062">linuxmag hors série</a>. C'était vraiment sympa, car on s'était
-bien réparti les tâches. Le hors série est un carton, et attire beaucoup de monde. Et beaucoup de demandes. De plus en
-plus de grosses sociétés me demandent en off si une version supportée/boostées est prévue. Par boostée, il faut
-comprendre avec une interface de configuration (le moteur n'est pas la problématique de ce type d'utilisateurs, sauf
-si leur propre production est bloquée).</p>
-<p>Je me rapproche de structures sur Bordeaux pour savoir comment on fait pour monter un éditeur. (Futur article plus
-tard sur le sujet). Mi-2013, c'est parti: je trouve un associé orienté commercial, et l'éditeur <a href="https://www.shinken-enterprise.com">Shinken Solutions</a>
-prends vie.</p>
-<p><center><img src='/images/common/hello (2).gif'></center></p>
-<h1>Le début de l'éditeur</h1>
-<p>Je mets de côté la partie recherche de fonds et le remplissage de nombreux dossiers. Le code lui a avancé comme
-lors de la phase Open Source: très vite. Bien trop vite d'ailleurs, car avec bien les 3/4 du temps pris sur les
-dossiers, j'ai dû prendre des racourcis sur le dev de la partie configuration (je n'avais pas assez d'exéprience
-à l'époque pour estimer si le racourci était trop court ou pas). Des clients sont séduits, plus par le potentiel
-que par les premières interfaces il faut bien le dire. On embauche, et l'équipe s'étoffe.</p>
-<h2>Les choses à revoir</h2>
-<p>Et là arrive le retour à la réalité: toute la phase d'installation et d'exploitation était à revoir.</p>
-<p>Quand on prend un moteur Open Source (comprendre dans 99% du temps: gratuit), on est concients qu'on prend
-un simple moteur qu'il va falloir intégrer soit même dans le SI, le configurer, l'adaptant si besoin. Bref,
-payer avec son propre temps.</p>
-<p>Mais quand on achète une solution chez un éditeur les attentes ne sont pas du tout les mêmes. Déjà il faut voir
-que le public n'est pas le même non plus. Shinken était adapté pour les spécialistes qui n'avaient pas peur se relever
-les manches, d'installer les dépendances, et faire l'automatisation de leurs fichiers de configuration.</p>
-<p>Mais ceux qui choississent une solution payante veulent que toute cette partie-là soit déjà faite, nouvelle société éditrice
-ou pas. De plus, là on a pas forcément affaire à ceux qui sont au courant, qui cherchent la nouveauté, mais justement
-l'autre partie du spectre, ceux qui cherchent la stabilité et surtout la facilité.</p>
-<p>Bon "facile" n'était pas ce qui catactérisait Shinken à l'époque il faut être honnête. Quand on savait quoi faire,
-l'installation était l'histoire d'une bonne heure, configuration de la partie architecture incluse. Mais dans les mains
-d'un débutant dans le domaine qui n'allait pas lire la documentation (de toute manière l'outil ne lui donnait pas le lien
-où aller chercher) et s'attendait à avoir à lancer une seule commande, c'était l'enfer.</p>
-<p>Les premiers retours sur cette partie était calamiteuse. Beaucoup de POC se sont arrétés à cette étape. Il fallait donc
-remédier à ça.</p>
-<p><center><img src='/images/common/challenge.gif'></center></p>
-<h2>Création d'un installeur</h2>
-<p>La création d'un installeur a été salutaire. Il fallait arriver avec bons nombres de dépendances, dont <a href="https://www.mongodb.com">Mongo</a> et <a href="graphite.readthedocs.io/">Graphite</a>.</p>
-<p>Là où il était simple de gérer pleins de distributions différentes pour le moteur Open Source, quand on doit livrer un tut cohérent aux clients (qui
-sont dans des réseaux isolés), on a du faire le choix de choisir une distribution à gérer. A l'époque (2013), c'était Centos/Redhat6,
- car elle rassurait. Générer les rpm n'a pas été trop rude, même si la gestion des fichiers de configuration via rpm est un vrai
-calvaire au final </p>
-<div class="highlight"><pre><span></span><code><span class="n">Astuce</span><span class="o">:</span> <span class="n">ne</span> <span class="n">connez</span> <span class="n">pas</span> <span class="n">vos</span> <span class="n">fichiers</span> <span class="n">de</span> <span class="n">configurations</span> <span class="err">à</span> <span class="n">rpm</span><span class="o">,</span> <span class="n">faites</span> <span class="n">le</span> <span class="err">à</span> <span class="n">la</span> <span class="n">main</span> <span class="n">de</span> <span class="n">suite</span><span class="o">,</span> <span class="n">car</span> <span class="n">de</span> <span class="n">toute</span> <span class="n">manière</span> <span class="n">vous</span> <span class="n">devez</span> <span class="n">le</span> <span class="n">faire</span> <span class="err">à</span> <span class="n">terme</span>
+    <p>BLABLABLA</p>
+<h1>Les applications, ça plante (souvent) (╥﹏╥)</h1>
+<p>Tout administrateur l'apprend assez vite à ses dépens: les applications ça plante, et ça plante souvent. Point de magie à cela, 
+elles sont de plus en plus complexes, avec de plus en plus de fonctionalités. De plus, vu qu'il faut les produire de plus en plus vite, 
+on a recours à des frameworks tout faits qui rajoutent leur propre couche de complexité.</p>
+<p>Et qui dit complexe, dit moins stable. Bien sûr, on peut rajouter des mécanismes de hautes disponibilités si l'application
+le permets, mais parfois ceci rajoute lui-même une grosse couche de complexité qui va avoir ses propres problèmes
+si elle n'est pas bien maitrisée.</p>
+<p><center><img src='/images/common/fail3.gif'></center></p>
+<p>Bref, ça va planter. Et d'un certain côté tant mieux, ça donne du travail à ceux qui font des outils de supervision <code>٩(^‿^)۶</code></p>
+<h1>Sans logs point de solution, ou presque</h1>
+<p>Quand ça va planter (et on a vu que ce n'est qu'une question de temps), les administrateurs n'ont pas un milliard de solutions. Nous ne sommes
+pas surhumains ou des magiciens, on va faire avec les erreurs que l'application donne, soit directement à l'écran, soit côté backend.</p>
+<p>Peu importe qu'ils soient sous forme de logs locaux, centralisés, ou bien trace, ça revient grosso modo au même: l'application nous 
+donne l'erreur comme elle le voit, avec son interprétation.</p>
+<p>L'erreur peut être volumineuse (coucou Java et ses grosses stacks inparsables....), ou bien sommaire, mais elle donne quelque chose à se mettre sous la dent pour l'administrateur. 
+La suite va dépendre si l'erreur est assez claire. Un <code>Failed to connect to srv-mysql port 3306: Connection refused</code> va être assez 
+simple: votre serveur mysql est arrété (si c'était un firewall, on aurait plus un timeout, moins de chance d'avoir un refused du firewall). </p>
+<p>L'admin sait où chercher, et va voir du côté de la base ce qui se passe. Là encore, les logs/traces vont être déterminants.</p>
+<p>Bon là, c'est pour les cas un peu simples. Heureusement, d'expérience ça représente bien 90/95% des cas: on part rarement avec juste rien. Bon j'inclu aussi
+les cas où les utilisateurs arrivent avec "ça ne marche pas", sans autre détail, mais une petite prise de main à distance plus tard, soit l'utilisateur 
+a découvert qu'en fait il faisait n'importe quoi (bien 1/4 des cas), soit on arrive à avoir le message où commencer à investiguer.</p>
+<h1>Les derniers 5%: l'enfer sur Terre</h1>
+<h2>Ca se trouve, c'est pas si grave, un reboot et on repart</h2>
+<p>Bon vous me voyez venir, il reste les autres cas. Ceux où juste ça ne marche plus, mais sans message clair. Juste on lance, et rien ne se passe. Aucune
+erreur, juste: rien.</p>
+<p>Bon là en général un admin avec un peu d'expérience va faire une première action en priorité numéro 1: il va prendre un café, car dans pas longtemps il risque de ne plus avoir le temps d'aller en prendre un <code>\̅_̅/̷̚ʾ(•◡•)</code></p>
+<p><center><img src='/images/common/café.gif'></center></p>
+<p>Après la seconde étape va dépendre un peu de l'admin, de la récurrence du problème (déjà arrivé ou pas), et si l'application doit vraiment repartir MAINTENANT (en majuscule, à ne
+pas confondre avec le "maintenant" des chefs de projets qui est en fait un "dès que possible" mais déguisé).</p>
+<p>Si le problème est récurrent, qu'on a jamais trouvé d'où ça vient, et qu'il faut vraiment que la production reparte, point de solution: on relance l'application
+et ses dépendances en totalités. Cette solution (aussi nommée "méthode Windows", allez savoir pourquoi... non je blague, tout le monde sait pourquoi) a le grand
+avantage de régler la quasi-totalité des problèmes. Bon par contre on ne sait pas d'où vient le problème à la source, mais on a au moins un contournement.</p>
+<p>Je mets de côté le cas où c'est la première fois qu'on rencontre le problème, car dans ce cas on pars directement en analyse en ne touchant à rien pour ne pas empirer la situation. </p>
+<h2>On est mal ^^</h2>
+<p>Mais parfois, même le massive reboot ne suffit pas. Aucun message, logs ou trace ne nous aiguille vers la source du problème (qui peut venir de 3 stacks en dessous de l'application, sinon ce n'est pas drôle).</p>
+<p>Dans ce cas, l'application ne nous aidant pas, il va falloir se passer d'elle et tenter de "deviner" ce qui ne lui plait pas. (Une autre solution est de balancer le problème chez les développeurs de l'application
+si vous les avez sous la main, mais si ça permet de calmer votre chef car le problème est ailleurs désormais, ça ne relance pas votre production pour autant ^^')</p>
+<p>Ici, celui qui ne m'a jamais laissé tombé porte un nom: <code>strace</code>.</p>
+<p><center><img src='/images/common/deal with it.gif'></center></p>
+<h2>strace, quand le problème est entre l'application et l'OS</h2>
+<p><code>strace</code> s'installe nativement sur votre système, c'est à portée d'un dnf/apt. Cette commande n'est en rien magique. Elle est même au final
+assez simple dans son fonctionnement: elle va tracer les appels systèmes entre vos applications (qu'elles soient déjà lancées ou pas) et l'OS.</p>
+<p>On va y voir tout ce qui se passe entre votre application et le système. Mais, le problème, c'est que quand je dis tout, c'est TOUT. Sa sortie est verbeuse, car
+les applications font un MAX d'appels systèmes tout le temps, et principalement au lancement, là où en général vous avez des problèmes <code>(╯︵╰,)</code></p>
+<p><center><img src='/images/75/article.jpg'></center></p>
+<p>Le cas simple de strace est de lancer la commande avec par exemple:</p>
+<div class="highlight"><pre><span></span><code><span class="err">strace ls -thor</span>
 </code></pre></div>
 
-<h2>Les clients et les cycles de mises à jour</h2>
-<p>Autre point qui a posé problème était le rythme pour mettre à jour chez nos clients. Vu que c'étaient de grands comptes,
-on parle de cycles très longs de validation/tests. Entre livrer une version et la voir installer, c'étaient des semaines
-voir des mois. Dans un cas bien spécifique d'un projet où on était à l'année.</p>
-<p>Et c'est quelque chose que là encore on ne peut pas bouger. C'est le process interne des clients, et il faut faire avec,
-pas le choix.</p>
-<p>On a donc dû gérer plusieurs versions en parallèles, ce qui a un coût non négligeable en termes de gestion.</p>
-<p><center><img src='/images/common/killself.gif'></center></p>
-<h2>ok mais là ça fait un moment qu'on a pas évoqué le code non?</h2>
-<p>Voilà, en fait, c'est toute la problématique d'un éditeur qui s'adresse pour les grandes sociétés (Shinken
-n'était pas adapté pour les petites structures): c'est tout sauf un problème de code. </p>
-<p>Il faut faire avec des habitudes et des process internes. Le code n'est que le dernier des soucis, c'est facile à régler par rapport aux
-premiers points.</p>
-<p>Par exemple, on a dû parfois faire des algorithmes moins efficaces techniquement, mais bien plus faciles et
-comprehensibles par les utilisateurs. Un algorithme trop complexe va juste créer des problèmes à l'éditeur, sans
-que ses clients y voient un intérêt.</p>
-<p>Bref, je gérais au jour à jour des problèmes qui n'étaient pas le code. La différence avec ce qui se passait du
-côté Open Source était très forte, dans mon esprit c'était devenu deux "projets" différents.</p>
-<p>Techniquement, c'était de plus en plus le cas, vu qu'au début on était trop limites en temps pour maintenir les
-modifications dans la version open source (et les tester, adapter, etc, c'est bien plus que juste backporter le code).</p>
-<h1>Quand tu découvres qu'il y a deux types de motivations</h1>
-<p>Pour ceux qui ont lu le livre <a href="https://www.amazon.fr/Gamers-Brain-Neuroscience-Impact-Design/dp/1498775500">The Gamer's Brain de Celia Hodent</a>
-savent qu'il y a (au moins) deux types de motivations:
- * intrinsèque : la récompense est de faire l'activité en elle-même  (en résumé: c'est fun en soi)
- * extrinsèque : la récompense t'es donnée car tu as fait l'activité (en résumé: pas marrant, mais tu es payé pour)</p>
-<p>Le problème c'est que je n'ai lu ce livre que vers 2020, pas 2013 ^^'</p>
-<p>Et donc assez rapidement est arrivé un changement: développer pour Shinken était une activité que je faisais
-car c'était marrant, donc une motivation <em>intrinsèque</em>. </p>
-<p>Mais après avoir lancé la société, ma paie et surtout
-celle de mes salariés en dépendait literralement. J'étais donc passé sur une motivation <em>extrinsèque</em>, avec des
-contraintes de l'éditeur comme on a vu avant.</p>
-<p>Et ce passage de motivation intrinsèque à motivation extrinsèque
-est un cas connu: c'est un chemin en sens unique, car une fois que le cervau a identifié une tâche comme une
-récompense extrinsèque, il ne revient pas en arrière. Il est même moins sensible que ceux qui n'ont connu que
-la récompense extrinsèque!</p>
-<p>Et entre ça et le fait que le code du framework avait tellement divergé que je relisais du "vieux" code que
-j'avais fixé il y a quelque temps au "travail", le soir c'était tout sauf "fun" à faire.</p>
-<div class="highlight"><pre><span></span><code><span class="err">J&#39;avais tué mon hobby. Litérallement.</span>
+<p>On va avoir une sortie de la sorte:</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span> <span class="n">strace</span> <span class="n">ls</span> <span class="o">-</span><span class="n">thor</span>
+<span class="n">execve</span><span class="p">(</span><span class="s2">&quot;/usr/bin/ls&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ls&quot;</span><span class="p">,</span> <span class="s2">&quot;-thor&quot;</span><span class="p">],</span> <span class="mh">0x7fffbd60f428</span> <span class="o">/*</span> <span class="mi">43</span> <span class="n">vars</span> <span class="o">*/</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">brk</span><span class="p">(</span><span class="n">NULL</span><span class="p">)</span>                               <span class="o">=</span> <span class="mh">0x1ca9000</span>
+<span class="n">mmap</span><span class="p">(</span><span class="n">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7f6578ed3000</span>
+<span class="n">access</span><span class="p">(</span><span class="s2">&quot;/etc/ld.so.preload&quot;</span><span class="p">,</span> <span class="n">R_OK</span><span class="p">)</span>      <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s2">&quot;/etc/ld.so.cache&quot;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">fstat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="n">st_mode</span><span class="o">=</span><span class="n">S_IFREG</span><span class="o">|</span><span class="mi">0644</span><span class="p">,</span> <span class="n">st_size</span><span class="o">=</span><span class="mi">40994</span><span class="p">,</span> <span class="o">...</span><span class="p">})</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">mmap</span><span class="p">(</span><span class="n">NULL</span><span class="p">,</span> <span class="mi">40994</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7f6578ec8000</span>
+<span class="n">close</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                                <span class="o">=</span> <span class="mi">0</span>
+<span class="n">open</span><span class="p">(</span><span class="s2">&quot;/lib64/libselinux.so.1&quot;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">read</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\177</span><span class="s2">ELF</span><span class="se">\2\1\1\0\0\0\0\0\0\0\0\0\3\0</span><span class="s2">&gt;</span><span class="se">\0\1\0\0\0\220</span><span class="s2">j</span><span class="se">\0\0\0\0\0\0</span><span class="s2">&quot;</span><span class="o">...</span><span class="p">,</span> <span class="mi">832</span><span class="p">)</span> <span class="o">=</span> <span class="mi">832</span>
+<span class="o">...</span>
+<span class="n">openat</span><span class="p">(</span><span class="n">AT_FDCWD</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_NONBLOCK</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="o">|</span><span class="n">O_DIRECTORY</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">getdents</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">/*</span> <span class="mi">84</span> <span class="n">entries</span> <span class="o">*/</span><span class="p">,</span> <span class="mi">32768</span><span class="p">)</span>    <span class="o">=</span> <span class="mi">3240</span>
 </code></pre></div>
 
-<p><center><img src='/images/common/cassé 3.gif'></center></p>
-<h2>Gérer seul son projet Open Source</h2>
-<p>Et c'est là que le fait que je gère seul le projet a été une erreur je pense. Si je devais recommancer,
-je pense que dès qu'on lance un éditeur, il faut passer la main sur le projet open source à quelqu'un qui
-n'est pas lié économiquement à l'éditeur, ou à défaut le faire avec un groupe neutre. Même pas pour des raisons
-de "concurrences" ou autre, mais bien pour être sûr qu'il y ait une bonne motivation à sa tête.</p>
-<p>Hereusement, <a href="https://github.com/geektophe">Christophe Simon</a> de Dailymotion a grandement palié le problème et a géré dans l'ombre le projet
-Open Source. Je le remercie chaleureusement pour ça <code>(/.__.)/ \(.__.\)</code></p>
-<p><center><img src='/images/common/thanks.gif'></center></p>
-<h2>La vitesse d'un éditeur versus celle d'un mec sur son canapé</h2>
-<p>Autre point qui peu être très désagréable, est que suite à tous ces soucis de gestion des process des
-clients, j'ai eu l'impression d'aller beaucoup, <em>beaucoup</em> moins vite en termes de développement que lorsque
-j'étais seul dans mon canapé à coder le soir.</p>
-<p>En fait, c'est à la fois vrai et faux.</p>
-<p><center><img src='/images/common/maybe.gif'></center></p>
-<p>Le fait de travailler en équipe demande beaucoup de "surcharge" en interne pour que ça avance correctement (bonne
-gestion des tickets, communication interne, gestion de la documentation, etc), surtout quand on a de gros clients.</p>
-<p>Donc si je me prends en tant qu'individuel, ma vitesse pure dans une telle organisation était bien plus faible que
-celle que j'avais avant de monter un éditeur. Et c'est totalement normal. C'était la vitesse de l'équipe qui comptait,
-pas la mienne.</p>
-<p>Mais c'est dur à accepter, surtout quand on allait très vite avant.
-Mes collègues ont moins ce problème, car pour
-eux c'est une vitesse "normale", et je me retrouvais à être en décalage par rapport à eux dans mon ressenti.</p>
-<p>La vitesse de réflexion et d'exécution ayant toujours été un de mes points forts, c'était quelque chose que j'ai
-très, très mal véçu au fil du temps:
-  * plus de process
-  * moins de vitesse individuelle
-  * mais meilleure vitesse d'équipe à la fin</p>
-<h2>Deux salles, deux ambiances</h2>
-<p>Bons nombres de développeurs connaissent déjà tout cela. Car c'est leur métier et ils ont conscience de ces problèmes
-de motivation ou de vitesse perçue. </p>
-<p>Mais je n'étais pas un développeur profesionnel à l'époque, j'étais administrateur système <code>\̅_̅/̷̚ʾ(•◡•)</code></p>
-<p>Je pense qu'un développeur professionnel aurait eu moins de soucis, ou en tout cas aurait pu les identifier plus vite. </p>
-<h2>Des solutions</h2>
-<p>Est-ce qu'il y a des solutions? </p>
-<p>Déjà splitter au plus tôt le travail et le hobby en laissant ce dernier dans les mains
-d'autres, ou en tout cas avoir un groupe pour le gérer et non pas une seule personne.</p>
-<p>Des conseils pour se lancer dans un éditeur qui s'adresse à de grosses sociétés et à leur process? Pas vraiment.
-Prennez votre vélocité "normale" que vous imaginez, et divisez là par un bon gros 3. Vous aurez une bonne estimation quand ça
-s'adresse à ce genre de clients. Il faut que votre business plan soit en phase avec ça.</p>
-<p><center><img src='/images/common/tropcher.gif'></center></p>
-<p>Si mon éxpérience vous est utile, ou si vous en avez une similaire (ou contraire), n'hésitez pas à le mettre
-en commentaires, c'est le genre de sujet que je n'ai pas trop vu/lu dans le passé et qui m'aurait été pratique
-il y a 10 ans <code>(づ｡◕‿‿◕｡)づ</code></p>
+<p><center><img src='/images/common/reading.gif'></center></p>
+<p>On voit l'appel au lancement du binaire. Puis après pas mal de chargement de fichiers et librairies et le listing du répertoire "."</p>
+<p>Ce qui va nous intéresser le plus, ce sont les erreurs, du genre:</p>
+<div class="highlight"><pre><span></span><code><span class="n">connect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_UNIX</span><span class="p">,</span> <span class="n">sun_path</span><span class="o">=</span><span class="s2">&quot;/var/run/nscd/socket&quot;</span><span class="p">},</span> <span class="mi">110</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">)</span>
+</code></pre></div>
+
+<p>nscd est un démon de cache qui peut ou pas exister sur la machine. Ici, c'est la négative. Est-ce un problème dans notre cas? Non, ce n'est
+qu'un cache. Et là vous voyez le problème: il y a les bonnes erreurs, et les mauvaises erreurs.</p>
+<p>Ici malheureusement, il va falloir montrer les muscles, et apprendre un peu tous ces rouages de l'OS afin de les identifier, et les filtrer rapidement.</p>
+<p>Prennons un vrai cas avec une erreur:</p>
+<div class="highlight"><pre><span></span><code><span class="err">strace ls -thor /n-existe-pas</span>
+</code></pre></div>
+
+<p>L'appel qui va nous intéresser va etre celui-ci:</p>
+<div class="highlight"><pre><span></span><code><span class="err">lstat(&quot;/n-existe-pas&quot;, 0x1f84600)       = -1 ENOENT (No such file or directory)</span>
+</code></pre></div>
+
+<p><code>strace</code> vous donne des données brutes, mais ça va rester à vous de faire le travail in-fine. Rien de magique.</p>
+<p>Par contre, ce qui est intéressant, c'est que vous êtes quasi sûr que l'erreur est dedans. Juste qu'un simple <code>ls</code> génère 150 lignes, alors imaginez un lancement
+d'un <code>apache</code> récalcitrant.</p>
+<p>Ce que je vous recommande d'ailleurs pour son lancement:</p>
+<ul>
+<li>mettre la sortie dans un fichier (<code>-o</code>)</li>
+<li>tracer également les threads et autre processus fils (<code>-f</code>)</li>
+<li>ne pas limiter la taille des strings dans les arguments des appels, ça aide (<code>-s 999999</code>)</li>
+</ul>
+<p>Ceci nous donne donc:</p>
+<div class="highlight"><pre><span></span><code><span class="err">strace -o /tmp/trace.txt -f -s 999999 ls -thor /n-existe-pas</span>
+</code></pre></div>
+
+<p>Vu sa verbosité, c'est à utiliser en dernier recours, mais ça peut sauver des productions.</p>
+<h2>Le jour où strace a débloqué plus de 300 personnes, et calmé mon chef</h2>
+<p>Dans mon cas, en 2008 ou 2009, nous avions un GROS erp Oracle, avec plusieurs <code>apaches</code> intégrés (chacun sa version, sa gestion de log, etc, un véritable enfer à administrer avec
+une surcouche xml d'Oracle qui n'aidait pas). </p>
+<p>Et un jour en production, une partie de l'application ne démarrait plus. Rien dans les nombreux logs:</p>
+<ul>
+<li>espace disque ok</li>
+<li>pas de soucis réseaux</li>
+<li>dns OK également (flute, souvent un bon bouc émissaire)</li>
+<li>cluster Oracle OK</li>
+<li>reboot fait, mais n'a rien changé </li>
+</ul>
+<p><center><img src='/images/common/oups.gif'></center></p>
+<p>Aucun des suspects habituels. Ça faisait déjà bien 3/4h que 300 utilisateurs attendaient leur ERP, dans une société de l'industrie, c'est long, TRES long.</p>
+<p><center><img src='/images/common/wait.gif'></center></p>
+<p>Je sors donc mon copain <code>strace</code>, en désespoir de cause. Vu qu'il nous manquait un des démons <code>apache</code>, je me suis concentré sur ce dernier:</p>
+<ul>
+<li>j'ai trouvé son lancement sur un appel <code>execve</code>, j'avais donc son PID</li>
+<li>j'ai grep tout ce qui concenait de PID d'apache dans la sortie de <code>strace</code></li>
+<li>j'ai vu un <code>open()</code> sur un obscur log qui retournait en erreur (je n'ai plus le code d'erreur préci, mais ce n'était pas un succès ^^)</li>
+<li>en allant voir le log, il faisait pile-poil 2Go. Pas un octet de plus ou de moins. Louche</li>
+<li>je regarde l'appel systèe en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre <code>open64()</code></li>
+<li>je clean le log avec un bon vieux <code>&gt; fichier-log</code></li>
+<li>ça redémarre enfin <code>♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓ ♪</code></li>
+</ul>
+<p><center><img src='/images/common/youpi.gif'></center></p>
+<p>J'avais découvert <code>strace</code> peu de temps avant. Sans lui, on aurait du faire appel au support Oracle, et vu la qualité de leurs réponses à l'époque, la
+production attendrait encore de redémarrer, nos 300 utilisateurs au chômage technique <code>ლ(ಠ益ಠლ)</code></p>
+<h2>strace sur un processus qui tourne déjà</h2>
+<p>Un dernier cas où je trouve <code>strace</code> pratique, c'est pour aller s'accrocher sur un processus qui est bloqué. Par exemple:</p>
+<div class="highlight"><pre><span></span><code><span class="err"> strace -o /tmp/trace.txt -f -s 999999 -p PID</span>
+</code></pre></div>
+
+<p>On pourra avoir par exemple un:</p>
+<div class="highlight"><pre><span></span><code><span class="err"> select(5, NULL, NULL, NULL, {tv_sec=0, tv_usec=50000} &lt;unfinished ...&gt;</span>
+</code></pre></div>
+
+<ul>
+<li>là on sait que le processus attend le filre descriptor <code>5</code></li>
+<li>on va voir qui est ce file descriptor <code>5</code> dans le processus via <code>ls -thor /proc/PID/fd</code> <ul>
+<li>et on trouve ainsi sur quelle socket/fichier il bloque</li>
+</ul>
+</li>
+</ul>
+<h1>Pas le seul outil dans son domaine, mais réponds toujours présent</h1>
+<p><code>strace</code> n'est pas le seul à opérer dans cette couche pour trouver les appels systèmes qui posent des problèmes. Un de ses sucesseurs est le fameux <code>eBPF</code> dont on parlera
+peut-être un jour.</p>
+<p>Ce dernier est un <code>strace</code> sous stéroïdes, qui ralenti beaucoup moins que strace, est capable de filtrage bien plus précis, etc. Mais le problème, c'est que ce n'est
+pas encore d'une stabilité à toute épreuve, et que son API évolue beaucoup, donc on n'est pas forcément sûr que son "script" de debug va bien fonctionner sur
+un ancien serveur par exemple (si tant est qu'il soit disponible, ce qui est loin d'être certain).</p>
+<p>Nul doute qu'<code>eBPF</code> rendra obsolète <code>strace</code> un jour, mais ce dernier a encore l'avantage d'être toujours là, peu importe les situations ou les règles de sécurité.</p>
+<p><center><img src='/images/common/hero 4.gif'></center></p>
+<h1>La couche système que j'apprécie tout particulèrement</h1>
+<p>Comme vous avez pu le voir au fil de ce post, c'est une couche que j'apprécie énormément. Cette couche des appels systèmes révèle tous les petits détails
+croustillant sur les trucs et astuces du système, sur comment les différents blocs fonctionnent entre eux.</p>
+<p><code>strace</code> est justement un moyen de trouver des problèmes, mais également découvrir tous pleins de nouveaux mécanismes systèmes. </p>
+<p>Quand je fais appel à <code>strace</code>, c'est
+que j'ai un gros problème, mais une chose est sûre: même après quasi 20 ans à faire du Linux, je vais sûrement découvrir encore un ou deux trucs que je ne 
+connais pas encore.</p>
+<p>Et rien que pour ça, je sais que je vais passer un bon moment <code>༼ つ ◕_◕ ༽つ</code></p>
+<p><center><img src='/images/common/hype.png'></center></p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
     <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
@@ -315,17 +314,9 @@ il y a 10 ans <code>(づ｡◕‿‿◕｡)づ</code></p>
 
 <hr/>
 
+<!--
 <div id="disqus_thread"></div>
 <script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
     s.src = 'https://jeangabes.disqus.com/embed.js';
@@ -334,7 +325,7 @@ il y a 10 ans <code>(づ｡◕‿‿◕｡)づ</code></p>
     })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
+-->
 
         </footer>
     </article>
@@ -366,6 +357,9 @@ il y a 10 ans <code>(づ｡◕‿‿◕｡)づ</code></p>
                     <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
                         <h2>Archives</h2>
                         <ul style="padding-left: 8px;">
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2023</span> <a href="/depuis-open-source-vers-editeur/"> Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances </a>
+                            </li>
                             <li class="archive-entry">
                                 <span class="archives-li-header">Feb 2015</span> <a href="/smart-agent/"> Smart agent solution </a>
                             </li>
