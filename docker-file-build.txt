@@ -12,5 +12,5 @@ ADD        . /root/blog
 
 WORKDIR       /root/blog
 
-RUN           rm -fr output/*
-ENTRYPOINT    make html
+
+ENTRYPOINT    rm -fr output/*; make html

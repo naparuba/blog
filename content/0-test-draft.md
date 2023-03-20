@@ -1,15 +1,15 @@
 Title: Strace, l'outil de la dernière chance
-Date: 2023-03-24 10:20
+Date: 2023-03-31 10:20
 Category: Talk
 Tags: linux, debug, admin
-Slug: strace-outil-derniere-chance
+Slug: test-published
 Author: Jean Gabès
 AuthorLogin: naparuba
 Summary: Quand on se retrouve en façe d'une application qui se plante sans erreur claire et sans logs/trace, il reste une solution de la dernière chance: la commande strace
 id: 75
-Status: ready
+Status: draft
 
-
+BLABLABLA
 
 # Les applications, ça plante (souvent) (╥﹏╥)
 

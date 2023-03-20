@@ -61,3 +61,6 @@ TWITTER_URL = 'https://twitter.com/naparuba'
 TEMPLATE_PAGES = {'./parcours.html': './parcours.html',
                   './blog.html': './blog.html',
                   }
+
+PLUGIN_PATHS = ["plugins"]
+PLUGINS = ["future_publishing"]
