@@ -4,6 +4,11 @@ on: [push]
 jobs:
   Build:
     runs-on: ubuntu-latest
+    
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the changed files back to the repository.
+      contents: write
+      
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -19,4 +24,9 @@ jobs:
         run: |
           ./docker_run.sh run-github-actions docker-file-build.txt
            git status
+           
+      -  uses: stefanzweifel/git-auto-commit-action@v4
+         with:
+           file_pattern: 'output/*'
+           commit_message: Autobuild from github actions
       - run: echo "🍏 This job's status is ${{ job.status }}."
