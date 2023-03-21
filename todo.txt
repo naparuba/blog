@@ -1,0 +1,206 @@
+#  ______          __            __   __            __          _
+# /_  __/___  ____/ /___       _/_/  / /____  _____/ /_  ____  (_)___ ___  _____
+#  / / / __ \/ __  / __ \    _/_/   / __/ _ \/ ___/ __ \/ __ \/ / __ `/ / / / _ \
+# / / / /_/ / /_/ / /_/ /  _/_/    / /_/  __/ /__/ / / / / / / / /_/ / /_/ /  __/
+#/_/  \____/\__,_/\____/  /_/      \__/\___/\___/_/ /_/_/ /_/_/\__, /\__,_/\___/
+#                                                                /_/
+
+* passer en build sous github actions (voir un peu la diff avec travis)
+
+
+
+#    ______      __                                __  _      __
+#   / ____/_  __/ /___  ____________   ____ ______/ /_(_)____/ /__  _____
+#  / /_  / / / / __/ / / / ___/ ___/  / __ `/ ___/ __/ / ___/ / _ \/ ___/
+# / __/ / /_/ / /_/ /_/ / /  (__  )  / /_/ / /  / /_/ / /__/ /  __(__  )
+#/_/    \__,_/\__/\__,_/_/  /____/   \__,_/_/   \__/_/\___/_/\___/____/
+
+
+## Articles parlant de technique de développement Python
+* Les threads et leurs (nombreux) pièges
+* Lancer des processus fils (workers)
+* Les processus fils ne doivent pas survivre à leur père
+* Le garbage collector: pas forcément votre ami
+* On dump la RAM d’un processus qui fonctionne
+* Détecter des deadlocks: on dump la stack de tous les threads depuis le processus lui même
+* Détecter des deadlocks: on dump la stack de tous les threads depuis l’extérieur avec GDB
+* Éteindre (proprement) son processus: les signaux
+* Sérialiser ses données: Pickle (et sa sécurisation)
+* Versionner ses objets: survivre à plusieurs version de son code au fil du temps
+* Donner un “vrai” nom à vos processus
+* Empêcher un processus d’être lancé plusieurs fois: les fichiers pid
+* /dev/shm: un disque totalement en RAM, y a pas plus rapide
+* Dépasser ses limites: Python et ulimit
+* Du simple script au vrai démon
+* Moyenne exponentielle décroissante: une moyenne en O(1) en mémoire
+* Sérialiser vos propres objets avec Pickle: __get_state__ et __set_state__
+* Sauvegarder un fichier: attendez vous au pire
+* Variable d’environnement: un flag de DEBUG à pas cher
+* Dequeue(), le petit frère aux stéroïdes des listes classiques []
+* Limiter le temps passer dans un lock: le fast switching de liste
+* Copy, et deepcopy: la différence
+* Mettre un peu de couleur dans ses logs et son affichage shell
+* Le temps: indispensable, mais votre pire ennemi
+* Watchdog: détecter (et survivre) au debug d’un dead lock
+* Les uuids: tellement mieux que les simples ids (int)
+* Donner un nom à ses threads
+* Calculer une différence de temps écoulé: pas si trivial
+* Terminer ses requêtes avant de quitter: le transactionner
+* Le weakref: pratique pour les caches et alléger votre gestion RAM
+* Malloctrim: forcer les vieux Python à libérer leur RAM
+* Prendre la main sur le GC: parfois il faut lui dire non
+* Récupérer depuis Python sa consommation RAM a peu de frais
+* On ne fork() que si on a assez de RAM: le mensonge du Copy On Write
+* Mesurer le VRAI temps CPU d’une fonction (sans les temps de lock et autres attentes)
+* Multiprocessing: merci de me rendre tous ces mois de dev de perdu
+* Traceback: l’ami de vos erreurs
+* Le crash silencieux d’un thread: à éviter à tout prix
+* Une socket: deux timeouts
+* Les sockets unix: une communication inter processus à pas cher
+* Récupérer l’ip d’une interface réseaux
+* Horreur, mon process ne s’arrête pas avec sys.exit() (merci les threads)
+* Mongo: c’est ça une base “performante”?
+* AES: comment chiffrer vos données en Python
+* Les contextes managers, c’est bon, mangez-en
+* Attention, sys.argv n’est pas forcément ce que vous avez mis dans le shell
+* Méthode facile pour avoir la taille du terminal
+* Modularité: récupérez toutes les classes implémentant les classes mères
+* Améliorer le temps de boot: ne charger les lib que quand nécessaire
+* eval() comment le sécuriser
+* Stopper: mais qui a demandé l’arrêt de mon programme?
+* UDP: le protocole mal aimé
+* Récupérer l’espace disque disponible depuis Python
+* Tester son démon sur pleins de distributions linux différentes
+* CLI: faire patienter pendant que ses threads travaillent (spinner)
+* Les fstrings c’est cool, mais parfois %s c’est juste mieux.
+* Gérer Python2 et 3 en même temps, mais quel enfer!
+* Les floats, toujours là pour te casser les bonbons
+* Ce que j’aimerai en Python? Des macros! (et plus de GIL)
+* Pitié, nommez correctement vos branches git!
+* Godot: ça marche bien pour exporter sur Play Store
+* Interface de gestion du playstore: un poil too much
+*
+
+
+
+## Articles sur la philosophie de développement
+* Pourquoi je ne suis pas un grand fan des @property
+* Dict ou objet d’échange: comment choisir?
+* Les décorators: ultra pratique, mais ne pas en abuser
+* Pourquoi l’asynchrone n’est pas forcément l’ami des performances (et de vos debug)
+* Coder un moteur qui va charger des modules qui eux vont faire le travail
+* Ne tentez pas de faire “propre” avant d’avoir un truc qui fonctionne
+* REST: c’est gentil, MAIS
+* La taille*, ça ne compte pas vraiment ( * de la ligne)
+* Les ternaires: ne pas en abuser
+* Trop de commentaires: jamais vu, des mauvais si
+* Le typing: nécessaire mais pas magique
+* Je dois pouvoir débugger votre code à 3h du mat, mal réveillé
+* Codez à la cool, sinon c’est mort lors du Debug
+* Python c’est bien, mais clairement pas pour tout
+* Les constantes/enum nous veulent du bien
+* Les globales: quand, et surtout quand ne pas, les utiliser
+* Non, appeler sys.exit() dans une lib n’est PAS une bonne idée (ça vaut aussi pour les assert)
+* Mythe: en Python on a pas besoin de gérer sa RAM
+* Tests d’intégrations >> tests unitaires (mais les avoir les deux c’est encore mieux)
+* Investissez dans un vrai IDE, il vous le rendra (love Pycharm)
+* Git est votre ami (et son backup aussi)
+* Pourquoi je ne suis pas fan de pip en production
+* Vos propriétés sont privées. Point d’exception à la règle
+* Plus le code est compact, mieux c’est. Oui, en Perl.
+* Concentrez vous sur les données, les traitements en découleront. Surtout pas l’inverse!
+* Les exceptions: on les gère le plus bas possible
+* Trop de niveaux de classes, et c’est la mort
+* Les tests unitaires: surtout là pour aider au cours du développement, moins pour les regressions
+* Les logs: une factory c’est bien
+* Comment on aborde le dev quand on est admin
+* En quoi Shinken a été inspiré par WoW
+* C’est plus simple de debugger de l’open source: mouai
+* Mon point de vue sur les langages (C++, rust, python, java, Go)
+* Faire simple, c’est vraiment compliqué
+* Faire vivre ses données au sein de l’application et non pas via la BDD, bonne idée?
+* Écrire un bon texte de commit pour ses collègues
+* Oui l’IA va remplacer des développeurs, mais surtout les mauvais
+
+
+## Articles administration systèmes et réseaux (Linux)
+* Ma VM se fait-elle piquer du temps CPU par ses voisines?
+* Mongo: monter son cluster
+* top: pourquoi je l’aime
+* iostat: est-ce que mes disques sont un limiteur de performance?
+* iotop: mais qui consomme les iops?
+* du: mais qui me bouffe mon espace disque? (attention au fichiers caché/masqué, mount et autre deleted)
+* dmidecode: avoir les informations sur le matos (bios, barrette RAM, etc)
+* uuid du bios: attention, pas forcément unique!
+* Mon expérience avec les hébergeurs (ovh, scaleway, …)
+* Les principes Unix, mais en 2023
+* netstat / iptraf: vue très rapide sur sa consommation réseau
+* Le load average: le meilleur des indicateurs imparfait
+* Le “Glacier” d’OVH: bien mais peu accessible
+* Docker et autres containers: ni une mini-vm, ni un vrai OS non plus
+* Micro services, macro problèmes
+* Incident en Prod: garder son calme à tout prix
+
+
+
+
+
+
+## Articles sur des explications d’algorithmes
+* Consistant hashing: le load balancing stable à pas cher
+* Slow start: éviter de bourrer les polling
+* Algorithme pour détecter les membres des boucles dans un graphe
+* Raft: l’élection démocratique quand tout le monde veut être calife à la place du calife
+* Gossip: faire parvenir un message sur un grand cluster, sans broadcast réseaux
+* Bloom filter: C’est peut-être dedans, ou sûrement pas.
+
+
+## Business et vie d’ex-CEO
+* Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances
+
+
+* Il y a vraiment un marché derrière cette idée?
+* Etude de marché: le chemin est plus utile que le résultat
+* Comment se lancer par étapes dans l’entreprenariat
+* Se faire accompagner: le cas bordelais
+* Le conseil qui m’a le plus aidé en tant qu’entrepreneur
+* Se lancer oui, mais pas dans le vide
+* Les structures publiques qui vous aident pour vous lancer
+* Le difficile passage d’un outil (gratuit) à un vrai produit
+* La levée de fond, démystification et chausses trappes
+* CIR/CII, les grands principes et leurs coûts réels
+* Levée de fond. Le Ratchet? Ca compte si j’ai joué au jeu?
+* CEO? Félicitation, vous devez parler et vous taire à la fois
+* CEO: le code du travail démystifié, les grands principes
+* Les grandes phases de cession de votre société
+* Rapide Retex sur le marché des outils IT en France
+* Lancer sa startup pour un introverti++. Spoiler: ça va pas bien se passer
+* Open Source et SaaS: même conquête de marché
+* Recrutement: La technique ça s’apprends, le savoir être vachement moins
+* Recrutement: les signaux d’alertes en matière de dev
+* Recrutement: tu sais coder un arbre binaire? génial, mais je m’en fiche.
+* MVP: vertical ou horizontal slice? Comment choisir?
+* Recrutement: se méfier comme de la peste des solutions complexes
+* Recrutement: recruter d’anciens indépendants, attention
+* Le vrai coût de devoir gérer de veilles versions
+* Manuel de survie aux tickets utilisateurs
+
+
+
+## Perso
+* pourquoi avoir raté le concours des Mines sur une connerie est ce qui m’est arrivé de mieux
+* pourquoi il est plus épuisant d’expliquer une solution que de la trouver
+* Je monte mon petit labo
+* Hypersensible et CEO: cocktail dangereu
+* Apprendre que tu es zèbre/hpi à plus de 30ans: mouai
+* Apprendre que tu es “adopté” à 37ans: surprise ^^
+* Elever des zèbres/hpi: pas de tout repos
+* La suiss ball et le dos
+* CTO: comment faire sa veille
+* Ma collection d’Ascii art: de quoi égayer vos commits
+* Pop: starwars: pourquoi je préfère la pré-logie
+* Pop: pourquoi pour moi le Batman de 1986 est le meilleur
+* FDCN: pourquoi j’ai décidé de coder une application Android pour un livre dont on est le héro
+* Pourquoi j’ai une affection toute particulière pour le 1er IronMan
+* Pop: ces deux oeuvres que je ne peux plus revisionner
+* Classe prépa: ce qu’on ne te dis pas avant d’y entrer
