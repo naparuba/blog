@@ -13,7 +13,9 @@ Status: ready
 
 # Les applications, ça plante (souvent) (╥﹏╥)
 
-Tout administrateur l'apprend assez vite à ses dépens: les applications ça plante, et ça plante souvent. Point de magie à cela, 
+Tout administrateur l'apprend assez vite à ses dépens: les applications ça plante, et ça plante souvent. 
+
+Point de magie à cela, 
 elles sont de plus en plus complexes, avec de plus en plus de fonctionalités. De plus, vu qu'il faut les produire de plus en plus vite, 
 on a recours à des frameworks tout faits qui rajoutent leur propre couche de complexité.
 
