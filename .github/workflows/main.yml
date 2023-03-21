@@ -1,40 +1,39 @@
-name: Build and Push
+name    : Build and Push
 run-name: ${{ github.actor }} building blog and commit changes 🚀
 
-'on':
-  pull_request:
-  push:
-    branches:
-      - master
-  schedule:  # 3h30 vendredi
-    - cron: "3 30 * * 5"
+on      :
+   pull_request:
+   push        :
+   # 3h30 vendredi
+   schedule    :
+      -  cron: "3 30 * * 5"
 
-jobs:
-  Build:
-    runs-on: ubuntu-latest
-    
-    permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the changed files back to the repository.
-      contents: write
+jobs    :
+   Build:
+      runs-on    : ubuntu-latest
       
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - name: Launch docker image build
-        run: |
-          ./docker_run.sh run-github-actions docker-file-build.txt
-           git status
-           
-      -  uses: stefanzweifel/git-auto-commit-action@v4
-         with:
-           file_pattern: 'output/*'
-           commit_message: Autobuild from github actions
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      permissions:
+         # Give the default GITHUB_TOKEN write permission to commit and push the changed files back to the repository.
+         contents: write
+      
+      steps      :
+         -  run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+         -  run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+         -  run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+         -  name: Check out repository code
+            uses: actions/checkout@v3
+         -  run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+         -  run: echo "🖥️ The workflow is now ready to test your code on the runner."
+         -  name: List files in the repository
+            run : |
+               ls ${{ github.workspace }}
+         -  name: Launch docker image build
+            run : |
+               ./docker_run.sh run-github-actions docker-file-build.txt
+                git status
+         
+         -  uses: stefanzweifel/git-auto-commit-action@v4
+            with:
+               file_pattern  : 'output/*'
+               commit_message: Autobuild from github actions
+         -  run: echo "🍏 This job's status is ${{ job.status }}."
