@@ -17,5 +17,5 @@ jobs:
           ls ${{ github.workspace }}
       - name: Launch docker image build
         run: |
-          ./docker_run.sh run docker-file-build.txt
+          ./docker_run.sh run-github-actions docker-file-build.txt
       - run: echo "🍏 This job's status is ${{ job.status }}."

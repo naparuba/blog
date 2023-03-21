@@ -27,6 +27,13 @@ if [ $MODE == "run" ]; then
    exit $?
 fi
 
+if [ $MODE == "run-github-actions" ]; then
+   IMAGE_BUILD_ID=$(docker build -t $DF -q -f $DF $PYTHON3_ARGS . | cut -d':' -f2)
+   echo "Launching image: $IMAGE_BUILD_ID"
+   docker run -v ./output:/root/blog/output "$IMAGE_BUILD_ID"
+   exit $?
+fi
+
 if [ $MODE == "build" ]; then
    docker build -t $DF -f $DF $PYTHON3_ARGS .
    exit $?
