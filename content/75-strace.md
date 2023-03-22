@@ -1,5 +1,5 @@
 Title: Strace, l'outil de la dernière chance
-Date: 2023-03-24 10:20
+Date: 2023-03-31 10:20
 Category: Talk
 Tags: linux, debug, admin
 Slug: strace-outil-derniere-chance
@@ -11,7 +11,7 @@ Status: ready
 
 
 
-# Les applications, ça plante (souvent) (╥﹏╥)
+# Les applications ça plante, souvent (╥﹏╥)
 
 Tout administrateur l'apprend assez vite à ses dépens: les applications ça plante, et ça plante souvent. 
 
