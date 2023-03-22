@@ -34,19 +34,26 @@
     <link rel="stylesheet" href="/theme/css/style.css"/>
 
 
-    <script type="application/javascript">
-        var doNotTrack = false;
-        if ( !doNotTrack ) {
-            window.ga = window.ga || function() {
-                (ga.q = ga.q || []).push( arguments );
-            };
-            ga.l      = +new Date;
-            ga( 'create', 'UA-122321624-233', 'auto' );
-
-            ga( 'send', 'pageview' );
-        }
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push( ['trackPageView'] );
+        _paq.push( ['enableLinkTracking'] );
+        (function() {
+            var u = "//matomo.gabes.fr/";
+            _paq.push( ['setTrackerUrl', u + 'matomo.php'] );
+            _paq.push( ['setSiteId', '3'] );
+            var d   = document,
+                g   = d.createElement( 'script' ),
+                s   = d.getElementsByTagName( 'script' )[ 0 ];
+            g.async = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore( g, s );
+        })();
     </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Matomo Code -->
+
 
 
 </head>
@@ -124,7 +131,7 @@
         <header class="post-header">
             <h2><a href="/drafts/strace-outil-derniere-chance.html" rel="bookmark">Strace, l'outil de la dernière chance</a></h2>
             <span class='author'>Jean Gabès</span>
-            <span style="color: gray;font-style: italic;">( 24 Mar 2023 )</span>
+            <span style="color: gray;font-style: italic;">( 31 Mar 2023 )</span>
 
             <span class="tags"><a href="/tag/linux.html">linux</a> / <a href="/tag/debug.html">debug</a> / <a href="/tag/admin.html">admin</a></span>
             <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
@@ -132,7 +139,7 @@
 
         </header>
 
-    <h1>Les applications, ça plante (souvent) (╥﹏╥)</h1>
+    <h1>Les applications ça plante, souvent (╥﹏╥)</h1>
 <p>Tout administrateur l'apprend assez vite à ses dépens: les applications ça plante, et ça plante souvent. </p>
 <p>Point de magie à cela, 
 elles sont de plus en plus complexes, avec de plus en plus de fonctionalités. De plus, vu qu'il faut les produire de plus en plus vite, 
