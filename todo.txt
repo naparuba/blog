@@ -17,6 +17,9 @@
 
 
 ## Articles parlant de technique de développement Python
+* Copy, et deepcopy: la différence
+
+
 * Les threads et leurs (nombreux) pièges
 * Lancer des processus fils (workers)
 * Les processus fils ne doivent pas survivre à leur père
@@ -37,8 +40,7 @@
 * Sauvegarder un fichier: attendez vous au pire
 * Variable d’environnement: un flag de DEBUG à pas cher
 * Dequeue(), le petit frère aux stéroïdes des listes classiques []
-* Limiter le temps passer dans un lock: le fast switching de liste
-* Copy, et deepcopy: la différence
+* Limiter le temps passé dans un lock: le fast switching de liste
 * Mettre un peu de couleur dans ses logs et son affichage shell
 * Le temps: indispensable, mais votre pire ennemi
 * Watchdog: détecter (et survivre) au debug d’un dead lock
@@ -79,7 +81,6 @@
 * Pitié, nommez correctement vos branches git!
 * Godot: ça marche bien pour exporter sur Play Store
 * Interface de gestion du playstore: un poil too much
-*
 
 
 
@@ -167,9 +168,9 @@
 * Se lancer oui, mais pas dans le vide
 * Les structures publiques qui vous aident pour vous lancer
 * Le difficile passage d’un outil (gratuit) à un vrai produit
-* La levée de fond, démystification et chausses trappes
+* La levée de fonds, démystification et chausses trappes
 * CIR/CII, les grands principes et leurs coûts réels
-* Levée de fond. Le Ratchet? Ca compte si j’ai joué au jeu?
+* Levée de fonds. Le Ratchet? Ça compte si j’ai joué au jeu?
 * CEO? Félicitation, vous devez parler et vous taire à la fois
 * CEO: le code du travail démystifié, les grands principes
 * Les grandes phases de cession de votre société

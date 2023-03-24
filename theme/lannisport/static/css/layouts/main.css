@@ -19,11 +19,20 @@ body {
 }
 
 h1,
+{
+    color : #306D83;
+}
+
 h2,
 h3,
 h4,
 h5 {
-    color : #1C2D41;
+    color : #00969C;
+}
+
+code {
+    color: #d39bb7;
+    font-weight: bold;
 }
 
 strong {
@@ -35,7 +44,7 @@ p {
 }
 
 a {
-    color : #248AAA;
+    color : #306D83;
 }
 
 a:hover {
@@ -290,9 +299,9 @@ mark {
 }
 
 /* and posts with a white background to read it*/
-#post{
-    background-color: inherit;
-    box-shadow: 0px 0px 20px 0px #fff;
+#post {
+    background-color : inherit;
+    box-shadow       : 0px 0px 20px 0px #FFFFFF;
 }
 
 /* Archives */
@@ -319,7 +328,7 @@ header.post-header .tags {
     display      : block;
     float        : right;
     margin-right : 5px;
-    color: gray;
+    color        : gray;
 }
 
 /* tags are grey to not be too visible */
@@ -328,9 +337,9 @@ header.post-header .tags a {
     text-decoration : underline;
 }
 
-#post article img{
-    border: 1px solid darkgray;
-    box-shadow: 2px 2px 5px darkgrey;
+#post article img {
+    border     : 1px solid darkgray;
+    box-shadow : 2px 2px 5px darkgrey;
 }
 
 /* ======= Paginator ========= */
