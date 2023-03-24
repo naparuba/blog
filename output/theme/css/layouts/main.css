@@ -250,9 +250,9 @@ pre {
     padding          : 10px;
 }
 
-pre > code {
-    padding : 10px !important;
-}
+/*pre > code {*/
+/*    padding : 10px !important;*/
+/*}*/
 
 a.header-anchor {
     text-decoration : none;
