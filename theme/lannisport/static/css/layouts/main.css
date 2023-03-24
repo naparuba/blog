@@ -20,19 +20,22 @@ body {
 
 h1,
 {
-    color : #306D83;
+
+    font-family : "Chewy", cursive;
+    color       : #306D83;
 }
 
 h2,
 h3,
 h4,
 h5 {
-    color : #00969C;
+    font-family : "Chewy", cursive;
+    color       : #00969C;
 }
 
 code {
-    color: #d39bb7;
-    font-weight: bold;
+    color       : #D39BB7;
+    font-weight : bold;
 }
 
 strong {
@@ -40,7 +43,8 @@ strong {
 }
 
 p {
-    color : #3C4858;
+    font-family : "Atkinson Hyperlegible", sans-serif;
+    color       : #3C4858;
 }
 
 a {
