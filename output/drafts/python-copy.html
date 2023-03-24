@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ</title>
+
+
+    <meta name="description" content="Portfolio et blog profesionnel de Jean Gabès."/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/main.css"/>
+    <link rel="stylesheet" href="/theme/css/navigators/navbar.css"/>
+    <link rel="stylesheet" href="/theme/css/plyr.css"/>
+    <link rel="stylesheet" href="/theme/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/social.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/png" href="/theme/images/author/favicon.png"/>
+
+    <meta property="og:title" content="Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Portfolio et blog profesionnel de Jean Gabès"/>
+    <meta property="og:image" content="/theme/images/author/naparuba.gif">
+    <meta property="og:url" content="https://hugo-toha.github.io">
+
+
+    <link rel="stylesheet" href="/theme/css/style.css"/>
+
+
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push( ['trackPageView'] );
+        _paq.push( ['enableLinkTracking'] );
+        (function() {
+            var u = "//matomo.gabes.fr/";
+            _paq.push( ['setTrackerUrl', u + 'matomo.php'] );
+            _paq.push( ['setSiteId', '3'] );
+            var d   = document,
+                g   = d.createElement( 'script' ),
+                s   = d.getElementsByTagName( 'script' )[ 0 ];
+            g.async = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore( g, s );
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
+            Jean Gabès</a>
+        <button
+                class="navbar-toggler navbar-dark"
+                id="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#top-nav-items"
+                aria-label="menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="top-nav-items">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#home">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">A propos</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#experiences">Expérience</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#education">Scolarité</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#projects">Projets</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/#recent-posts">Post récents</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+
+<div id="post-container" class="container-fluid section-holder d-flex bg-white">
+    <div class="container anchor p-lg-5" id="post">
+        <div class="row pt-sm-2 pt-md-4 align-self-center">
+            <div class="row">
+                <div class="container col-md-9">
+<section>
+    <article>
+        <header class="post-header">
+            <h2><a href="/drafts/python-copy.html" rel="bookmark">Python: la différence entre copy et deepcopy</a></h2>
+            <span class='author'>Jean Gabès</span>
+            <span style="color: gray;font-style: italic;">( 14 Apr 2023 )</span>
+
+            <span class="tags"><a href="/tag/linux.html">linux</a> / <a href="/tag/debug.html">debug</a> / <a href="/tag/admin.html">admin</a></span>
+            <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
+
+
+        </header>
+
+    <h1>Les conteneurs en Python</h1>
+<p>S'il y a bien deux éléments que je trouve structurant dans un language de programmation, c'est autant sa grammaire que ses conteneurs standards. Ces derniers sont importants, car
+ils representent le plus gros des troupes de ce que l'on va utiliser au jour le jour. Une absence de liste dynamique par défaut sera très, très handicapante, et on va 
+se retrouver à prendre une librairie tierce pour ça.</p>
+<p>Sauf que d'autres librairies/projets auront fait un autre choix et pris une autre librairie, avec sa phase d'aprentissage qui va avec (et ses bugs?). Ce n'est pas pour rien que les 
+languages de maintenant sont équipés dès le départ de conteneurs standards:</p>
+<ul>
+<li>liste à taille fixe ou dynamique</li>
+<li>tableau de hash, dictionnaire, map, appelez ça comme vous voulez</li>
+<li>struct et/ou objet</li>
+</ul>
+<p>Contrairement aux types natifs simples comme les int ou les float, les conteneurs peuvent être modifiés, et ne sont donc pas à utiliser à la légère. Que ce soit lorsqu'on les 
+passe à une fonction/méthode, qu'on tente d'y accéder depuis des threads ou même qu'on vive avec au fil de son programme linéairement.</p>
+<h1>Parfois, il faut faire une copie</h1>
+<p>Le piège le plus simple des conteneurs vient de la copie. On peut avoir besoin d'une simple copie pour donner une liste à un autre élément qui va avoir besoin de faire un tri différent, tri 
+qui pourrait être "in place", et donc impacter celui qui a gentiement fourni la liste!</p>
+<p>Parfois on a pas trop confiance dans cet "autre" élément, comme si c'est un module tiers qui est chargé par l'utilisateur, et qu'on lui donne des données auquel on tient (ordre compris).</p>
+<p>Bref, parfois, on souhaite juste copier sa liste/dict. En Python, le module copy est là pour ça. On a deux méthodes qui nous intéresse, et qu'il est primordial de connaitre avant d'en utiliser une ou l'autre:</p>
+<ul>
+<li>copy</li>
+<li>deepcopy</li>
+</ul>
+<p><center><img src='/images/common/maybe.gif'></center></p>
+<h1>copy et deepcopy</h1>
+<h2>Le principe de copy</h2>
+<p>copy.copy est la plus simple, mais pas forcément la moins traitre au jour le jour.</p>
+<p>copy() va uniquement copier le conteneur, <code>mais pas son contenu</code>. Ce dernier point est très important. Ceci signifie que si on a:</p>
+<div class="highlight"><pre><span></span><code><span class="err">a = [3, 2, 1]</span>
+<span class="err">b = copy.copy(a)</span>
+<span class="err">b.sort()</span>
+<span class="err">print(&#39;a =&gt; %s&#39; % a)</span>
+<span class="err">print(&#39;b =&gt; %s&#39; % b)</span>
+</code></pre></div>
+
+<p>Donne:</p>
+<div class="highlight"><pre><span></span><code><span class="err">a =&gt; [3, 2, 1]</span>
+<span class="err">b =&gt; [1, 2, 3]</span>
+</code></pre></div>
+
+<p>Par contre attention, ici c'était le cas simple, on a des objets immutables dans nos listes, de simples int. Dans la vie de tous les jours, on
+aura une liste de dict ou d'instances par exemple.</p>
+<p><center><img src='/images/common/pointers.jpg'></center></p>
+<p>Et là, attention, car on a vu que copy() ne touche qu'au conteneur, pas au contenant. Donc ici la copie aura des pointeurs vers les mêmes objets.</p>
+<div class="highlight"><pre><span></span><code><span class="err">a = [{&#39;name&#39;:&#39;jean&#39;}, {&#39;name&#39;:&#39;rené&#39;}, {&#39;name&#39;:&#39;claude&#39;}]</span>
+<span class="err">b = copy.copy(a)</span>
+<span class="err">b[0][&#39;name&#39;] = &#39;paul&#39;</span>
+<span class="err">print(&#39;a =&gt; %s&#39; % a)</span>
+<span class="err">print(&#39;b =&gt; %s&#39; % b)</span>
+</code></pre></div>
+
+<p>Donne:</p>
+<div class="highlight"><pre><span></span><code><span class="err">a =&gt; [{&#39;name&#39;: &#39;paul&#39;}, {&#39;name&#39;: &#39;rené&#39;}, {&#39;name&#39;: &#39;claude&#39;}]</span>
+<span class="err">b =&gt; [{&#39;name&#39;: &#39;paul&#39;}, {&#39;name&#39;: &#39;rené&#39;}, {&#39;name&#39;: &#39;claude&#39;}]</span>
+</code></pre></div>
+
+<p><center><img src='/images/common/oops.gif'></center></p>
+<p>On aurait pu vérifier en demandant directement si on avait les mêmes pointeurs:</p>
+<div class="highlight"><pre><span></span><code><span class="err">print(a[0] is b[0])</span>
+<span class="err">True</span>
+</code></pre></div>
+
+<p>L'accès qu'on pouvait penser anodin à <code>b</code> a bien impacté <code>a</code>.</p>
+<h2>Le principe de deepcopy</h2>
+<p>copy.deepcopy() va régler le problème. Mais bien entendu rien n'est gratuit, et en réglant un problème, on en créé un symétrique. Voire deux <code>^^'</code></p>
+<p>deepcopy() va faire une copie en profondeur (merci captain obvious...). Il va donc copier également le contenu, et ce récursivement.</p>
+<p>On aura donc deux impacts par rapport à copy():</p>
+<ul>
+<li>ça va coûter autrement plus cher. Si c'est négligeable pour des int, dans la vie de tous les jours on peux avoir un gros volume de données qui sont pointées, et deepcopy() peut être très long</li>
+<li>il va vraiment tout copier, ceci peux produire des soucis bien complexes à débugger si les objets étaient référencés ailleurs</li>
+</ul>
+<p>Au moins nos cas simples sont réglés:</p>
+<div class="highlight"><pre><span></span><code><span class="err">a = [{&#39;name&#39;:&#39;jean&#39;}, {&#39;name&#39;:&#39;rené&#39;}, {&#39;name&#39;:&#39;claude&#39;}]</span>
+<span class="err">b = copy.deepcopy(a)</span>
+<span class="err">b[0][&#39;name&#39;] = &#39;paul&#39;</span>
+<span class="err">print(&#39;a =&gt; %s&#39; % a)</span>
+<span class="err">print(&#39;b =&gt; %s&#39; % b)</span>
+<span class="err">print(a[1] is b[1])</span>
+</code></pre></div>
+
+<p>Donne:</p>
+<div class="highlight"><pre><span></span><code><span class="err">a =&gt; [{&#39;name&#39;: &#39;jean&#39;}, {&#39;name&#39;: &#39;rené&#39;}, {&#39;name&#39;: &#39;claude&#39;}]</span>
+<span class="err">b =&gt; [{&#39;name&#39;: &#39;paul&#39;}, {&#39;name&#39;: &#39;rené&#39;}, {&#39;name&#39;: &#39;claude&#39;}]</span>
+<span class="err">False</span>
+</code></pre></div>
+
+<p>Par contre, si on prend le cas où on pointait vers de vrais objets, genre des personnes, qui étaient également référencées dans une autre partie du programme, on aura également copié ces instances.</p>
+<div class="highlight"><pre><span></span><code><span class="err">jean = User(&#39;jean&#39;, age=40)</span>
+<span class="err">a = [{&#39;contact&#39;:jean}, ...]</span>
+<span class="err">b = copy.deepcopy(a)</span>
+<span class="err">[... se passe un peu de temps...]</span>
+<span class="err">jean.celebrate_birthday()</span>
+<span class="err">[... on passe quelques milliers de lignes, on est 5 niveaux d&#39;appels et on a oublié d&#39;où venait b initialement]</span>
+<span class="err">print(b[0])</span>
+</code></pre></div>
+
+<p>Donne:</p>
+<div class="highlight"><pre><span></span><code><span class="err">Name=Jean, age=40</span>
+</code></pre></div>
+
+<p><center><img src='/images/common/bug 2.gif'></center></p>
+<p>Ici, nous nous sommes retrouvés avec deux objets 'jean', et une partie du programme est resté avec la première instance, l'autre moitié avec l'autre.</p>
+<p>Le pire, c'est qu'au débug, avant de modifier une des instances, bon courage pour détecter que ce sont deux instances différentes, car on aura pendant un long moment le même affichage:</p>
+<div class="highlight"><pre><span></span><code><span class="err">Name=jean, age=40</span>
+</code></pre></div>
+
+<p>C'est une des raisons qui font qu'il m'est souvent arrivé dans ce genre de cas d'afficher dans le print d'un élément son pointeur avec un id(self) par exemple:</p>
+<p>Name=jean, age=40, ptr=140526325860624</p>
+<p>Bon faut avouer que ce n'est pas ultra lisible. Mais lors d'un debug ça peut sauver des journées à se demander pourquoi un objet n'a pas la modification qu'on a faite 20s avant. Et oui, ça m'est arrivé, et non je ne donnerai pas le temps que j'ai perdu sur cette connerie mais c'était beaucoup trop <code>(／‵Д′)／~ ┻━┻</code></p>
+<p><center><img src='/images/76/article.png'></center></p>
+<h1>Attention: le choix n'est pas anodin</h1>
+<p>Comme on l'a vu, ce n'est pas anodin comme choix. Aucun n'est sans risque. C'est pour ça que si vous venez à devoir faire une copie, ne choississez surtout par au hasard. Demandez-vous combien de temps la copie va vivre, où et par qui elle va être utilisée, etc.</p>
+<p>S'il vous manque des infos sur la vie de vos objets, n'allez pas plus loin et aller les chercher.</p>
+<p>Votre moi du futur vous remerciera des heures de debug économisées pour ces 5 petites minutes de réflexions.</p>
+<p><center><img src='/images/common/thanks 4.gif'></center></p>
+
+<div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>
+</div>
+
+<hr/>
+
+<!--
+<div id="disqus_thread"></div>
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jeangabes.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
+
+        </footer>
+    </article>
+</section>
+
+<!--article.locale_date-->
+                </div> <!-- /container -->
+
+                <div class="col-md-3">
+                    <div id="SocialIcons" class="row">
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>                    </div>
+
+                    <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
+                        <h2>Archives</h2>
+                        <ul style="padding-left: 8px;">
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2023</span> <a href="/depuis-open-source-vers-editeur/"> Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2015</span> <a href="/smart-agent/"> Smart agent solution </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2010</span> <a href="/retour-des-rmll/"> Retour des RMLL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2010</span> <a href="/retour-a-lecole/"> Retour à l'école </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-la-01-est-arrivee/"> Shinken : la 0.1 est arrivée! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-example-de-hack-rapide-du-code/"> Shinken : example de Hack rapide du code </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-tagguez-vos-pollers/"> Shinken : tagguez vos pollers </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/shinken-quelques-news-sur-la-prochaine-01/"> Shinken : quelques news sur la prochaine 0.1 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/nagios-de-lopen-source-a-lopen-core/"> Nagios : de l'open source à l'open core ? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war/"> Art of (free software) war </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war-fr/"> Art of (free software) war - FR </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/deduplication-bloc-fixe-vs-bloc-variable/"> Déduplication : bloc fixe VS bloc variable </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/la-reponse-de-lauteur-de-nagios/"> La réponse de l'auteur de Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/"> Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/partie-a-trois-python-__slots__-et-metaclass/"> Partie à trois : Python, __slots__ et metaclass </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/"> Les escalades de notifications enfin simples à mettre en place </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/gestion-des-exclusions-de-timeperiods/"> Gestion des exclusions de timeperiods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/apres-mysql-oracle-et-couchdb-sqlite/"> Après MySQL, Oracle et couchdb : Sqlite </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/generalisation-des-modulations-de-resultats/"> Généralisation des modulations de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/couchdb-dans-shinken/"> Couchdb dans Shinken </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-sur-zdnet/"> Shinken sur ZDNet! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/python-et-le-data-driven-programming/"> Python et le Data-Driven programming </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/il-fait-chaud-chaud-cet-hiver/"> Il fait chaud chaud cet hiver </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/hot-periods/"> Hot periods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/mes-premiers-patchs/"> Mes premiers patchs ! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-des-modulateurs-de-resultats/"> Shinken : des modulateurs de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quel-avenir-pour-nagios-shinken/"> Shinken : quel avenir pour Nagios? Shinken? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-gestion-des-noms-en-utf8/"> Shinken : gestion des noms en UTF8 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quoi-de-neuf-docteur/"> Shinken : Quoi de neuf docteur? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-lart-de-linspiration/"> Shinken : l'art de l'inspiration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-nouveau-logo/"> Shinken : un nouveau logo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-le-choix-de-la-licence-agpl/"> Shinken : le choix de la licence AGPL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/"> Shinken : un serveur? Inutile, préférez un eeepc... </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/"> Shinken : 100Kchecks? Ah désolé, il fallait lire 200K </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/"> Shinken : à oui au fait, c'est multiplate-forme </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-les-realms-sont-la/"> Shinken : les realms sont là </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-pool-realm/"> Shinken : Pool -> Realm </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/"> Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-dispatch-des-commandes-externes/"> Shinken : dispatch des commandes externes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-le-dispatching-des-configurations-et-les-spares/"> Shinken : le dispatching des configurations et les spares </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/patch-nagios-ssl-pour-ndo/"> Patch Nagios : SSL pour Ndo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/100k-checks5minutes/"> 100K checks/5minutes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-les-grandes-lignes/"> Shinken : Les grandes lignes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/sortie-de-mon-livre-sur-nagios/"> Sortie de mon livre sur Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/monter-un-cluster-filesystem-avec-ocfs2/"> Monter un cluster filesystem avec OCFS2 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/"> Patch Nagios pour une gestion plus fine de la configuration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/shinken-quand-un-python-rencontre-nagios/"> Shinken : quand un python rencontre Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/"> Patch Nagios pour un démarrage (bien plus) rapide </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/administration-et-supervision-de-heartbeatldirectordipvs/"> Administration et supervision de HeartBeat/Ldirectord/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/"> Mise en place d'une solution de load balancing hautement disponible </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/"> La haute disponiblité et la répartition de charge avec HeartBeat/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/funkyplaylist-un-script-generateur-de-playlist/"> FunkyPlayList : un script générateur de playlist </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/"> Pyndsgest : gérer vos jeux NDS facilement </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/uberlogger/"> UberLogger </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mon-blog/"> Mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/ouverture-de-mon-blog/"> Ouverture de mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/un-petit-point-sur-lauteur/"> Un petit point sur l'auteur </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/ouverture/"> Ouverture </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="clear">
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+        <div class="row text-left">
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Navigation</h5>
+
+                <ul>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#about">A propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#skills">Skills</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#experiences">Expérience</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#education">Scolarité</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#projects">Mes projets</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#recent-posts">Derniers Posts</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Me contacter:</h5>
+                <ul>
+                    <li><span>Email: </span> <span>naparuba@gmail.com</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/theme/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/theme/js/popper.min.js"></script>
+<script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/theme/js/navbar.js"></script>
+<script type="text/javascript" src="/theme/js/plyr.js"></script>
+<script type="text/javascript" src="/theme/js/main.js"></script>
+
+
+<script src="/theme/js/itype.min.js"></script>
+<script src="/theme/js/github-button.js"></script>
+
+<script src="/theme/js/jquery.filterizr.min.js"></script>
+</body>
+</html>
