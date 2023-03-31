@@ -18,7 +18,7 @@
 
 ## Articles parlant de technique de développement Python
 * Copy, et deepcopy: la différence
-
+* Donner un “vrai” nom à vos processus
 
 * Les threads et leurs (nombreux) pièges
 * Lancer des processus fils (workers)
@@ -30,7 +30,6 @@
 * Éteindre (proprement) son processus: les signaux
 * Sérialiser ses données: Pickle (et sa sécurisation)
 * Versionner ses objets: survivre à plusieurs version de son code au fil du temps
-* Donner un “vrai” nom à vos processus
 * Empêcher un processus d’être lancé plusieurs fois: les fichiers pid
 * /dev/shm: un disque totalement en RAM, y a pas plus rapide
 * Dépasser ses limites: Python et ulimit
