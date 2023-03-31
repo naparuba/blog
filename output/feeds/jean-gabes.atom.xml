@@ -1,5 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ - Jean Gabès</title><link href="/" rel="alternate"></link><link href="/feeds/jean-gabes.atom.xml" rel="self"></link><id>/</id><updated>2023-03-17T10:20:00+01:00</updated><entry><title>Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances</title><link href="/depuis-open-source-vers-editeur/" rel="alternate"></link><published>2023-03-17T10:20:00+01:00</published><updated>2023-03-17T10:20:00+01:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2023-03-17:/depuis-open-source-vers-editeur/</id><summary type="html">&lt;p&gt;Quand on passe d'un hobby de dev sur un outil open source à un éditeur d'une solution payante, on change de monde et également de type de motivation.&lt;br/&gt; Dans cet article, je vais partager comment je l'ai véçu, ce que ça a changé par rapport à ma relation avec le code et le projet dans son ensemble.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Ce post fait suite aux réflexions que j'ai eu lors de mon entretient avec &lt;a href="https://fr.linkedin.com/in/imranedessai"&gt;Imrane Dessaï&lt;/a&gt; que vous pouvez retrouver sur &lt;a href="https://www.youtube.com/watch?v=kM42WE0Sa4c"&gt;Youtube&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ - Jean Gabès</title><link href="/" rel="alternate"></link><link href="/feeds/jean-gabes.atom.xml" rel="self"></link><id>/</id><updated>2023-03-31T10:20:00+02:00</updated><entry><title>Strace, l'outil de la dernière chance</title><link href="/strace-outil-derniere-chance/" rel="alternate"></link><published>2023-03-31T10:20:00+02:00</published><updated>2023-03-31T10:20:00+02:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2023-03-31:/strace-outil-derniere-chance/</id><summary type="html">&lt;p&gt;Quand on se retrouve en façe d'une application qui se plante sans erreur claire et sans logs/trace, il reste une solution de la dernière chance: la commande strace&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Les applications ça plante, souvent (╥﹏╥)&lt;/h1&gt;
+&lt;p&gt;Tout administrateur l'apprend assez vite à ses dépens: les applications ça plante, et ça plante souvent. &lt;/p&gt;
+&lt;p&gt;Point de magie à cela, 
+elles sont de plus en plus complexes, avec de plus en plus de fonctionalités. De plus, vu qu'il faut les produire de plus en plus vite, 
+on a recours à des frameworks tout faits qui rajoutent leur propre couche de complexité.&lt;/p&gt;
+&lt;p&gt;Et qui dit complexe, dit moins stable. Bien sûr, on peut rajouter des mécanismes de hautes disponibilités si l'application
+le permets, mais parfois ceci rajoute lui-même une grosse couche de complexité qui va avoir ses propres problèmes
+si elle n'est pas bien maitrisée.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/fail3.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Bref, ça va planter. Et d'un certain côté tant mieux, ça donne du travail à ceux qui font des outils de supervision &lt;code&gt;٩(^‿^)۶&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Sans logs point de solution, ou presque&lt;/h1&gt;
+&lt;p&gt;Quand ça va planter (et on a vu que ce n'est qu'une question de temps), les administrateurs n'ont pas un milliard de solutions. Nous ne sommes
+pas surhumains ou des magiciens, on va faire avec les erreurs que l'application donne, soit directement à l'écran, soit côté backend.&lt;/p&gt;
+&lt;p&gt;Peu importe qu'ils soient sous forme de logs locaux, centralisés, ou bien trace, ça revient grosso modo au même: l'application nous 
+donne l'erreur comme elle le voit, avec son interprétation.&lt;/p&gt;
+&lt;p&gt;L'erreur peut être volumineuse (coucou Java et ses grosses stacks inparsables....), ou bien sommaire, mais elle donne quelque chose à se mettre sous la dent pour l'administrateur. 
+La suite va dépendre si l'erreur est assez claire. Un &lt;code&gt;Failed to connect to srv-mysql port 3306: Connection refused&lt;/code&gt; va être assez 
+simple: votre serveur mysql est arrété (si c'était un firewall, on aurait plus un timeout, moins de chance d'avoir un refused du firewall). &lt;/p&gt;
+&lt;p&gt;L'admin sait où chercher, et va voir du côté de la base ce qui se passe. Là encore, les logs/traces vont être déterminants.&lt;/p&gt;
+&lt;p&gt;Bon là, c'est pour les cas un peu simples. Heureusement, d'expérience ça représente bien 90/95% des cas: on part rarement avec juste rien. Bon j'inclu aussi
+les cas où les utilisateurs arrivent avec "ça ne marche pas", sans autre détail, mais une petite prise de main à distance plus tard, soit l'utilisateur 
+a découvert qu'en fait il faisait n'importe quoi (bien 1/4 des cas), soit on arrive à avoir le message où commencer à investiguer.&lt;/p&gt;
+&lt;h1&gt;Les derniers 5%: l'enfer sur Terre&lt;/h1&gt;
+&lt;h2&gt;Ca se trouve, c'est pas si grave, un reboot et on repart&lt;/h2&gt;
+&lt;p&gt;Bon vous me voyez venir, il reste les autres cas. Ceux où juste ça ne marche plus, mais sans message clair. Juste on lance, et rien ne se passe. Aucune
+erreur, juste: rien.&lt;/p&gt;
+&lt;p&gt;Bon là en général un admin avec un peu d'expérience va faire une première action en priorité numéro 1: il va prendre un café, car dans pas longtemps il risque de ne plus avoir le temps d'aller en prendre un &lt;code&gt;\̅_̅/̷̚ʾ(•◡•)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/café.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Après la seconde étape va dépendre un peu de l'admin, de la récurrence du problème (déjà arrivé ou pas), et si l'application doit vraiment repartir MAINTENANT (en majuscule, à ne
+pas confondre avec le "maintenant" des chefs de projets qui est en fait un "dès que possible" mais déguisé).&lt;/p&gt;
+&lt;p&gt;Si le problème est récurrent, qu'on a jamais trouvé d'où ça vient, et qu'il faut vraiment que la production reparte, point de solution: on relance l'application
+et ses dépendances en totalités. Cette solution (aussi nommée "méthode Windows", allez savoir pourquoi... non je blague, tout le monde sait pourquoi) a le grand
+avantage de régler la quasi-totalité des problèmes. Bon par contre on ne sait pas d'où vient le problème à la source, mais on a au moins un contournement.&lt;/p&gt;
+&lt;p&gt;Je mets de côté le cas où c'est la première fois qu'on rencontre le problème, car dans ce cas on pars directement en analyse en ne touchant à rien pour ne pas empirer la situation. &lt;/p&gt;
+&lt;h2&gt;On est mal ^^&lt;/h2&gt;
+&lt;p&gt;Mais parfois, même le massive reboot ne suffit pas. Aucun message, logs ou trace ne nous aiguille vers la source du problème (qui peut venir de 3 stacks en dessous de l'application, sinon ce n'est pas drôle).&lt;/p&gt;
+&lt;p&gt;Dans ce cas, l'application ne nous aidant pas, il va falloir se passer d'elle et tenter de "deviner" ce qui ne lui plait pas. (Une autre solution est de balancer le problème chez les développeurs de l'application
+si vous les avez sous la main, mais si ça permet de calmer votre chef car le problème est ailleurs désormais, ça ne relance pas votre production pour autant ^^')&lt;/p&gt;
+&lt;p&gt;Ici, celui qui ne m'a jamais laissé tombé porte un nom: &lt;code&gt;strace&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/deal with it.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h2&gt;strace, quand le problème est entre l'application et l'OS&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;strace&lt;/code&gt; s'installe nativement sur votre système, c'est à portée d'un dnf/apt. Cette commande n'est en rien magique. Elle est même au final
+assez simple dans son fonctionnement: elle va tracer les appels systèmes entre vos applications (qu'elles soient déjà lancées ou pas) et l'OS.&lt;/p&gt;
+&lt;p&gt;On va y voir tout ce qui se passe entre votre application et le système. Mais, le problème, c'est que quand je dis tout, c'est TOUT. Sa sortie est verbeuse, car
+les applications font un MAX d'appels systèmes tout le temps, et principalement au lancement, là où en général vous avez des problèmes &lt;code&gt;(╯︵╰,)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/75/article.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Le cas simple de strace est de lancer la commande avec par exemple:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;strace ls -thor&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;On va avoir une sortie de la sorte:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;strace&lt;/span&gt; &lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;thor&lt;/span&gt;
+&lt;span class="n"&gt;execve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr/bin/ls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ls&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-thor&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="mh"&gt;0x7fffbd60f428&lt;/span&gt; &lt;span class="o"&gt;/*&lt;/span&gt; &lt;span class="mi"&gt;43&lt;/span&gt; &lt;span class="n"&gt;vars&lt;/span&gt; &lt;span class="o"&gt;*/&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;brk&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;                               &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0x1ca9000&lt;/span&gt;
+&lt;span class="n"&gt;mmap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PROT_READ&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;PROT_WRITE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MAP_PRIVATE&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;MAP_ANONYMOUS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0x7f6578ed3000&lt;/span&gt;
+&lt;span class="n"&gt;access&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/etc/ld.so.preload&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R_OK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;ENOENT&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;such&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/etc/ld.so.cache&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;O_RDONLY&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;O_CLOEXEC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="n"&gt;fstat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;st_mode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;S_IFREG&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="mi"&gt;0644&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;st_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;40994&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;mmap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;40994&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PROT_READ&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MAP_PRIVATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0x7f6578ec8000&lt;/span&gt;
+&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;                                &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/lib64/libselinux.so.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;O_RDONLY&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;O_CLOEXEC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\177&lt;/span&gt;&lt;span class="s2"&gt;ELF&lt;/span&gt;&lt;span class="se"&gt;\2\1\1\0\0\0\0\0\0\0\0\0\3\0&lt;/span&gt;&lt;span class="s2"&gt;&amp;gt;&lt;/span&gt;&lt;span class="se"&gt;\0\1\0\0\0\220&lt;/span&gt;&lt;span class="s2"&gt;j&lt;/span&gt;&lt;span class="se"&gt;\0\0\0\0\0\0&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;832&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;832&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="n"&gt;openat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;AT_FDCWD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;O_RDONLY&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;O_NONBLOCK&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;O_CLOEXEC&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;O_DIRECTORY&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="n"&gt;getdents&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;/*&lt;/span&gt; &lt;span class="mi"&gt;84&lt;/span&gt; &lt;span class="n"&gt;entries&lt;/span&gt; &lt;span class="o"&gt;*/&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;32768&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3240&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/reading.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;On voit l'appel au lancement du binaire. Puis après pas mal de chargement de fichiers et librairies et le listing du répertoire "."&lt;/p&gt;
+&lt;p&gt;Ce qui va nous intéresser le plus, ce sont les erreurs, du genre:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;sa_family&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;AF_UNIX&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sun_path&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/run/nscd/socket&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="mi"&gt;110&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;ENOENT&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;such&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;nscd est un démon de cache qui peut ou pas exister sur la machine. Ici, c'est la négative. Est-ce un problème dans notre cas? Non, ce n'est
+qu'un cache. Et là vous voyez le problème: il y a les bonnes erreurs, et les mauvaises erreurs.&lt;/p&gt;
+&lt;p&gt;Ici malheureusement, il va falloir montrer les muscles, et apprendre un peu tous ces rouages de l'OS afin de les identifier, et les filtrer rapidement.&lt;/p&gt;
+&lt;p&gt;Prennons un vrai cas avec une erreur:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;strace ls -thor /n-existe-pas&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;L'appel qui va nous intéresser va etre celui-ci:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;lstat(&amp;quot;/n-existe-pas&amp;quot;, 0x1f84600)       = -1 ENOENT (No such file or directory)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;strace&lt;/code&gt; vous donne des données brutes, mais ça va rester à vous de faire le travail in-fine. Rien de magique.&lt;/p&gt;
+&lt;p&gt;Par contre, ce qui est intéressant, c'est que vous êtes quasi sûr que l'erreur est dedans. Juste qu'un simple &lt;code&gt;ls&lt;/code&gt; génère 150 lignes, alors imaginez un lancement
+d'un &lt;code&gt;apache&lt;/code&gt; récalcitrant.&lt;/p&gt;
+&lt;p&gt;Ce que je vous recommande d'ailleurs pour son lancement:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mettre la sortie dans un fichier (&lt;code&gt;-o&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;tracer également les threads et autre processus fils (&lt;code&gt;-f&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;ne pas limiter la taille des strings dans les arguments des appels, ça aide (&lt;code&gt;-s 999999&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ceci nous donne donc:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;strace -o /tmp/trace.txt -f -s 999999 ls -thor /n-existe-pas&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Vu sa verbosité, c'est à utiliser en dernier recours, mais ça peut sauver des productions.&lt;/p&gt;
+&lt;h2&gt;Le jour où strace a débloqué plus de 300 personnes, et calmé mon chef&lt;/h2&gt;
+&lt;p&gt;Dans mon cas, en 2008 ou 2009, nous avions un GROS erp Oracle, avec plusieurs &lt;code&gt;apaches&lt;/code&gt; intégrés (chacun sa version, sa gestion de log, etc, un véritable enfer à administrer avec
+une surcouche xml d'Oracle qui n'aidait pas). &lt;/p&gt;
+&lt;p&gt;Et un jour en production, une partie de l'application ne démarrait plus. Rien dans les nombreux logs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;espace disque ok&lt;/li&gt;
+&lt;li&gt;pas de soucis réseaux&lt;/li&gt;
+&lt;li&gt;dns OK également (flute, souvent un bon bouc émissaire)&lt;/li&gt;
+&lt;li&gt;cluster Oracle OK&lt;/li&gt;
+&lt;li&gt;reboot fait, mais n'a rien changé &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/oups.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Aucun des suspects habituels. Ça faisait déjà bien 3/4h que 300 utilisateurs attendaient leur ERP, dans une société de l'industrie, c'est long, TRES long.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/wait.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Je sors donc mon copain &lt;code&gt;strace&lt;/code&gt;, en désespoir de cause. Vu qu'il nous manquait un des démons &lt;code&gt;apache&lt;/code&gt;, je me suis concentré sur ce dernier:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;j'ai trouvé son lancement sur un appel &lt;code&gt;execve&lt;/code&gt;, j'avais donc son PID&lt;/li&gt;
+&lt;li&gt;j'ai grep tout ce qui concenait de PID d'apache dans la sortie de &lt;code&gt;strace&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;j'ai vu un &lt;code&gt;open()&lt;/code&gt; sur un obscur log qui retournait en erreur (je n'ai plus le code d'erreur préci, mais ce n'était pas un succès ^^)&lt;/li&gt;
+&lt;li&gt;en allant voir le log, il faisait pile-poil 2Go. Pas un octet de plus ou de moins. Louche&lt;/li&gt;
+&lt;li&gt;je regarde l'appel systèe en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre &lt;code&gt;open64()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;je clean le log avec un bon vieux &lt;code&gt;&amp;gt; fichier-log&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;ça redémarre enfin &lt;code&gt;♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓ ♪&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/youpi.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;J'avais découvert &lt;code&gt;strace&lt;/code&gt; peu de temps avant. Sans lui, on aurait du faire appel au support Oracle, et vu la qualité de leurs réponses à l'époque, la
+production attendrait encore de redémarrer, nos 300 utilisateurs au chômage technique &lt;code&gt;ლ(ಠ益ಠლ)&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;strace sur un processus qui tourne déjà&lt;/h2&gt;
+&lt;p&gt;Un dernier cas où je trouve &lt;code&gt;strace&lt;/code&gt; pratique, c'est pour aller s'accrocher sur un processus qui est bloqué. Par exemple:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt; strace -o /tmp/trace.txt -f -s 999999 -p PID&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;On pourra avoir par exemple un:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt; select(5, NULL, NULL, NULL, {tv_sec=0, tv_usec=50000} &amp;lt;unfinished ...&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;là on sait que le processus attend le filre descriptor &lt;code&gt;5&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;on va voir qui est ce file descriptor &lt;code&gt;5&lt;/code&gt; dans le processus via &lt;code&gt;ls -thor /proc/PID/fd&lt;/code&gt; &lt;ul&gt;
+&lt;li&gt;et on trouve ainsi sur quelle socket/fichier il bloque&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Pas le seul outil dans son domaine, mais réponds toujours présent&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;strace&lt;/code&gt; n'est pas le seul à opérer dans cette couche pour trouver les appels systèmes qui posent des problèmes. Un de ses sucesseurs est le fameux &lt;code&gt;eBPF&lt;/code&gt; dont on parlera
+peut-être un jour.&lt;/p&gt;
+&lt;p&gt;Ce dernier est un &lt;code&gt;strace&lt;/code&gt; sous stéroïdes, qui ralenti beaucoup moins que strace, est capable de filtrage bien plus précis, etc. Mais le problème, c'est que ce n'est
+pas encore d'une stabilité à toute épreuve, et que son API évolue beaucoup, donc on n'est pas forcément sûr que son "script" de debug va bien fonctionner sur
+un ancien serveur par exemple (si tant est qu'il soit disponible, ce qui est loin d'être certain).&lt;/p&gt;
+&lt;p&gt;Nul doute qu'&lt;code&gt;eBPF&lt;/code&gt; rendra obsolète &lt;code&gt;strace&lt;/code&gt; un jour, mais ce dernier a encore l'avantage d'être toujours là, peu importe les situations ou les règles de sécurité.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/hero 4.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;La couche système que j'apprécie tout particulèrement&lt;/h1&gt;
+&lt;p&gt;Comme vous avez pu le voir au fil de ce post, c'est une couche que j'apprécie énormément. Cette couche des appels systèmes révèle tous les petits détails
+croustillant sur les trucs et astuces du système, sur comment les différents blocs fonctionnent entre eux.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;strace&lt;/code&gt; est justement un moyen de trouver des problèmes, mais également découvrir tous pleins de nouveaux mécanismes systèmes. &lt;/p&gt;
+&lt;p&gt;Quand je fais appel à &lt;code&gt;strace&lt;/code&gt;, c'est
+que j'ai un gros problème, mais une chose est sûre: même après quasi 20 ans à faire du Linux, je vais sûrement découvrir encore un ou deux trucs que je ne 
+connais pas encore.&lt;/p&gt;
+&lt;p&gt;Et rien que pour ça, je sais que je vais passer un bon moment &lt;code&gt;༼ つ ◕_◕ ༽つ&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/hype.png'&gt;&lt;/center&gt;&lt;/p&gt;</content><category term="linux"></category><category term="debug"></category><category term="admin"></category></entry><entry><title>Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances</title><link href="/depuis-open-source-vers-editeur/" rel="alternate"></link><published>2023-03-17T10:20:00+01:00</published><updated>2023-03-17T10:20:00+01:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2023-03-17:/depuis-open-source-vers-editeur/</id><summary type="html">&lt;p&gt;Quand on passe d'un hobby de dev sur un outil open source à un éditeur d'une solution payante, on change de monde et également de type de motivation.&lt;br/&gt; Dans cet article, je vais partager comment je l'ai véçu, ce que ça a changé par rapport à ma relation avec le code et le projet dans son ensemble.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Ce post fait suite aux réflexions que j'ai eu lors de mon entretient avec &lt;a href="https://fr.linkedin.com/in/imranedessai"&gt;Imrane Dessaï&lt;/a&gt; que vous pouvez retrouver sur &lt;a href="https://www.youtube.com/watch?v=kM42WE0Sa4c"&gt;Youtube&lt;/a&gt;&lt;/p&gt;
 &lt;h1&gt;De simple consommateur Open Source à contributeur&lt;/h1&gt;
 &lt;p&gt;Petit retour rapide sur l'histoire dont on va parler ici: Shinken était parti comme un simple POC sans nom pour rajouter le côté 
 distribué à Nagios. Suite au refus de Nagios d'incorporer les amélorations dans le projet "mère" (car utilisant un nouveau
