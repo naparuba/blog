@@ -167,7 +167,7 @@ Je sors donc mon copain ````strace````, en désespoir de cause. Vu qu'il nous ma
   * j'ai grep tout ce qui concenait de PID d'apache dans la sortie de ````strace````
   * j'ai vu un ````open()```` sur un obscur log qui retournait en erreur (je n'ai plus le code d'erreur préci, mais ce n'était pas un succès ^^)
   * en allant voir le log, il faisait pile-poil 2Go. Pas un octet de plus ou de moins. Louche
-  * je regarde l'appel systèe en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre ````open64()````
+  * je regarde l'appel système en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre ````open64()````
   * je clean le log avec un bon vieux ````> fichier-log````
   * ça redémarre enfin ````♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓ ♪````
 
