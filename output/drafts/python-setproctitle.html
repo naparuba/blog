@@ -139,10 +139,10 @@
 
         </header>
 
-    <p><center><img src='/images/77/article.png'></center></p>
+    <p><center><img src='/images/77/article.jpg'></center></p>
 <h1>Quand on doit intervernir sur un serveur un peu inconnu</h1>
-<p>Il est 3h du mat, vous êtes encore mal réveillé (tu m'étonnes...), vous arrivez non sans mal à vous connecter sur le serveur de votre client malgrés les 36 niveaux de redirections mis en place. </p>
-<p>La supervision est bien sûr aux abonnées absentes, et se limit à dire que l'application ne réponds qu'une fois sur 2. Elle vous remonte également que le serveur a une grosse charge bie anormale.</p>
+<p>Il est 3h du mat, vous êtes encore mal réveillé (tu m'étonnes...), vous arrivez non sans mal à vous connecter sur le serveur de votre client malgrés les <code>36</code> niveaux de redirections mis en place. </p>
+<p>La supervision est bien sûr aux abonnées absentes, et se limit à dire que l'application ne répond qu'une fois sur 2. Elle vous remonte également que le serveur a une grosse charge bie anormale.</p>
 <p>Ok, vous avez déjà des pistes à explorer:</p>
 <ul>
 <li>la plateforme physique a un problème (genre RAID qui se dit que 3h du mat c'est un bon moment pour reconstruire un disque)</li>
@@ -153,7 +153,7 @@
 <div class="highlight"><pre><span></span><code><span class="err">df -h</span>
 </code></pre></div>
 
-<p>(un grand classique celui là aussi...), mais non, l'espace disque est OK sur tous les volumes. Le client a tout mis sur /, simple, mais il aime le risque quand même.</p>
+<p>(un grand classique celui là aussi...), mais non, l'espace disque est OK sur tous les volumes. Le client a tout mis sur <code>/</code>, simple, mais il aime le risque quand même.</p>
 <p>On peut donc se concentrer sur un ralentissement. On lance donc un petit:</p>
 <div class="highlight"><pre><span></span><code><span class="err"> iostat -kx 5</span>
 </code></pre></div>
@@ -163,38 +163,56 @@
 <div class="highlight"><pre><span></span><code><span class="err"> top</span>
 </code></pre></div>
 
-<p>Petit tri sur M pour avoir le tri sur la mémoire, mais en effet, point de gros processus à l'horizon, c'est confirmé. 
-Par contre, le tri par CPU montre deux processus Python à 100% de CPU chacun. Sur une machine avec 2 CPUs, ça explique que notre démon n'a plus de quoi répondre.</p>
-<p>Par contre, juste "python" ça va pas nous aider. On met l'affichage des arguments pour voir le nom des scripts, et là encore ça ne nous aide pas. Pas de client sous la main pour savoir à quoi ils servent, et donc si on peux les tuer.</p>
-<p>Si leur nom avait été plus clair, genre "ERP: /tmp cleaner" là ça aurait aidé, on sait qu'on aurait pu les tuer vu qu'on était large sur l'espace disque, ou au moins les nicer sans pitié.</p>
+<p>Petit tri sur <code>M</code> pour avoir le tri sur la mémoire, mais en effet, point de gros processus à l'horizon, c'est confirmé.</p>
+<p>Par contre, le tri par CPU montre un processus Python à 100% de CPU. Sur une machine mono CPU, ceci explique pourquoi notre démon n'a plus de quoi répondre.
+<center><img src='/images/77/1.jpg'></center></p>
+<p><center><img src='/images/common/cassé 3.gif'></center></p>
+<p>Par contre, juste <code>python</code> ça ne va pas nous aider. On met l'affichage des arguments pour voir le nom des scripts, et là encore ça ne nous aide pas. </p>
+<p>Pas de responsable côté client sous la main pour savoir à quoi ils servent, et donc si on peut les tuer.
+<center><img src='/images/77/2.jpg'></center></p>
+<p>Si leur nom avait été plus clair, genre <code>ERP: /tmp cleaner</code> là ça aurait aidé, on sait qu'on aurait pu les tuer vu qu'on était large sur l'espace disque, ou au moins les nicer sans pitié.</p>
 <p>Là bien obligé de les nicer, mais sans trop savoir si c'est grave ou pas.</p>
-<h1>Niveau novice: donner un nom à votre processus c'est facile et rapide</h1>
-<p>Bref, si quand on développe un code, son rôle est clair et limpide (ou alors vou aurez du mal à le développer de toute manière ^^), mais pensez que ceux qui vont repasser derrière après 5 ou 10ans vont également
+<p><center><img src='/images/common/hache 3.gif'></center></p>
+<h1>Niveau novice: donner un nom à votre processus, c'est facile et rapide</h1>
+<p>Bref, si quand on développe un code, son rôle est clair et limpide (ou alors vou aurez du mal à le développer de toute manière <code>^^'</code>), mais pensez que ceux qui vont repasser derrière après 5 ou 10ans vont également
 avoir besoin de savoir ce que ça fait dans les grandes lignes.</p>
-<p>Si les autres développeurs vont avoir le droit aux commentaires, les administrateurs eux ne vont avoir qu'une et une seule chose pour se faire un avis: le nom du processus. Et si vous ne faite rien, ça sera juste "python", 
-pas très utile pour eux faut bien le reconnaitre.</p>
-<p>C'est pourquoi je vous recommande de passer par un petit renommage de processus quand vous pouvez. La mise en place est triviale: c'est le paquet setproctitle. Trouvable sur <a href="https://pypi.org/project/setproctitle/">Pypi</a>.</p>
-<p>Son appel est très simple égalmeent, et il s'occupe de toutes les petites bidouilles systèmes pour ça (car oui, c'est loin d'être si simple d'un point de vue système en fait, merci le poid de l'histoire du noyau Linux ici).</p>
+<p>Si les autres développeurs vont avoir droit aux commentaires, les administrateurs eux ne vont avoir qu'une et une seule chose pour se faire un avis rapidement: le nom du processus. </p>
+<p>Et si vous ne faites rien, ça sera juste "python", on a déjà vu plus utile, il faut bien le reconnaitre.</p>
+<p>C'est pourquoi je vous recommande de passer par un petit renommage de processus quand vous pouvez. La mise en place est triviale: c'est le paquet <code>setproctitle</code>. Trouvable sur <a href="https://pypi.org/project/setproctitle/">Pypi</a>.</p>
+<p>Son appel est très simple également, et il s'occupe de toutes les petites bidouilles systèmes pour ça (car oui, c'est loin d'être si simple d'un point de vue système en fait, merci le poid de l'histoire du noyau Linux ici).</p>
 <div class="highlight"><pre><span></span><code> <span class="kn">import</span> <span class="nn">setproctitle</span>
  <span class="n">setproctitle</span><span class="o">.</span><span class="n">setproctitle</span><span class="p">(</span><span class="s1">&#39;ERP: /tmp cleaner&#39;</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Hop, finito. Même pas besoin d'être root pour le faire, vous pouvez y aller serein.</p>
-<p><center><img src='/images/common/maybe.gif'></center></p>
-<h1>Niveau intermédiaire: donner un nom à vos processus fils également, ça aide à s'y retrouver</h1>
+<p><center><img src='/images/77/3.jpg'></center></p>
+<p><center><img src='/images/common/hero.gif'></center></p>
+<h1>Niveau intermédiaire: donner un nom à vos processus fils également</h1>
 <p>Maintenant que vous mettez tous vos démons avec un nom de processus, les administrateurs vous aime bien, et vous autorise même à avoir des clés sur les serveurs (pas le compte root, faut pas déconner quand même).</p>
-<p>Cas qui peux arriver si vous travaillez avec un énorme volume de données et Python, c'est l'utilisation de la libairie multiprocessing. Une autre fois, j'expliquerai à quel point je la déteste, mais pas là, l'article est déjà long comme ça.</p>
-<p>Multiprocessing permet de s'affranchir de LA plus grosse limite de Python à mon sens: il ne sait utiliser qu'un seul CPU (oui oui, même en async, il n'y a aucune magie) à l'heure actuelle. Bon ça fait 10ans qu'on parle de faire
-sauter la limitation, donc je pense que ce sera encore le cas très longtemps après la sortie de cet article.</p>
-<p>Multiprocessing permet de lancer des sous-processus, des workers, qui vont travailler sur une partie de vos données. Si on mets de côté tous ses bugs, c'est un moyen simple d'améliorer sensiblement ses performances.</p>
+<p>Cas qui peut arriver si vous travaillez avec un énorme volume de données et Python, c'est l'utilisation de la libairie <code>multiprocessing</code>. </p>
+<p>Une autre fois, j'expliquerai à quel point je la <code>déteste</code>, mais ce n'est pas le sujet aujourd'hui.</p>
+<p>Multiprocessing permet de s'affranchir de LA plus grosse limite de Python à mon sens: il ne sait utiliser qu'<code>un seul CPU</code> (oui oui, même en <code>async</code>, il n'y a aucune magie) à l'heure actuelle. </p>
+<p>Bon ça fait 10ans qu'on parle de faire sauter la limitation, donc je pense que ce sera encore le cas très longtemps après la sortie de cet article.</p>
+<p><center><img src='/images/common/wait 3.gif'></center></p>
+<p>Multiprocessing permet de lancer des sous-processus, des <code>workers</code>, qui vont travailler sur une partie de vos données. </p>
+<p>Si on met de côté tous ses bugs (lol, bon courage pour ne pas tomber dedans), c'est un moyen simple d'améliorer sensiblement ses performances.</p>
 <p>Par contre, vos processus workers vont tous avoir le même nom, celui de votre processus principal. Pas très pratique:</p>
 <ul>
 <li>ni pour le développeur qui doit débugger dans un worker particulier</li>
-<li>encore moins pour l'administrateur qui se retrouve avec pleins de fois le même processus, mais chacun avec des rôles différents ^^'</li>
+<li>encore moins pour l'administrateur qui se retrouve avec pleins de fois le même processus, mais chacun avec des rôles différents <code>^^'</code></li>
 </ul>
-<h1>Niveau master: maintenir à jour le titre de votre processus avec l'étape actuelle</h1>
-<p><center><img src='/images/common/bug 2.gif'></center></p>
+<p>Vous pouvez donc donner un nom au sous-processus. Il suffit de remettre un autre nom via <code>setproctitle</code>.</p>
+<p>Astuce: pensez à garder une référence aux processus principal, si on n'affiche que le nom du processus fils, il faut encore être capable de savoir à quelle application il se réfère.</p>
+<p><center><img src='/images/77/4.jpg'></center></p>
+<h1>Niveau master: maintenir à jour sur le traitement actuel</h1>
+<p>Dernière astuce si vous en avez la possibilité, c'est de donner directement depuis le nom du processus l'avancement d'un traitement, ou son état de chargement par exemple. </p>
+<p>C'est très raffiné, je trouve, et mine de rien bien pratique pour suivre un traitement directement avec un top.</p>
+<p><center><img src='/images/77/5.jpg'></center></p>
+<p><center><img src='/images/common/beautiful.gif'></center></p>
 <h1>Petit détail, grande classe</h1>
+<p>Ce petit détail pour les développeurs est d'une grande aide pour l'administration. </p>
+<p>Pour m'être retrouvé à revenir sur un programme qui n'avait pas le nommage des processus alors que j'y étais habitué, j'ai perdu beaucoup de temps lors des phases de debug. C'est quelque chose de tout bête, mais qui aide grandement quand on debug, et où le temps est précieux, genre à <code>3h</code> du mat... <code>:D</code></p>
+<p><center><img src='/images/common/decouverte.gif'></center></p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
     <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>

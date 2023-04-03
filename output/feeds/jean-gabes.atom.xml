@@ -117,7 +117,7 @@ une surcouche xml d'Oracle qui n'aidait pas). &lt;/p&gt;
 &lt;li&gt;j'ai grep tout ce qui concenait de PID d'apache dans la sortie de &lt;code&gt;strace&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;j'ai vu un &lt;code&gt;open()&lt;/code&gt; sur un obscur log qui retournait en erreur (je n'ai plus le code d'erreur préci, mais ce n'était pas un succès ^^)&lt;/li&gt;
 &lt;li&gt;en allant voir le log, il faisait pile-poil 2Go. Pas un octet de plus ou de moins. Louche&lt;/li&gt;
-&lt;li&gt;je regarde l'appel systèe en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre &lt;code&gt;open64()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;je regarde l'appel système en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre &lt;code&gt;open64()&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;je clean le log avec un bon vieux &lt;code&gt;&amp;gt; fichier-log&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;ça redémarre enfin &lt;code&gt;♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓ ♪&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;

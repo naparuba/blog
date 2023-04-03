@@ -257,7 +257,7 @@ une surcouche xml d'Oracle qui n'aidait pas). </p>
 <li>j'ai grep tout ce qui concenait de PID d'apache dans la sortie de <code>strace</code></li>
 <li>j'ai vu un <code>open()</code> sur un obscur log qui retournait en erreur (je n'ai plus le code d'erreur préci, mais ce n'était pas un succès ^^)</li>
 <li>en allant voir le log, il faisait pile-poil 2Go. Pas un octet de plus ou de moins. Louche</li>
-<li>je regarde l'appel systèe en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre <code>open64()</code></li>
+<li>je regarde l'appel système en question, et en effet, il ne pouvait pas ouvrir de fichiers de plus de 2Go, il fallait passer sur un appel du genre <code>open64()</code></li>
 <li>je clean le log avec un bon vieux <code>&gt; fichier-log</code></li>
 <li>ça redémarre enfin <code>♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓ ♪</code></li>
 </ul>
