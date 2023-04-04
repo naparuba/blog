@@ -5,7 +5,6 @@
 #/_/  \____/\__,_/\____/  /_/      \__/\___/\___/_/ /_/_/ /_/_/\__, /\__,_/\___/
 #                                                                /_/
 
-* passer en build sous github actions (voir un peu la diff avec travis)
 
 
 
