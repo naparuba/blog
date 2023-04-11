@@ -18,13 +18,16 @@ On doit être capable de changer tout ce que l'on souhaite dans l'implémentatio
 
 Sans ce principe fondateur, vous pouvez mettre à la poubelle toute idée de maintenance de votre code/librairie.
 
-Python étant également un language objet, il a évidement respecté ce principe. On peut avoir des getter/setter avec ses classes.
+Python étant également un langage objet, il a évidement respecté ce principe. On peut avoir des getter/setter avec ses classes.
 
-Je passe leur définition, c'est pas définition assez trivial.
+Je passe leur définition, c'est par définition assez trivial.
 
-Par contre, il a également une autre manière de faire en Python (déjà on s'éloigne du "There should be one-- and preferably only one --obvious way to do it." du [https://peps.python.org/pep-0020/](zen of Python)): l'annotation @property
+Par contre, il a également une autre manière de faire en Python (déjà on s'éloigne du `There should be one-- and preferably only one --obvious way to do it.` du [https://peps.python.org/pep-0020/](zen of Python)): l'annotation `@property`
 
-Son principe est assez simple: on va relier une méthode à un nom de propriété classique. Voici ce que ça donne sur un exemple simple:
+<center><img src='/images/common/reading.gif'></center> 
+
+Son principe est assez simple: on va relier une méthode à un nom de propriété classique. Voici ce que ça donne sur un exemple simple, développé par un premier développeur, `Jean`:
+
     class Human:
         def __init__(name, birthday):
             self._name = name
@@ -57,126 +60,96 @@ Joli? Oui. Trompeur? Oh que oui aussi. Car si on ne regarde que le code d'un poi
 
 Or non, cette impression peut être totalement fausse et donner des résultats qui vont être trompeurs.
 
+<center><img src='/images/common/outch 2.gif'></center> 
+
 # Quand les @property mentent
 
-Les @property ne sont que des appels à des méthodes. Juste que la syntaxe nous a caché ça. Rien de plus.
+Les `@property` ne sont que des appels à des méthodes. Juste que la syntaxe nous a caché ça. Rien de plus.
 
-Revenons un peu à notre exemple
+Revenons un peu à notre exemple. Imaginons que nous avons un nouveau développeur, nommé `William`, qui a besoin de faire une moyenne sur beaucoup de personnes, genre 100_000. `William` va procéder ainsi:
 
+    # en supposant qu'il y en a au moins un évidement
+    moyenne = sum([human.age for human in lot_of_humans]) / len(lot_of_humans)
 
+D'après son interface, `William` s'attend à ce que le temps du calcul soit très rapide, c'est une bête somme d'entier après tout. Il ne connait pas les détails `internes` de Human, car il l'utilise, on a pas à savoir `comment` il est fait.
 
-ICICICICICICICI
+<center><img src='/images/common/pasfaux.png'></center> 
 
+## Un autre développeur corrige le bug de Human dans son coin
 
+Mais maintenant un autre développeur, nommée `Amy`, corrige le bug de la classe Human sur son `self._age = birthday - now()` car c'est peut-être vrai au moment de l'instanciation de l'objet
+mais il suffit d'attendre un ou deux jours pour avoir des cas où l'anniversaire est passé pour avoir un autre âge. 
 
-Il est 3h du mat, vous êtes encore mal réveillé (tu m'étonnes...), vous arrivez non sans mal à vous connecter sur le serveur de votre client malgrés les `36` niveaux de redirections mis en place. 
+<center><img src='/images/common/bug.jpg'></center> 
 
-La supervision est bien sûr aux abonnées absentes, et se limit à dire que l'application ne répond qu'une fois sur 2. Elle vous remonte également que le serveur a une grosse charge bie anormale.
+`Amy` va donc déplacer le calcul à chaque fois qu'on demande l'age:
 
-Ok, vous avez déjà des pistes à explorer:
+        # note: simplifié
+        @property
+        def age(self):
+            return self._birthday - now()
 
-* la plateforme physique a un problème (genre RAID qui se dit que 3h du mat c'est un bon moment pour reconstruire un disque)
-* soit c'est une VM qui se fait canibaliser son temps (ça arrive bien plus souvent qu'on pense, surtout chez les hébergeurs "cloud")
-* soit une application sur le serveur est parti en vrille et bouffe toutes les ressources
+       @age.setter
+        def age(self, value):
+            self._birthday = now() - value
 
-Une fois sur la machine, premier réflexe:
+Ok, c'est fixé de manière simple. 
 
-    df -h
+`Amy` aurait pu rajouter un cache, ou avoir un calcul une fois par jour, mais ça demande que le démon ait un ordonnancement et cie, et un cache demande de le vider de temps en temps. Ce fix a le mérite d'être fonctionnel, et elle n'a pas plus de temps à y passer de toute manière.
 
-(un grand classique celui là aussi...), mais non, l'espace disque est OK sur tous les volumes. Le client a tout mis sur `/`, simple, mais il aime le risque quand même.
+## Le premier développeur voit ses tests de performances s'éffondrer
+Revenons à notre développeur `William` qui devait calculer sa moyenne. 
 
-On peut donc se concentrer sur un ralentissement. On lance donc un petit:
+C'est une grosse équipe, il n'est pas au courant de tous les détails des fix des autres développeurs. 
 
-     iostat -kx 5
+Par contre, on lui avait demandé de s'engager sur les performances de son calcul de moyenne.
+Confiant dans le calcul de `sum()` sur de simples entiers, il avait mis un test de performance avec très peu de marge sur son calcul.
 
-Et là non, les disques ne sont pas solicités plus que ça, 20% max, ça va, on est large. On ne doit pas swapper non plus, on peux donc éliminer les problèmes de surconsommation RAM, dommage, c'est simple à régler au moins.
+Problème, les calculs de date sont très, **très**, couteux, peu importe le language. 
 
-On passe donc côté CPU:
+<center><img src='/images/common/sad (2).gif'></center> 
 
-     top
+Python ne fait pas exception. Et ici, là où il pensait naivement avoir affaire à des entiers, il a désormais dans sa boucle N fois un gros calcul de temps. D'où ses problèmes de performances. 
 
-Petit tri sur `M` pour avoir le tri sur la mémoire, mais en effet, point de gros processus à l'horizon, c'est confirmé.
+Un accès direct à un entier, c'est peu cher (enfin avec Python, disons que c'est moyennement cher), mais là avec un calcul de date, c'est la mort.
 
-Par contre, le tri par CPU montre un processus Python à 100% de CPU. Sur une machine mono CPU, ceci explique pourquoi notre démon n'a plus de quoi répondre.
-<center><img src='/images/77/1.jpg'></center>
+## Qui s'est raté alors?
+A qui la faute? 
 
-<center><img src='/images/common/cassé 3.gif'></center>
+ * `Amy` a corrigé aussi bien qu'elle a pu dans le temps imparti un bug important
+ * `William` a pris un `human.age` affiché comme un entier pour... bah un entier. Je ne vois pas comment lui en vouloir.
 
-Par contre, juste `python` ça ne va pas nous aider. On met l'affichage des arguments pour voir le nom des scripts, et là encore ça ne nous aide pas. 
+Non. Je pense que la faute revient à `Jean`, qui a défini l'interface de Human. 
 
-Pas de responsable côté client sous la main pour savoir à quoi ils servent, et donc si on peut les tuer.
-<center><img src='/images/77/2.jpg'></center>
+<center><img src='/images/common/stess (2).jpg'></center> 
 
-Si leur nom avait été plus clair, genre `ERP: /tmp cleaner` là ça aurait aidé, on sait qu'on aurait pu les tuer vu qu'on était large sur l'espace disque, ou au moins les nicer sans pitié.
+Je peux tout à fait pardonner à `William` d'avoir fait la faute sur `human.age`, car j'aurais fait la même.
 
-Là bien obligé de les nicer, mais sans trop savoir si c'est grave ou pas.
+On ne s'attend pas à avoir un appel de méthode ici, et encore moins un appel couteux.
 
-<center><img src='/images/common/hache 3.gif'></center>
+Par contre, si on avait un appel du genre `human.get_age()` on fait un peu plus attention. La supposition de "on récupère juste un entier quasi gratuitement" ne tient plus, et on est tenté d'aller voir ce qu'il y a dans le get_age(), ou à minima de la sortir de sa boucle, et le timer à part.
 
-# Niveau novice: donner un nom à votre processus, c'est facile et rapide
-Bref, si quand on développe un code, son rôle est clair et limpide (ou alors vou aurez du mal à le développer de toute manière `^^'`), mais pensez que ceux qui vont repasser derrière après 5 ou 10ans vont également
-avoir besoin de savoir ce que ça fait dans les grandes lignes.
+## Les @property, un piège
+Et c'est bien ça que je reproche au `@property`. C'est pratique sur le papier, mais c'est piégeux.
 
-Si les autres développeurs vont avoir droit aux commentaires, les administrateurs eux ne vont avoir qu'une et une seule chose pour se faire un avis rapidement: le nom du processus. 
+On va faire de fausses suppositions sur des propriétés alors qu'en fait le calcul peut être bien plus important, voir accéder à un cache avec tous les problèmes que ça demande, les accès concurrents (moins un souci si on fait que du read sur un entier), etc.
 
-Et si vous ne faites rien, ça sera juste "python", on a déjà vu plus utile, il faut bien le reconnaitre.
+Oh, bien sûr, on peut me répondre: "c'est au développeur qui l'utilise de faire attention"
 
-C'est pourquoi je vous recommande de passer par un petit renommage de processus quand vous pouvez. La mise en place est triviale: c'est le paquet `setproctitle`. Trouvable sur [Pypi](https://pypi.org/project/setproctitle/).
-
-Son appel est très simple également, et il s'occupe de toutes les petites bidouilles systèmes pour ça (car oui, c'est loin d'être si simple d'un point de vue système en fait, merci le poid de l'histoire du noyau Linux ici).
-
-     import setproctitle
-     setproctitle.setproctitle('ERP: /tmp cleaner')
-
-Hop, finito. Même pas besoin d'être root pour le faire, vous pouvez y aller serein.
-
-
-<center><img src='/images/77/3.jpg'></center>
-
-<center><img src='/images/common/hero.gif'></center>
-
-# Niveau intermédiaire: donner un nom à vos processus fils également
-Maintenant que vous mettez tous vos démons avec un nom de processus, les administrateurs vous aime bien, et vous autorise même à avoir des clés sur les serveurs (pas le compte root, faut pas déconner quand même).
-
-Cas qui peut arriver si vous travaillez avec un énorme volume de données et Python, c'est l'utilisation de la libairie `multiprocessing`. 
-
-Une autre fois, j'expliquerai à quel point je la `déteste`, mais ce n'est pas le sujet aujourd'hui.
-
-Multiprocessing permet de s'affranchir de LA plus grosse limite de Python à mon sens: il ne sait utiliser qu'`un seul CPU` (oui oui, même en `async`, il n'y a aucune magie) à l'heure actuelle. 
-
-Bon ça fait 10ans qu'on parle de faire sauter la limitation, donc je pense que ce sera encore le cas très longtemps après la sortie de cet article.
-
-<center><img src='/images/common/wait 3.gif'></center>
-
-Multiprocessing permet de lancer des sous-processus, des `workers`, qui vont travailler sur une partie de vos données. 
-
-Si on met de côté tous ses bugs (lol, bon courage pour ne pas tomber dedans), c'est un moyen simple d'améliorer sensiblement ses performances.
-
-Par contre, vos processus workers vont tous avoir le même nom, celui de votre processus principal. Pas très pratique:
-
- * ni pour le développeur qui doit débugger dans un worker particulier
- * encore moins pour l'administrateur qui se retrouve avec pleins de fois le même processus, mais chacun avec des rôles différents `^^'`
-
-Vous pouvez donc donner un nom au sous-processus. Il suffit de remettre un autre nom via `setproctitle`.
-
-Astuce: pensez à garder une référence aux processus principal, si on n'affiche que le nom du processus fils, il faut encore être capable de savoir à quelle application il se réfère.
-
-<center><img src='/images/77/4.jpg'></center>
-
-# Niveau master: maintenir à jour sur le traitement actuel
-
-Dernière astuce si vous en avez la possibilité, c'est de donner directement depuis le nom du processus l'avancement d'un traitement, ou son état de chargement par exemple. 
-
-C'est très raffiné, je trouve, et mine de rien bien pratique pour suivre un traitement directement avec un top.
-
-<center><img src='/images/77/5.jpg'></center>
-
-<center><img src='/images/common/beautiful.gif'></center>
+Mais non je ne suis pas d'accord. Il doit déjà faire attention à son propre code, alors réussir à deviner toutes les suppositions du code des autres, ça commence à faire beaucoup si on lui mets des peaux de bananes sous les pieds.
 
 
-# Petit détail, grande classe
-Ce petit détail pour les développeurs est d'une grande aide pour l'administration. 
+## Le vrai usage des @property : ratraper un cas foireux
+Pour moi les `@property` sont un moyen de ratraper le code d'une interface qui a été mauvaise dès le début: on avait donné l'accès à une de ses propriétés internes, et on s'aperçoit qu'il n'aurait pas fallu. 
 
-Pour m'être retrouvé à revenir sur un programme qui n'avait pas le nommage des processus alors que j'y étais habitué, j'ai perdu beaucoup de temps lors des phases de debug. C'est quelque chose de tout bête, mais qui aide grandement quand on debug, et où le temps est précieux, genre à `3h` du mat... `:D`
+On tente alors de catcher les appels "à l'arrache" sans avoir à changer son interface d'appels de la part de ses clients.
 
-<center><img src='/images/common/decouverte.gif'></center>
+Mais c'est donc une solution à un problème qui n'aurait pas dû se poser dès le départ. Sauf si tu es une classe "friend" comme en C++, tu n'as pas à accéder à mes propriétés en direct, que j'ai mis un _ au début ou pas (ou alors tu peux planter, ça sera ta faute si je change une ligne `(⌐■_■)–︻╦╤─ – – – (╥﹏╥)` ).
+
+Au moins les getter/setter, tu ne feras pas de suppositions de performance ou accès concurrents. On fait naturellement attention dans ces cas-là.
+
+Les @property c'est l'opposé de ma philosophie de développement. C'est "too much" et ça donne une fausse idée de simplicité. 
+
+Je préfère largement quand la simplicité est véridique `༼ つ ͡◕ Ѿ ͡◕ ༽つ`
+
+<center><img src='/images/common/café.gif'></center> 
