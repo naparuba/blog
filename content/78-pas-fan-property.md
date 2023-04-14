@@ -7,7 +7,7 @@ Author: Jean Gabès
 AuthorLogin: naparuba
 Summary: Après quasi 15ans de Python, je ne vois toujours d'intérêt légitime au @property. Voici pourquoi.
 id: 78
-Status: draft
+Status: ready
 
 <center><img src='/images/78/article.jpg'></center>
 
