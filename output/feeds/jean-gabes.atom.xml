@@ -1,5 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ - Jean Gabès</title><link href="/" rel="alternate"></link><link href="/feeds/jean-gabes.atom.xml" rel="self"></link><id>/</id><updated>2023-04-14T10:20:00+02:00</updated><entry><title>Python: la différence entre copy et deepcopy</title><link href="/python-copy/" rel="alternate"></link><published>2023-04-14T10:20:00+02:00</published><updated>2023-04-14T10:20:00+02:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2023-04-14:/python-copy/</id><summary type="html">&lt;p&gt;En Python, quand on souhaite copier un conteneur, on a le choix entre copy et deepcopy.&lt;br/&gt;Se tromper entre les deux est c'est le bug assuré. Voyons pourquoi.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;center&gt;&lt;img src='/images/76/article.png'&gt;&lt;/center&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ - Jean Gabès</title><link href="/" rel="alternate"></link><link href="/feeds/jean-gabes.atom.xml" rel="self"></link><id>/</id><updated>2023-04-28T10:20:00+02:00</updated><entry><title>Python: donner un vrai nom à vos process</title><link href="/python-setproctitle/" rel="alternate"></link><published>2023-04-28T10:20:00+02:00</published><updated>2023-04-28T10:20:00+02:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2023-04-28:/python-setproctitle/</id><summary type="html">&lt;p&gt;Quand un admin doit voir ce qui tourne sur un serveur, avoir un vrai nom de process au lieu de juste "python" est quand même plus pratique&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;center&gt;&lt;img src='/images/77/article.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Quand on doit intervernir sur un serveur un peu inconnu&lt;/h1&gt;
+&lt;p&gt;Il est 3h du mat, vous êtes encore mal réveillé (tu m'étonnes...), vous arrivez non sans mal à vous connecter sur le serveur de votre client malgrés les &lt;code&gt;36&lt;/code&gt; niveaux de redirections mis en place. &lt;/p&gt;
+&lt;p&gt;La supervision est bien sûr aux abonnées absentes, et se limit à dire que l'application ne répond qu'une fois sur 2. Elle vous remonte également que le serveur a une grosse charge bie anormale.&lt;/p&gt;
+&lt;p&gt;Ok, vous avez déjà des pistes à explorer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;la plateforme physique a un problème (genre RAID qui se dit que 3h du mat c'est un bon moment pour reconstruire un disque)&lt;/li&gt;
+&lt;li&gt;soit c'est une VM qui se fait canibaliser son temps (ça arrive bien plus souvent qu'on pense, surtout chez les hébergeurs "cloud")&lt;/li&gt;
+&lt;li&gt;soit une application sur le serveur est parti en vrille et bouffe toutes les ressources&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Une fois sur la machine, premier réflexe:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;df -h&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;(un grand classique celui là aussi...), mais non, l'espace disque est OK sur tous les volumes. Le client a tout mis sur &lt;code&gt;/&lt;/code&gt;, simple, mais il aime le risque quand même.&lt;/p&gt;
+&lt;p&gt;On peut donc se concentrer sur un ralentissement. On lance donc un petit:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt; iostat -kx 5&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Et là non, les disques ne sont pas solicités plus que ça, 20% max, ça va, on est large. On ne doit pas swapper non plus, on peux donc éliminer les problèmes de surconsommation RAM, dommage, c'est simple à régler au moins.&lt;/p&gt;
+&lt;p&gt;On passe donc côté CPU:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt; top&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Petit tri sur &lt;code&gt;M&lt;/code&gt; pour avoir le tri sur la mémoire, mais en effet, point de gros processus à l'horizon, c'est confirmé.&lt;/p&gt;
+&lt;p&gt;Par contre, le tri par CPU montre un processus Python à 100% de CPU. Sur une machine mono CPU, ceci explique pourquoi notre démon n'a plus de quoi répondre.
+&lt;center&gt;&lt;img src='/images/77/1.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/cassé 3.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Par contre, juste &lt;code&gt;python&lt;/code&gt; ça ne va pas nous aider. On met l'affichage des arguments pour voir le nom des scripts, et là encore ça ne nous aide pas. &lt;/p&gt;
+&lt;p&gt;Pas de responsable côté client sous la main pour savoir à quoi ils servent, et donc si on peut les tuer.
+&lt;center&gt;&lt;img src='/images/77/2.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Si leur nom avait été plus clair, genre &lt;code&gt;ERP: /tmp cleaner&lt;/code&gt; là ça aurait aidé, on sait qu'on aurait pu les tuer vu qu'on était large sur l'espace disque, ou au moins les nicer sans pitié.&lt;/p&gt;
+&lt;p&gt;Là bien obligé de les nicer, mais sans trop savoir si c'est grave ou pas.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/hache 3.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Niveau novice: donner un nom à votre processus, c'est facile et rapide&lt;/h1&gt;
+&lt;p&gt;Bref, si quand on développe un code, son rôle est clair et limpide (ou alors vou aurez du mal à le développer de toute manière &lt;code&gt;^^'&lt;/code&gt;), mais pensez que ceux qui vont repasser derrière après 5 ou 10ans vont également
+avoir besoin de savoir ce que ça fait dans les grandes lignes.&lt;/p&gt;
+&lt;p&gt;Si les autres développeurs vont avoir droit aux commentaires, les administrateurs eux ne vont avoir qu'une et une seule chose pour se faire un avis rapidement: le nom du processus. &lt;/p&gt;
+&lt;p&gt;Et si vous ne faites rien, ça sera juste "python", on a déjà vu plus utile, il faut bien le reconnaitre.&lt;/p&gt;
+&lt;p&gt;C'est pourquoi je vous recommande de passer par un petit renommage de processus quand vous pouvez. La mise en place est triviale: c'est le paquet &lt;code&gt;setproctitle&lt;/code&gt;. Trouvable sur &lt;a href="https://pypi.org/project/setproctitle/"&gt;Pypi&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Son appel est très simple également, et il s'occupe de toutes les petites bidouilles systèmes pour ça (car oui, c'est loin d'être si simple d'un point de vue système en fait, merci le poid de l'histoire du noyau Linux ici).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;setproctitle&lt;/span&gt;
+ &lt;span class="n"&gt;setproctitle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setproctitle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ERP: /tmp cleaner&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Hop, finito. Même pas besoin d'être root pour le faire, vous pouvez y aller serein.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/77/3.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/hero.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Niveau intermédiaire: donner un nom à vos processus fils également&lt;/h1&gt;
+&lt;p&gt;Maintenant que vous mettez tous vos démons avec un nom de processus, les administrateurs vous aime bien, et vous autorise même à avoir des clés sur les serveurs (pas le compte root, faut pas déconner quand même).&lt;/p&gt;
+&lt;p&gt;Cas qui peut arriver si vous travaillez avec un énorme volume de données et Python, c'est l'utilisation de la libairie &lt;code&gt;multiprocessing&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;Une autre fois, j'expliquerai à quel point je la &lt;code&gt;déteste&lt;/code&gt;, mais ce n'est pas le sujet aujourd'hui.&lt;/p&gt;
+&lt;p&gt;Multiprocessing permet de s'affranchir de LA plus grosse limite de Python à mon sens: il ne sait utiliser qu'&lt;code&gt;un seul CPU&lt;/code&gt; (oui oui, même en &lt;code&gt;async&lt;/code&gt;, il n'y a aucune magie) à l'heure actuelle. &lt;/p&gt;
+&lt;p&gt;Bon ça fait 10ans qu'on parle de faire sauter la limitation, donc je pense que ce sera encore le cas très longtemps après la sortie de cet article.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/wait 3.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;Multiprocessing permet de lancer des sous-processus, des &lt;code&gt;workers&lt;/code&gt;, qui vont travailler sur une partie de vos données. &lt;/p&gt;
+&lt;p&gt;Si on met de côté tous ses bugs (lol, bon courage pour ne pas tomber dedans), c'est un moyen simple d'améliorer sensiblement ses performances.&lt;/p&gt;
+&lt;p&gt;Par contre, vos processus workers vont tous avoir le même nom, celui de votre processus principal. Pas très pratique:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ni pour le développeur qui doit débugger dans un worker particulier&lt;/li&gt;
+&lt;li&gt;encore moins pour l'administrateur qui se retrouve avec pleins de fois le même processus, mais chacun avec des rôles différents &lt;code&gt;^^'&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Vous pouvez donc donner un nom au sous-processus. Il suffit de remettre un autre nom via &lt;code&gt;setproctitle&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Astuce: pensez à garder une référence aux processus principal, si on n'affiche que le nom du processus fils, il faut encore être capable de savoir à quelle application il se réfère.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/77/4.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Niveau master: maintenir à jour sur le traitement actuel&lt;/h1&gt;
+&lt;p&gt;Dernière astuce si vous en avez la possibilité, c'est de donner directement depuis le nom du processus l'avancement d'un traitement, ou son état de chargement par exemple. &lt;/p&gt;
+&lt;p&gt;C'est très raffiné, je trouve, et mine de rien bien pratique pour suivre un traitement directement avec un top.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/77/5.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/beautiful.gif'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Petit détail, grande classe&lt;/h1&gt;
+&lt;p&gt;Ce petit détail pour les développeurs est d'une grande aide pour l'administration. &lt;/p&gt;
+&lt;p&gt;Pour m'être retrouvé à revenir sur un programme qui n'avait pas le nommage des processus alors que j'y étais habitué, j'ai perdu beaucoup de temps lors des phases de debug. C'est quelque chose de tout bête, mais qui aide grandement quand on debug, et où le temps est précieux, genre à &lt;code&gt;3h&lt;/code&gt; du mat... &lt;code&gt;:D&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;&lt;img src='/images/common/decouverte.gif'&gt;&lt;/center&gt;&lt;/p&gt;</content><category term="python"></category><category term="debug"></category><category term="admin"></category></entry><entry><title>Python: la différence entre copy et deepcopy</title><link href="/python-copy/" rel="alternate"></link><published>2023-04-14T10:20:00+02:00</published><updated>2023-04-14T10:20:00+02:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2023-04-14:/python-copy/</id><summary type="html">&lt;p&gt;En Python, quand on souhaite copier un conteneur, on a le choix entre copy et deepcopy.&lt;br/&gt;Se tromper entre les deux est c'est le bug assuré. Voyons pourquoi.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;center&gt;&lt;img src='/images/76/article.png'&gt;&lt;/center&gt;&lt;/p&gt;
 &lt;h1&gt;Les conteneurs en Python&lt;/h1&gt;
 &lt;p&gt;S'il y a bien deux éléments que je trouve structurant dans un langage de programmation, ce sont autant sa grammaire que ses conteneurs standards.&lt;/p&gt;
 &lt;p&gt;Ces derniers sont importants, car ils représentent le plus gros des troupes de ce que l'on va utiliser au jour le jour. Une absence de liste dynamique par défaut sera très, très handicapante, et on va se retrouver à prendre une bibliothèque tierce pour ça.&lt;/p&gt;
