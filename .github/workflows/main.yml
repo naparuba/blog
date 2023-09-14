@@ -4,6 +4,7 @@ run-name: ${{ github.actor }} building blog and commit changes 🚀
 on      :
    pull_request:
    push        :
+   workflow_dispatch:
    # 1h30 vendredi, attention, github gere mal les temps, on dirait de l utc
    schedule    :
       - cron:  '30 1 * * 5'
