@@ -575,8 +575,9 @@
 <div class="container-fluid section-holder d-flex bg-white">
     <div class="container-fluid anchor pb-5 projects-section" id="projects">
 
-        <h1 class="text-center">Projets</h1>
+        <h1 class="text-center">Portfolio</h1>
 
+        <!--
         <div class="container ml-auto text-center">
             <div class="btn-group flex-wrap" role="group" id="project-filter-buttons">
                 <button type="button" class="btn btn-dark" data-filter="all"> Tous</button>
@@ -585,36 +586,137 @@
                 <button type="button" class="btn btn-dark" data-filter="hobby"> Hobby</button>
             </div>
         </div>
+        -->
 
         <div class="container filtr-projects">
-            <div class="row" id="project-card-holder">
+            <div class="flex-container">
 
-                <!-- Shinken -->
-                <div class="col-sm-12 col-md-6 col-lg-4 p-2 filtr-item" data-category='all, professional, monitoring'>
-                    <div class="card mt-1">
-                        <div class="card">
-                            <a class="card-header" href="https://github.com/naparuba/shinken" target="_blank" rel="noopener">
-                                <div>
-                                    <div class="d-flex">
-                                        <img class="card-img-xs" src="/theme/images/sections/projects/shinken.png" alt="Shinken"/>
-                                        <h5 class="card-title mb-0">Shinken</h5>
+                <!-- Nagios -->
+                <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-12 p-2 filtr-item"
+                         data-category='all, professional, monitoring'>
+                        <div class="card mt-1">
+                            <div class="card">
+                                <a class="card-header"
+                                   href="https://www.eyrolles.com/Informatique/Livre/nagios-3-pour-la-supervision-et-la-metrologie-9782212124736/"
+                                   target="_blank"
+                                   rel="noopener">
+                                    <div>
+                                        <div class="d-flex">
+                                            <img class="card-img-xs" src="/theme/images/sections/projects/nagios.png"
+                                                 alt="Shinken"/>
+                                            <h5 class="card-title mb-0">Livre sur Nagios</h5>
+                                        </div>
+                                        <div class="sub-title">
+                                            <span>Auteur</span>
+                                            <span>2009</span>
+                                        </div>
                                     </div>
-                                    <div class="sub-title">
-                                        <span>Ex-owner</span>
-                                        <span>2009 - 2023</span>
+                                </a>
+                                <div class="card-body text-justify pt-1 pb-1">
+                                    <div class="flex-container">
+                                        <div class="col-6">
+                                            <p>Après avoir rédigé de nombreux articles sur Nagios et participé au projet
+                                                Open Source, j'ai décidé d'écrire un livre sur Nagios aux éditions
+                                                Eyrolles.</p>
+                                            <p>La rédaction du livre a demandé 6mois de mon temps, et ce dernier est
+                                                sorti en 2009.</p>
+                                            <p>C'est une grande réalisation qui m'a permis de m'améliorer en matière de
+                                                pédagogie, afin de pouvoir emmener les lecteurs du status de néophite, à
+                                                celui d'utilisateur éclairé à la fin du livre. </p>
+                                            <p>Il m'a permis également de bien comprendre les limites du logiciel
+                                                Nagios, et a donné ainsi vie au projet Shinken juste à sa suite.</p>
+
+                                            <ul class="competences">
+                                                <li>Monitoring</li>
+                                                <li>Pédagogie</li>
+                                            </ul>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <img class="screenshot"
+                                                 src="/theme/images/sections/projects/nagios_screenshot.jpg"
+                                                 alt="Shinken"/>
+                                        </div>
+                                    </div>
+                                    <div class="project-card-footer">
+                                        <div class="project-tags-holder">
+                                            <span class="badge btn-info">professional</span>
+                                            <span class="badge btn-info">monitoring</span>
+                                        </div>
+
+                                        <div class="project-btn-holder">
+                                            <a class="github-button-inactive project-btn"
+                                               href="https://github.com/naparuba/shinken" data-icon="octicon-standard"
+                                               data-show-count="true" aria-label="Star Shinken">Star</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </a>
-                            <div class="card-body text-justify pt-1 pb-1">
-                                <p>Moteur de supervision modulaire pour les grands environnements</p>
-                                <div class="project-card-footer">
-                                    <div class="project-tags-holder">
-                                        <span class="badge btn-info">professional</span>
-                                        <span class="badge btn-info">monitoring</span>
-                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                    <div class="project-btn-holder">
-                                        <a class="github-button-inactive project-btn" href="https://github.com/naparuba/shinken" data-icon="octicon-standard" data-show-count="true" aria-label="Star Shinken">Star</a>
+                <!-- Shinken -->
+                <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-12 p-2 filtr-item"
+                         data-category='all, professional, monitoring'>
+                        <div class="card mt-1">
+                            <div class="card">
+                                <a class="card-header" href="https://github.com/naparuba/shinken" target="_blank"
+                                   rel="noopener">
+                                    <div>
+                                        <div class="d-flex">
+                                            <img class="card-img-xs" src="/theme/images/sections/projects/shinken.png"
+                                                 alt="Shinken"/>
+                                            <h5 class="card-title mb-0">Shinken</h5>
+                                        </div>
+                                        <div class="sub-title">
+                                            <span>Ex-leader</span>
+                                            <span>2009 - 2023</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="card-body text-justify pt-1 pb-1">
+                                    <div class="flex-container">
+                                        <div class="col-6">
+                                            <p>C'est à l'heure actuelle ma plus grande réalisation.</p>
+                                            <p>C'est un moteur de supervision modulaire pour les (très) grands
+                                                environnements, genre banques ou ministères.</p>
+                                            <p>Démarré suite à mon livre sur Nagios3, c'est une réimplémentation de ce
+                                                dernier en utilisant des techniques modernes, afin d'apporter à la
+                                                supervision les performances et la haute disponibilité.</p>
+                                            <p>Ce projet a eu un réel succès auprès de ses utilisateurs, ce qui a incité
+                                                certains à devenir contributeur sur le projet.</p>
+                                            <p>De nombreuses sociétés l'ont utilisés très rapidement en remplacement de
+                                                Nagios, et m'ont incité à lancer la société Shinken Solutions en 2013
+                                                pour en faire une version complète, dédié aux grands comptes.</p>
+
+                                            <ul class="competences">
+                                                <li>Monitoring</li>
+                                                <li>Python</li>
+                                                <li>Open Source</li>
+                                                <li>Leadership</li>
+                                                <li>Architecture</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6">
+                                            <img class="screenshot"
+                                                 src="/theme/images/sections/projects/shinken_screenshot.png"
+                                                 alt="Shinken"/>
+                                        </div>
+                                    </div>
+                                    <div class="project-card-footer">
+                                        <div class="project-tags-holder">
+                                            <span class="badge btn-info">professional</span>
+                                            <span class="badge btn-info">monitoring</span>
+                                        </div>
+
+                                        <div class="project-btn-holder">
+                                            <a class="github-button-inactive project-btn"
+                                               href="https://github.com/naparuba/shinken" data-icon="octicon-standard"
+                                               data-show-count="true" aria-label="Star Shinken">Star</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -623,133 +725,248 @@
                 </div>
 
                 <!-- Opsbro -->
-                <div class="col-sm-12 col-md-6 col-lg-4 p-2 filtr-item" data-category='all, hobby'>
-                    <div class="card mt-1">
-                        <div class="card">
-                            <a class="card-header" href="https://github.com/naparuba/opsbro" target="_blank" rel="noopener">
-                                <div>
-                                    <div class="d-flex">
-                                        <img class="card-img-xs" src="/theme/images/sections/projects/opsbro.jpg" alt="OpsBro"/>
-                                        <h5 class="card-title mb-0">OpsBro</h5>
+                <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-12 p-2 filtr-item" data-category='all, hobby'>
+                        <div class="card mt-1">
+                            <div class="card">
+                                <a class="card-header" href="https://github.com/naparuba/opsbro" target="_blank"
+                                   rel="noopener">
+                                    <div>
+                                        <div class="d-flex">
+                                            <img class="card-img-xs" src="/theme/images/sections/projects/opsbro.jpg"
+                                                 alt="OpsBro"/>
+                                            <h5 class="card-title mb-0">OpsBro</h5>
+                                        </div>
+                                        <div class="sub-title">
+                                            <span>Auteur</span>
+                                            <span>2013 - Présent</span>
+                                        </div>
                                     </div>
-                                    <div class="sub-title">
-                                        <span>Owner</span>
-                                        <span>2013 - Présent</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="card-body text-justify pt-1 pb-1">
-                                <p>Un outil gérant les tâches principales des ops pour le dépoiement et la gestion des serveurs Linux et Windows.</p>
-                                <div class="project-card-footer">
-                                    <div class="project-tags-holder">
-                                        <span class="badge btn-info"> ops </span>
-                                        <span class="badge btn-info"> multi-tools </span>
-                                    </div>
+                                </a>
+                                <div class="card-body text-justify pt-1 pb-1">
+                                    <div class="flex-container">
+                                        <div class="col-6">
+                                            <p>C'est mon side project le plus avancé.</p>
+                                            <p>Débuté dès 2013, il est resté depuis lors dans l'ombre de Shinken.</p>
+                                            <p>C'est un multi-outil permettant d'aider les devops dans leurs tâches
+                                                quotidiennes:</p>
+                                            <ul>
+                                                <li>Gestion de configuration (à la puppet)</li>
+                                                <li>Déploiement des applis (à la Ansible)</li>
+                                                <li>Monitoring (à la Shinken)</li>
+                                                <li>Métrologie (à la Prometheus)</li>
+                                                <li>Service discovery (à la Consul)</li>
+                                                <li>Auto-détection (là je n'ais pas trop d'exemple :))</li>
 
-                                    <div class="project-btn-holder">
-                                        <a class="github-button-inactive project-btn" href="https://github.com/naparuba/opsbro" data-icon="octicon-standard" data-show-count="true" aria-label="Star OpsBro">Star</a>
+                                            </ul>
+                                            <p>Loin d'être fini, c'est un outil qui pourrait être utile aux petites
+                                                équipes d'admin, ne se focalisant que sur le strict nécessaire de chaque
+                                                domaine. Donc dès que l'équipe grossi, il faut le changer par les outils
+                                                plus "gros" demandant bien plus de temps d'apprentissagle.</p>
+                                            <p>Mais bon, vous avez voulu une grosse équipe, faut faire avec désormais
+                                                :)</p>
+
+                                            <ul class="competences">
+                                                <li>Devops</li>
+                                                <li>Python</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6">
+                                            <img class="screenshot"
+                                                 src="/theme/images/sections/projects/opsbro_screenshot.png"
+                                                 alt="Shinken"/>
+                                        </div>
+                                    </div>
+                                    <div class="project-card-footer">
+                                        <div class="project-tags-holder">
+                                            <span class="badge btn-info"> ops </span>
+                                            <span class="badge btn-info"> multi-tools </span>
+                                        </div>
+
+                                        <div class="project-btn-holder">
+                                            <a class="github-button-inactive project-btn"
+                                               href="https://github.com/naparuba/opsbro" data-icon="octicon-standard"
+                                               data-show-count="true" aria-label="Star OpsBro">Star</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Mangle -->
-                <div class="col-sm-12 col-md-6 col-lg-4 p-2 filtr-item" data-category='all, hobby, fun'>
-                    <div class="card mt-1">
-                        <div class="card">
-                            <a class="card-header" href="https://github.com/naparuba/mangle" target="_blank" rel="noopener">
-                                <div>
-                                    <div class="d-flex">
-                                        <img class="card-img-xs" src="/theme/images/sections/projects/mangle.jpg" alt="Mangle"/>
-                                        <h5 class="card-title mb-0">Mangle</h5>
+                <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-12 p-2 filtr-item" data-category='all, hobby, fun'>
+                        <div class="card mt-1">
+                            <div class="card">
+                                <a class="card-header" href="https://github.com/naparuba/mangle" target="_blank"
+                                   rel="noopener">
+                                    <div>
+                                        <div class="d-flex">
+                                            <img class="card-img-xs" src="/theme/images/sections/projects/mangle.jpg"
+                                                 alt="Mangle"/>
+                                            <h5 class="card-title mb-0">Mangle</h5>
+                                        </div>
+                                        <div class="sub-title">
+                                            <span>Nothing</span>
+                                            <span>2015 - Présent</span>
+                                        </div>
                                     </div>
-                                    <div class="sub-title">
-                                        <span>Nothing</span>
-                                        <span>2015 - Présent</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="card-body text-justify pt-1 pb-1">
-                                <p>Interface pour découper correctement des mangas pour les liseuses.</p>
-                                <div class="project-card-footer">
-                                    <div class="project-tags-holder">
-                                        <span class="badge btn-info">hobby</span>
-                                        <span class="badge btn-info">fun</span>
+                                </a>
+                                <div class="card-body text-justify pt-1 pb-1">
+                                    <div class="flex-container">
+                                        <div class="col-6">
+                                            <p>C'est un projet que j'ai forké depuis mangle, que j'ai
+                                                amélioré.</p>
+                                            <p>C'est une interface de gestion de manga, afin de les transformer en
+                                                fichiers lisibles par une liseuse.</p>
+                                            <p>Il est développé en Python + QT, et est l'occasion de faire du traitement
+                                                d'image avancé, comme le fait d'avoir un algorithme qui enlève les zones
+                                                inutles autour des pages, ou bien un algorithme permettant de découper
+                                                au mieux les webtoon pour les adapter à une lecture sur liseuse.</p>
+
+                                            <ul class="competences">
+                                                <li>Python</li>
+                                                <li>Interface / QT</li>
+                                                <li>Traitement d'images</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6">
+                                            <img class="screenshot"
+                                                 src="/theme/images/sections/projects/mangle_screenshot.png"
+                                                 alt="Shinken"/>
+                                        </div>
                                     </div>
 
-                                    <div class="project-btn-holder">
-                                        <a class="github-button-inactive project-btn" href="https://github.com/naparuba/mangle" data-icon="octicon-standard" data-show-count="true" aria-label="Star Nocode">Star</a>
+                                    <div class="project-card-footer">
+                                        <div class="project-tags-holder">
+                                            <span class="badge btn-info">hobby</span>
+                                            <span class="badge btn-info">fun</span>
+                                        </div>
+
+                                        <div class="project-btn-holder">
+                                            <a class="github-button-inactive project-btn"
+                                               href="https://github.com/naparuba/mangle" data-icon="octicon-standard"
+                                               data-show-count="true" aria-label="Star Nocode">Star</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Uberlogger -->
-                <div class="col-sm-12 col-md-6 col-lg-4 p-2 filtr-item" data-category='all, academic'>
-                    <div class="card mt-1">
-                        <div class="card">
-                            <a class="card-header" href="https://github.com/naparuba/uberlogger" target="_blank" rel="noopener">
-                                <div>
-                                    <div class="d-flex">
-                                        <img class="card-img-xs" src="/theme/images/sections/projects/uberlogger.png" alt="Uberlogger"/>
-                                        <h5 class="card-title mb-0">Uberlogger</h5>
+                <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-12 p-2 filtr-item" data-category='all, academic'>
+                        <div class="card mt-1">
+                            <div class="card">
+                                <a class="card-header" href="https://github.com/naparuba/uberlogger" target="_blank"
+                                   rel="noopener">
+                                    <div>
+                                        <div class="d-flex">
+                                            <img class="card-img-xs"
+                                                 src="/theme/images/sections/projects/uberlogger.png" alt="Uberlogger"/>
+                                            <h5 class="card-title mb-0">Uberlogger</h5>
+                                        </div>
+                                        <div class="sub-title">
+                                            <span>Owner</span>
+                                            <span>2005</span>
+                                        </div>
                                     </div>
-                                    <div class="sub-title">
-                                        <span>Owner</span>
-                                        <span>2005</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="card-body text-justify pt-1 pb-1">
-                                <p>Outil développé dans le cadre scolaire, pot à miel pour piéger les pirates de serveurs Linux.</p>
-                                <div class="project-card-footer">
-                                    <div class="project-tags-holder">
-                                        <span class="badge btn-info"> hacking </span>
-                                        <span class="badge btn-info"> security </span>
+                                </a>
+                                <div class="card-body text-justify pt-1 pb-1">
+                                    <div class="flex-container">
+                                        <div class="col-12">
+                                            <p>C'est un projet qui a débuté dans le cadre d'un projet scolaire de
+                                                3ième année d'école d'ingénieur.</p>
+                                            <p>C'est un honeypot pour tracer toute l'activité d'un pirate sur un serveur
+                                                Linux sans que le pirate ne puisse détecter l'outil.</p>
+                                            <p>Cet outil a été une vraie réussite technique, et nous avons eu la chance
+                                                de le présenter lors de la conférence SSTIC 2005 devant 400
+                                                profesionnels de la sécurité.</p>
+                                            <ul class="competences">
+                                                <li>C</li>
+                                                <li>Module kernel Linux</li>
+                                                <li>Sécurité</li>
+                                            </ul>
+                                        </div>
+
                                     </div>
 
-                                    <div class="project-btn-holder">
-                                        <a class="github-button-inactive project-btn" href="https://github.com/naparuba/uberlogger" data-icon="octicon-standard" data-show-count="true" aria-label="Star Tensorflow">Star</a>
+                                    <div class="project-card-footer">
+                                        <div class="project-tags-holder">
+                                            <span class="badge btn-info"> hacking </span>
+                                            <span class="badge btn-info"> security </span>
+                                        </div>
+
+                                        <div class="project-btn-holder">
+                                            <a class="github-button-inactive project-btn"
+                                               href="https://github.com/naparuba/uberlogger"
+                                               data-icon="octicon-standard" data-show-count="true"
+                                               aria-label="Star Tensorflow">Star</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Pyndsgest -->
-                <div class="col-sm-12 col-md-6 col-lg-4 p-2 filtr-item" data-category='all, hobby'>
-                    <div class="card mt-1">
-                        <div class="card">
-                            <a class="card-header" href="https://github.com/naparuba/pyndsgest" target="_blank" rel="noopener">
-                                <div>
-                                    <div class="d-flex">
-                                        <img class="card-img-xs" src="/theme/images/sections/projects/nds.jpg" alt="Pyndsgest"/>
-                                        <h5 class="card-title mb-0">Pyndsgest</h5>
+                <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-12 p-2 filtr-item" data-category='all, hobby'>
+                        <div class="card mt-1">
+                            <div class="card">
+                                <a class="card-header" href="https://github.com/naparuba/pyndsgest" target="_blank"
+                                   rel="noopener">
+                                    <div>
+                                        <div class="d-flex">
+                                            <img class="card-img-xs" src="/theme/images/sections/projects/nds.jpg"
+                                                 alt="Pyndsgest"/>
+                                            <h5 class="card-title mb-0">Pyndsgest</h5>
+                                        </div>
+                                        <div class="sub-title">
+                                            <span>Owner</span>
+                                            <span>2005</span>
+                                        </div>
                                     </div>
-                                    <div class="sub-title">
-                                        <span>Owner</span>
-                                        <span>2005</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="card-body text-justify pt-1 pb-1">
-                                <p>Interface de gestion de jeux NDS.</p>
-                                <div class="project-card-footer">
-                                    <div class="project-tags-holder">
-                                        <span class="badge btn-info"> gaming </span>
-                                        <span class="badge btn-info"> nds </span>
+                                </a>
+                                <div class="card-body text-justify pt-1 pb-1">
+                                    <div class="flex-container">
+                                        <div class="col-6">
+                                            <p>C'est un projet que j'ai développé pour m'aider à gérer mes jeux
+                                                Nintendo DS à l'époque.</p>
+                                            <p>Il permettait de lister les jeux que j'avais (en ROM), et les
+                                                traiter/découper afin de gagner de la place sur les cartouches de
+                                                jeux</p>
+                                            <p>C'était mon premier projet en Python, et en plus avec une interface, qui
+                                                m'a permis d'apprendre beaucoup sur ces deux sujets</p>
+                                            <ul class="competences">
+                                                <li>Python</li>
+                                                <li>Interface QT</li>
+                                                <li>Traitement de données bas niveau</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6">
+                                            <img class="screenshot"
+                                                 src="/theme/images/sections/projects/pyndsgest_screenshot.png"
+                                                 alt="Shinken"/>
+                                        </div>
                                     </div>
 
-                                    <div class="project-btn-holder">
-                                        <a class="github-button-inactive project-btn" href="https://github.com/naparuba/pyndsgest" data-icon="octicon-standard" data-show-count="true" aria-label="Star Tensorflow">Star</a>
+                                    <div class="project-card-footer">
+                                        <div class="project-tags-holder">
+                                            <span class="badge btn-info"> gaming </span>
+                                            <span class="badge btn-info"> nds </span>
+                                        </div>
+
+                                        <div class="project-btn-holder">
+                                            <a class="github-button-inactive project-btn"
+                                               href="https://github.com/naparuba/pyndsgest" data-icon="octicon-standard"
+                                               data-show-count="true" aria-label="Star Tensorflow">Star</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -757,7 +974,71 @@
                     </div>
                 </div>
 
+                <!-- Fdcn -->
+                <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-12 p-2 filtr-item" data-category='all, hobby'>
+                        <div class="card mt-1">
+                            <div class="card">
+                                <a class="card-header" href="https://github.com/naparuba/fdcn" target="_blank"
+                                   rel="noopener">
+                                    <div>
+                                        <div class="d-flex">
+                                            <img class="card-img-xs" src="/theme/images/sections/projects/fdcn.png"
+                                                 alt="Fdcn"/>
+                                            <h5 class="card-title mb-0">Forteresse du Chaudron Noir</h5>
+                                        </div>
+                                        <div class="sub-title">
+                                            <span>Owner</span>
+                                            <span>2005</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="card-body text-justify pt-1 pb-1">
+                                    <div class="flex-container">
+                                        <div class="col-6">
+                                            <p>C'est un projet que j'ai développé pour me permettre de suivre mon
+                                                avancée dans le livre "La forteresse du chaudron noir", de Bob
+                                                Lennon.</p>
+                                            <p>C'est une interface écrite en Godot, avec une partie en Python pour le
+                                                traitement des données du livre</p>
+                                            <p>C'était mon premier projet en Godot, et en plus avec une publication sur
+                                                le store Android, qui m'a permis d'apprendre beaucoup sur ces deux
+                                                sujets.</p>
+                                            <ul class="competences">
+                                                <li>Python</li>
+                                                <li>Interface Godot</li>
+                                                <li>Android</li>
+                                            </ul>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <img class="screenshot"
+                                                 src="/theme/images/sections/projects/fdcn_screenshot.png"
+                                                 alt="Shinken"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="project-card-footer">
+                                        <div class="project-tags-holder">
+                                            <span class="badge btn-info"> UI </span>
+                                            <span class="badge btn-info"> Android </span>
+                                            <span class="badge btn-info"> Godot </span>
+                                        </div>
+
+                                        <div class="project-btn-holder">
+                                            <a class="github-button-inactive project-btn"
+                                               href="https://github.com/naparuba/fdcn" data-icon="octicon-standard"
+                                               data-show-count="true" aria-label="Star Tensorflow">Star</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>
 
