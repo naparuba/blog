@@ -57,6 +57,6 @@ Je présente le nom à mes enfants, et mon petit dernier se trompe et l'appelle 
 
 <center><img src='/images/common/coder.gif'></center> 
 
-Voici ce que ça donne au final, et qu'on va analyser dans les prochains articles :
+Voici ce que ça donne au final, et qu'on va analyser dans le futur :
 
 <center><img src='/images/79/henskan_screenshot.png'></center>
