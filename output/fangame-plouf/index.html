@@ -131,46 +131,91 @@
 <section>
     <article>
         <header class="post-header">
-            <h2><a href="/shinken-le-dispatching-des-configurations-et-les-spares/" rel="bookmark">Shinken : le dispatching des configurations et les spares</a></h2>
-            <span class='author'>Gabès Jean</span>
-            <span style="color: gray;font-style: italic;">( 23 Oct 2009 )</span>
+            <h2><a href="/fangame-plouf/" rel="bookmark">Fangame sur  l'univers de Monsieur Plouf</a></h2>
+            <span class='author'>Jean Gabès</span>
+            <span style="color: gray;font-style: italic;">( 20 May 2025 )</span>
 
-            <span class="tags"><a href="/tag/blog.html">blog</a></span>
+            <span class="tags"><a href="/tag/godot.html">godot</a> / <a href="/tag/projet.html">projet</a> / <a href="/tag/plouf.html">plouf</a></span>
             <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
 
 
         </header>
 
-    <!-- relu -->
-
-<h2>Rappel sur les daemons et les configurations</h2>
-<p>J'ai déjà évoqué le fait que Shinken utilise plusieurs daemons qui ont chacun leur rôle. Le maître de tous est l'Arbiter qui lit la conf, la découpe et l'envoie vers ses petits camarades. Bien sûr, les satellites comme les pollers ont besoin de connaître l'adresse des ordonnanceurs. Ces derniers ont la responsabilité de l'ordonnancement de la supervision. La perte d'un d'entre eux peu être embêtante : une partie des hôtes ne seront plus surveillés!</p>
-<p>C'est pourquoi Shinken utilise un système de spare : des daemons seront lancés mais non actifs. Ils ne se verront affecter une configuration et donc une responsabilité que si un daemon maître meurt. Typiquement un placement de ces spares sur la machine de l'Arbiter peut être utile, il y a peu de chance qu'elle perde le lien avec elle même.</p>
-<p>Regardons un peu le dispatching des configurations vers les ordonnanceurs et ce qui se passe lorsqu'un ordonnanceur n'est plus disponible</p>
-<h2>Dispatch des configurations</h2>
-<p>L'arbiter lit la configuration globale de l'administrateur, il la coupe en morceaux (autant que l'ordonnanceurs NON spare). Le dispatcheur (une Classe dans l'Arbiter), l'envoi vers les ordonnanceurs. Puis il créé une configuration particulière avec juste les adressess des ordonnanceurs à destinations des satellites comme les pollers ou le broker. Et hop, tout le monde est content.</p>
-<p>Ca se résume en un diagramme:</p>
-<p><a href="/images/35/shinken-conf-dispatching.png"><img class="aligncenter size-full wp-image-281" title="shinken-conf-dispatching" src="/images/35/shinken-conf-dispatching.png" alt="shinken-conf-dispatching" width="580" height="410" /></a></p>
-<h2>Lorsqu'un ordonnanceur tombe</h2>
-<p>Personne n'est parfait, les OS non plus. Une machine ça peut tomber, un réseau aussi. Bref, les daemons ne seront pas toujours joignables. C'est pour cela qu'on peut définir des spare qui vont reprendre le flambeau des vérifications. Pour l'instant, seul les ordonnanceurs peuvent avoir un spare, mais ca ne devrait pas tarder pour les satellites car ce n'est pas bien différent.</p>
-<p>L'Arbiter vérifie régulièrement que tout le monde est vivant. Si un ordonnanceur est déclaré mort alors qu'il avait la responsabilité d'une configuration, il envoie la configuration vers un spare disponible.Il met à jour les informations des satellites pour qu'ils prennent en compte cette nouvelle disposition.</p>
-<p>Un cas intéressant arrive lorsque l'ordonnanceur n'était pas disponible à cause d'une perte réseau (vous savez, cette grande variable aléatoire  :mrgreen: ). Il était encore vivant mais on ne le voyait plus c'est tout. Si la conf a été envoyé à un spare, on a un problème : deux ordonnanceurs avec la même conf. Pour l'instant il est demandé à l'ordonnanceur maître de gentiment arrêter son ordonnancement et d'attendre une nouvelle conf. Dans l'avenir, une solution plus élégante sera de demander plutôt au spare de lâcher la main, car il y a de fortes chances que ce dernier aient moins d'informations que le premier.</p>
-<p>Ca se résume en un diagramme :</p>
-<p><a href="/images/35/shinken-scheduler-lost.png"><img class="aligncenter size-full wp-image-282" title="shinken-scheduler-lost" src="/images/35/shinken-scheduler-lost.png" alt="shinken-scheduler-lost" width="580" height="410" /></a></p>
-<h2>En bref</h2>
-<p>Imaginez un même système en C (juste le dispatching et la gestion des spares). </p>
-<p>... Ca y est vous le voyez?</p>
-<p>Compter le nombre de lignes que ca demande. ... </p>
-<p>Combien alors?</p>
-<p>Tout ça? Maintenant regardons combien ce prends dans Shinken : dispatcher 200 lignes, satellitelink 100 lignes (et ca va fortement diminuer), satellite pour la gestion de la conf : 50 lignes. </p>
-<p>Ah oui, le tout avec 30% de commentaires  :-)</p>
-<p>Le Python c'est bon.</p>
-<div class="highlight"><pre><span></span><code><span class="n">NOTE</span> <span class="mi">2021</span><span class="p">:</span> <span class="n">bon</span> <span class="k">on</span> <span class="n">doit</span> <span class="err">ê</span><span class="n">tre</span> <span class="err">à</span> <span class="mi">10</span><span class="n">x</span> <span class="n">plus</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">code</span> <span class="n">actuel</span><span class="p">,</span> <span class="n">facilement</span><span class="p">.</span> <span class="n">Mais</span> <span class="n">d</span><span class="s1">&#39;expérience c&#39;</span><span class="n">est</span> <span class="n">classqiue</span><span class="p">:</span> <span class="mi">10</span><span class="o">%</span> <span class="n">du</span> <span class="n">temps</span> <span class="n">pour</span> <span class="n">coder</span> <span class="n">un</span> <span class="n">truc</span><span class="p">,</span> <span class="mi">90</span><span class="o">%</span> <span class="n">restant</span> <span class="n">pour</span> <span class="n">le</span> <span class="n">stabiliser</span> <span class="n">et</span>
-           <span class="n">gérer</span> <span class="n">TOUS</span> <span class="n">les</span> <span class="n">cas</span> <span class="err">à</span> <span class="n">la</span> <span class="n">con</span> <span class="n">et</span> <span class="n">faire</span> <span class="n">que</span> <span class="n">les</span> <span class="n">utilisateurs</span> <span class="n">ne</span> <span class="n">soient</span> <span class="n">pas</span> <span class="n">perdu</span>
-
-<span class="n">NOTE</span> <span class="mi">2021</span><span class="p">:</span> <span class="mi">30</span><span class="o">%</span> <span class="n">de</span> <span class="n">commentaires</span><span class="p">,</span> <span class="n">j</span><span class="s1">&#39;en suis encore à ce ratio après 20ans de code, juste que mes commentaires sont différents, mais j&#39;</span><span class="n">en</span> <span class="n">ferai</span> <span class="n">un</span> <span class="n">article</span>
-           <span class="p">(</span><span class="n">qui</span> <span class="err">é</span><span class="n">nervera</span> <span class="n">Ben</span><span class="p">,</span> <span class="n">coucou</span> <span class="n">ben</span> <span class="o">^^</span> <span class="p">)</span>
-</code></pre></div>
+    <p><center><img src='/images/80/article.png'></center></p>
+<h1>J'avais besoin de coder un truc</h1>
+<p>J'avais fini deux jeux, à savoir Sekiro et <a href="https://store.steampowered.com/app/1809540/Nine_Sols/?l=french">Nine Sols</a>, et je recommande très fortement ce dernier (moins Sekiro, trop focus sur les combats de boss). Ce jeu m'a pris pas loin de 30 heures. Or c'est un peu ma limite pour jouer, après j'ai envie de créer un truc.</p>
+<p>Et là j'ai eu pour idée de faire un petit jeu, en <a href="https://godotengine.org/">Godot</a>. Je me suis dit que tant qu'à faire je vais faire un fangame sur l'univers d'un youtuber que j'aime bien : <a href="https://www.youtube.com/@MonsieurPlouf">Monsieur Plouf</a>, qui des chroniques très intéressantes et amusantes.</p>
+<p>Et ça tombe bien, son univers est en 2d, et ça me va très bien. J'ai pensé un moment à faire un jeu de baston, genre en réutilisant le moteur <a href="https://ikemen-engine.github.io/">Mugen/Ikemen-go</a>, mais en regardant combien de sprite il fallait pour faire un combatant, et que le découpage de sprites c'est pas mon fort, j'ai cherché autre chose de plus réalisable.</p>
+<p>Et là je me suis rapellé un petit jeu auquel j'ai joué et que j'avais bien aimé pour son efficacité: <a href="https://store.steampowered.com/app/474750/Reigns/?l=french">Reigns</a>.</p>
+<p>Je me suis donc dit: et pourquoi pas refaire un Reigns, mais mode Monsieur Plouf? </p>
+<p>Etait né "Une semaine en tant que Monsieur Plouf" qui doit arriver à faire sa chronique à temps. Bon alors pour être honnête, Monsieur Plouf sort une vidéo toutes les deux semaines, mais ça sonnait moins bien comme titre :)</p>
+<p>Voici a quoi ça ressemble:</p>
+<p><center><img src='/images/80/gameplay.png'></center> </p>
+<p>Le but principal du jeu est de vous faire passer un bon moment, et bien rigoler. Si ça c'est fait, j'ai réussi alors :)</p>
+<h1>Gameplay</h1>
+<p>Le gameplay est assez simple:</p>
+<ul>
+<li>on a une suite de problèmes</li>
+<li>le joueur a deux réponses possibles</li>
+<li>chaque réponse influe sur 4 critères qui sont indiqués en haut de l'écran, mais on ne sait pas quel impact précis ça va avoir</li>
+<li>une réponse peut avoir un effet positif ou négatif sur les critères</li>
+<li>si un critères tombe à 0 ou est au max, alors la partie est finie</li>
+<li>il faut atteindre un certains nombres de problèmes pour gagner, dans mon cas j'ai choisi 50</li>
+</ul>
+<p>Alors sur ordi on va gérer à la souris et manette (joystick), et sur téléphone ça sera au tactile, rien de bien méchant a priori, Godot aide bien.</p>
+<p>Le gameplay est simple, et a priori Reigns est assez connu, donc les joueurs vont s'en sortir, mais à coder ce n'est pas si simple que ça en a l'air.</p>
+<h1>Droits d'un fan game</h1>
+<p>Alors je mets de côté le fait que je ne sais pas dessiner, donc je vais me permettre de prendre des screenshots des chroniques comme base pour mes images. </p>
+<p>Que ce soit bien clair: je n'ai pas le <em>droit</em> de le faire, mais j'espère que vu que c'est un fangame open source et gratuit ça sera toléré. Mais dans les faits l'auteur original (Monsieur Plouf) n'aurait qu'à m'envoyer un email et je devrais supprimer toutes les images (et donc tuer le projet). C'est le risque des fangame, et soyons clair, si ça aurait été Nintendo je n'aurais pas pris le risque :) </p>
+<h1>Focus sur des points de gameplay</h1>
+<p>Alors on va vu que le gameplay est simple, mais pas simpliste non plus. Les problèmes et les choix doivent être assez clairs pour que le joueur arrive à deviner dans quel sens les critères vont évoluer.</p>
+<h2>Impact des choix</h2>
+<p>Un des points importants est de lui faire comprendre qu'il est proche d'une limite. J'ai tenté de faire que les icones en haut de l'écrans soient assez explicite, mais ce n'était pas assez à mon goût, et l'effet restait limité.</p>
+<p><center><img src='/images/80/too-much.png'></center> </p>
+<p>Je me suis dit que si ça pouvait mettre le joueur dans le même état psychologique où doit être Monsieur Plouf ça serait très intéressant et plus immersif. Alors oui, j'écoute beaucoup les podcasts de Plouf et Pseudo et donc je fais un peu plus attention à ce genre de points désormais, et fan game ou pas, ça reste un jeu, donc c'est sérieux :)</p>
+<p>On a donc plusieurs critères, et voici les impacts suivant si c'est trop haut ou trop bas:</p>
+<ul>
+<li>vie de famille:<ul>
+<li>si trop bas, sa famille lui manque, donc la vie est fade: plus de couleurs et plus de son</li>
+<li>si trop haut, c'est l'invasion: un sprite de sa fille et madame Plouf se balade sur l'écran et gènent le joueur</li>
+</ul>
+</li>
+<li>vitesse:<ul>
+<li>si trop bas: alors là c'est chaud, car Plouf n'a plus le temps, donc il doit rusher: le joueur n'a plus que 5s pour lire les réponses, après on cache les réponses! C'est clairement le pire impact :)</li>
+<li>si trop haut: là Plouf va trop vite. Et je me suis toujours demandé: Flash il vite à 200 à l'heure, donc en fait les autres sont au ralenti, tout le temps? Il doit s'ennuyer sévère non? Là Plouf voit tout au ralenti :)</li>
+</ul>
+</li>
+<li>créativité:<ul>
+<li>si trop bas: le monde est brut, donc on voit plus les pixels et les textes sont plus "carrés"</li>
+<li>si trop haut: là Plouf vit la créativité, et tout est psychédélique et flottant</li>
+</ul>
+</li>
+<li>popularité:<ul>
+<li>si trop bas: Youtube a oublié Plouf, dans plus de vidéo, ça se retranscrit dans le jeu par l'écran qui devient tout sombre de temps en temps </li>
+<li>si trop haut: là c'est trop populaire, Plouf se fait envahir par les marques, donc invasion de sprite d'éditeurs, avec notaement Konami, éditeur préféré de Monsieur Plouf.</li>
+</ul>
+</li>
+</ul>
+<h2>Cartes à gros impacts</h2>
+<p>Un autre point que j'ai changé par rapport à Reign original: de base j'ai mis un poids random et pas trop haut, mais j'ai aussi mis des cartes qui ont un gros impact (genre 3 fois plus qu'une carte normale). J'ai fait en sorte que visuellement ça se voit bien, j'espère que c'est le cas :)</p>
+<p><center><img src='/images/80/gros-impact.png'></center></p>
+<h1>Voila pour le gameplay</h1>
+<p>Si on rajoute le fait que Monsieur Plouf a 10 étapes à réaliser pour avoir une vidéo prête, on a notre progression avec 5 cartes par étapes, soit 50 cartes.</p>
+<p>J'ai écrit presque 90 cartes pour que ça ne soit pas toujours les mêmes, mais idéalement il en faudrait encore d'autres. J'ai bien outillé cette partie d'ailleurs, c'est assez facile à rajouter, reste à avoir l'inspiration :)</p>
+<p>Je me suis bien amusé à imaginer des trucs un peu loufoques, qui collent bien avec l'univers.</p>
+<h1>Technique plus tard</h1>
+<p>On va vu la partie gameplay, on verra une autre fois la partie technique, avec notamment ce que j'ai appris au cours de ce projet: non pas le découpage propre des sprites, ça ... bon disons que c'est toujours compliqué. Non je parle des shaders, c'est plus simple que ce que je pensais, et on verra ça.</p>
+<h1>Ok et le jeu il est dispo où?</h1>
+<p>Alors pour jouer c'est simple, vous avez plusieurs possibilité:</p>
+<ul>
+<li>Jouer directement en web: <a href="https://plouf.gabes.fr">plouf.gabes.fr</a></li>
+<li>Version pour <a href="https://plouf.gabes.fr/builds/win/">windows</a></li>
+<li>Version pour <a href="https://plouf.gabes.fr/builds/linux/">linux</a>, je ne l'ai pas testé, mais a priori ça devrait être bon pour le Steam Deck</li>
+<li>Version pour <a href="https://plouf.gabes.fr/builds/android/">Android</a>, testé et approuvé, ma version favorite :)</li>
+</ul>
+<h1>C'est Open Source</h1>
+<p>Alors si on mets de côté les images, c'est Open Source (licence MIT, open bar quoi). Donc si vous voulez fixer un bug (on sait jamais), ou alors rajouter des cartes rigolotes, faut pas hésiter à venir participer: <a href="https://github.com/naparuba/plouf">https://github.com/naparuba/plouf</a></p>
+<p>Bon jeu!</p>
 
 <div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
     <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
