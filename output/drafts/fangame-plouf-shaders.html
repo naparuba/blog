@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ</title>
+
+
+    <meta name="description" content="Portfolio et blog profesionnel de Jean Gabès."/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+
+    <link rel="stylesheet" href="/theme/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/main.css"/>
+    <link rel="stylesheet" href="/theme/css/navigators/navbar.css"/>
+    <link rel="stylesheet" href="/theme/css/plyr.css"/>
+    <link rel="stylesheet" href="/theme/css/flag-icon.min.css"/>
+    <link rel="stylesheet" href="/theme/css/layouts/social.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+
+    <link rel="icon" type="image/png" href="/theme/images/author/favicon.png"/>
+
+    <meta property="og:title" content="Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Portfolio et blog profesionnel de Jean Gabès"/>
+    <meta property="og:image" content="/theme/images/author/naparuba.gif">
+    <meta property="og:url" content="https://hugo-toha.github.io">
+
+
+    <link rel="stylesheet" href="/theme/css/style.css"/>
+
+
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push( ['trackPageView'] );
+        _paq.push( ['enableLinkTracking'] );
+        (function() {
+            var u = "//matomo.gabes.fr/";
+            _paq.push( ['setTrackerUrl', u + 'matomo.php'] );
+            _paq.push( ['setSiteId', '3'] );
+            _paq.push(['setDocumentTitle', "Jean"]);
+            _paq.push(['trackPageView']);
+            var d   = document,
+                g   = d.createElement( 'script' ),
+                s   = d.getElementsByTagName( 'script' )[ 0 ];
+            g.async = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore( g, s );
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-xl top-navbar initial-navbar" id="top-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/theme/images/author/naparuba-4x.gif" id="logo" alt="Logo">
+            Jean Gabès</a>
+        <button
+                class="navbar-toggler navbar-dark"
+                id="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#top-nav-items"
+                aria-label="menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="top-nav-items">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#home">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/parcours.html#about">A propos</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/parcours.html#skills">Skills</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/parcours.html#experiences">Expérience</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/parcours.html#education">Scolarité</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/parcours.html#projects">Projets</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/blog.html">Post récents</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+
+<div id="post-container" class="container-fluid section-holder d-flex bg-white">
+    <div class="container anchor p-lg-5" id="post">
+        <div class="row pt-sm-2 pt-md-4 align-self-center">
+            <div class="row">
+                <div class="container col-md-9">
+<section>
+    <article>
+        <header class="post-header">
+            <h2><a href="/drafts/fangame-plouf-shaders.html" rel="bookmark">Fangame sur  l'univers de Monsieur Plouf</a></h2>
+            <span class='author'>Jean Gabès</span>
+            <span style="color: gray;font-style: italic;">( 25 May 2025 )</span>
+
+            <span class="tags"><a href="/tag/godot.html">godot</a> / <a href="/tag/projet.html">projet</a> / <a href="/tag/plouf.html">plouf</a></span>
+            <span class="tags"><a href="/category/talk.html">Talk</a> / </span>
+
+
+        </header>
+
+    <p><center><img src='/images/81/article.jpg'></center></p>
+<h1>Les shaders: ce que j'avais toujours évités soigneusement</h1>
+<p>J'ai a mon actif quelques petits développements avec <a href="https://godotengine.org/">Godot</a>, principalement en 2d. Alors bidouiller des sprites avec Gimp ça va a peu près, mais il y a un sujet que j'ai toujours soigneusement évité: les <a href="https://fr.wikipedia.org/wiki/Shader">shaders</a>.</p>
+<p>J'ai déjà eu besoin de shaders, genre surligner le contour d'un sprite, mais j'avais fait comme tout bon dev: un bon gros copier coller sans trop chercher à comprendre, et hop fini ᕦ(ò_óˇ)ᕤ</p>
+<p>Après je connais le principe des shaders: ce sont des opérations codés dans un simili-C (déjà là ça motive pas des masses) qui peuvent jouer sur les pixels, et appelé un à un avec un très fort parallélisme.</p>
+<p>Mais là où ça devient rigolo c'est qu'on a une vision totalement locale, point de structure globale à portée, car le but est de faire du parallélisme sur GPU, et une structure globale en GPU c'est la mort des performances.</p>
+<h1>Bon on y arrive: j'ai vraiment besoins des shaders, on mélange deux sprites</h1>
+<p>Arrive le projet de <a href="https://github.com/naparuba/plouf">fangame Monsieur Plouf</a>. Après quelques tests pour faire bouger de droite à gauche un sprite suivant le mouvement de la souris ou doigt, et j'avais des images avec les personnages.</p>
+<p>Mais j'ai voulu les mettre dans des décors, et là ça devient plus complexe, car synchroniser les deux sprites et gérer les inputs des souris c'était faisable, mais galère à coder.</p>
+<p>J'ai donc rajouté des images de background, et le tout en png, car j'aime bien la transparence.</p>
+<p>Maintenant il fallait mélanger les deux.</p>
+<p>Et en fait c'est assez simple. De base on a la texture du personnage, avec des pixels de couleurs pour le perso, et des pixels en alpha transparent ... bah là où c'est transparent.</p>
+<p>On va fournir aux sprite du personnage un second sprite, celui du background:</p>
+<ul>
+<li>si on a un pixel du personnage qui est non transparent: on le garde</li>
+<li>si c'est un transparent, on met à la place le pixel issu de la même position du background</li>
+</ul>
+<p>Voila, ce n'est pas plus compliqué que ça.</p>
+<h1>Show me the code</h1>
+<p>Voici ce que donne le code en question:</p>
+<div class="highlight"><pre><span></span><code><span class="n">shader_type</span> <span class="n">canvas_item</span><span class="p">;</span>
+
+<span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">backTexture</span><span class="p">;</span>
+
+<span class="n">vec4</span> <span class="n">back_rgb</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">backTexture</span><span class="p">,</span> <span class="n">UV</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">COLOR</span><span class="p">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="err">{</span>
+    <span class="n">COLOR</span> <span class="o">=</span> <span class="n">back_rgb</span><span class="p">;</span>
+<span class="err">}</span>
+</code></pre></div>
+
+<p>Et oui, c'est tout.</p>
+<p>Alors voyons ça:</p>
+<div class="highlight"><pre><span></span><code><span class="err">shader_type canvas_item;</span>
+</code></pre></div>
+
+<p>Pour avoir un shader dans Godot, si j'ai bien compris il y a plusieurs dialectes de shaders, ici je ne parlerai que de ceux de Godot 4.</p>
+<div class="highlight"><pre><span></span><code><span class="err">uniform sampler2D backTexture;</span>
+</code></pre></div>
+
+<p>Pour charger la texture du back. Tout le parsing du PNG et cie est géré par Godot, on a juste à lui filer le .png chargé et hop, réglé. Merci Godot.</p>
+<div class="highlight"><pre><span></span><code><span class="err">vec4 back_rgb = texture(backTexture, UV);</span>
+</code></pre></div>
+
+<p>Ici on va récupérer le pixel (<code>vector 4, RGB + alpha</code>) dans la backTexture, et à la position <code>UV</code> (c'est une constante que donne le shader quand il s'exécute).</p>
+<div class="highlight"><pre><span></span><code><span class="err">if (COLOR.a == 0.0){</span>
+<span class="err">    COLOR = back_rgb;</span>
+<span class="err">}</span>
+</code></pre></div>
+
+<p>On regarde alors l'alpha (<code>.a</code>) et s'il est transparent (<code>0.0</code>) dans <code>COLOR</code> qui est le pixel qu'on est en train de gérer, donc celui de la texture du personnage, alors on y colle le pixel du fond.</p>
+<p>Voila, ce n'est pas plus compliqué que ça.</p>
+<p>Il faut dire que le plus gros du travail, à savoir le parsing du PNG et tout ce genre de trucs, pas passionnant pour un sous, est fait par le moteur.</p>
+<p>On arrive donc à avoir à partir de ce sprite:
+<center><img src='/images/81/PLOUF_HESITE.png'></center> </p>
+<p>avec comme paramètre de shader ce sprite ci:
+<center><img src='/images/81/BACK_BUREAU.png'></center> </p>
+<p>On arrive à notre résultat:
+<center><img src='/images/81/melange.png'></center> </p>
+<h1>Un autre usage?</h1>
+<p>Une carte n'est pas a bord carré, ça ne serait pas très joli. J'aimerai avoir des bords ronds.</p>
+<p>Ok, donc prends Gimp, tu modifies tous les PNG des fonds et hop.</p>
+<p>Alors oui, mais non:</p>
+<ul>
+<li>déjà c'est long,</li>
+<li>je ne sais pas faire ça avec gimp,</li>
+<li>et si j'ai un perso un peu large il dépasserait. </li>
+</ul>
+<p>Bref, ce n'est pas une bonne solution.</p>
+<p>Et là on va ressortir notre petit copain shader: on va faire des coins arondis, tout simplement en mettant l'alpha des pixels dans les coins à <code>0.0</code>.</p>
+<p>Ok facile, voila fini.</p>
+<p>Bon alors non, ce n'est pas si simple. On a DEJA un shader sur notre texture, et dans Godot on ne peut pas en appliquer deux à la suite, ou en tout cas pas facilement (il y a une histoire de viewports, mais ça a l'air d'être un tel bordel que j'ai abandonné ce truc qui ressemble à une bombe atomique pour écraser une mouche).</p>
+<p>Donc il va falloir rajouter notre calcul à notre shader déjà existant:
+   * On regarde si on est dans un pixel de coin et on mets l'alpha
+   * sinon on applique le mélange entre la texture du personnage et la texture du fond</p>
+<h1>Code de l'arrondi de 10 pixels dans chaque coins</h1>
+<p>Voici le bout du code pour savoir si on est dans un coin arrondi :</p>
+<div class="highlight"><pre><span></span><code><span class="n">uniform</span> <span class="nb">float</span> <span class="n">corner_radius</span> <span class="p">:</span> <span class="n">hint_range</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">10</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">uniform</span> <span class="n">vec2</span> <span class="n">texture_size</span> <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span><span class="mi">300</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="n">vec2</span> <span class="n">pixel_pos</span> <span class="o">=</span> <span class="n">UV</span> <span class="o">*</span> <span class="n">texture_size</span><span class="p">;</span>
+
+<span class="n">bool</span> <span class="n">in_bottom_left</span> <span class="o">=</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">corner_radius</span> <span class="o">&amp;&amp;</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">texture_size</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">);</span>
+<span class="n">bool</span> <span class="n">in_bottom_right</span> <span class="o">=</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">texture_size</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">texture_size</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">);</span>
+<span class="n">bool</span> <span class="n">in_top_left</span> <span class="o">=</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">corner_radius</span> <span class="o">&amp;&amp;</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">corner_radius</span><span class="p">;</span>
+<span class="n">bool</span> <span class="n">in_top_right</span> <span class="o">=</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">texture_size</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">pixel_pos</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">corner_radius</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">Calcul</span> <span class="n">de</span> <span class="n">la</span> <span class="n">distance</span> <span class="n">au</span> <span class="n">coin</span>
+<span class="nb">float</span> <span class="n">corner_dist</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">in_bottom_left</span><span class="p">)</span> <span class="err">{</span>
+    <span class="n">corner_dist</span> <span class="o">=</span> <span class="k">length</span><span class="p">(</span><span class="n">pixel_pos</span> <span class="o">-</span> <span class="n">vec2</span><span class="p">(</span><span class="n">corner_radius</span><span class="p">,</span> <span class="n">texture_size</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">));</span>
+<span class="err">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">in_bottom_right</span><span class="p">)</span> <span class="err">{</span>
+    <span class="n">corner_dist</span> <span class="o">=</span> <span class="k">length</span><span class="p">(</span><span class="n">pixel_pos</span> <span class="o">-</span> <span class="n">vec2</span><span class="p">(</span><span class="n">texture_size</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">texture_size</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">));</span>
+<span class="err">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">in_top_left</span><span class="p">)</span> <span class="err">{</span>
+    <span class="n">corner_dist</span> <span class="o">=</span> <span class="k">length</span><span class="p">(</span><span class="n">pixel_pos</span> <span class="o">-</span> <span class="n">vec2</span><span class="p">(</span><span class="n">corner_radius</span><span class="p">,</span> <span class="n">corner_radius</span><span class="p">));</span>
+<span class="err">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">in_top_right</span><span class="p">)</span> <span class="err">{</span>
+    <span class="n">corner_dist</span> <span class="o">=</span> <span class="k">length</span><span class="p">(</span><span class="n">pixel_pos</span> <span class="o">-</span> <span class="n">vec2</span><span class="p">(</span><span class="n">texture_size</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">corner_radius</span><span class="p">,</span> <span class="n">corner_radius</span><span class="p">));</span>
+<span class="err">}</span>
+
+<span class="n">bool</span> <span class="n">is_outside_corner</span> <span class="o">=</span> <span class="p">(</span><span class="n">in_bottom_left</span> <span class="o">||</span> <span class="n">in_bottom_right</span> <span class="o">||</span> <span class="n">in_top_left</span> <span class="o">||</span> <span class="n">in_top_right</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">corner_dist</span> <span class="o">&gt;</span> <span class="n">corner_radius</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">is_outside_corner</span><span class="p">)</span> <span class="err">{</span>
+    <span class="n">COLOR</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">discard</span><span class="p">;</span>
+<span class="err">}</span>
+</code></pre></div>
+
+<p>C'est ma méthode, et j'imagine que c'est loin d'être la méthode la plus optimale. De mon côté je regarde si on est dans un carré de 10 par 10 dans un des 4 coins.</p>
+<p>À savoir qu'ici je regarde une valeur absolue en nombres de pixels, et <code>UV</code> est en fait un couple de float entre <code>0.0</code> et <code>1.0</code> sur où est-ce qu'on est dans la texture.</p>
+<p>Puis je regarde à quelle distance on est du coin en question. Si on est à une distance plus grande que 10, alors on mets en alpha. Ainsi, on a un joli arrondi de 10pixels. C'est comme utiliser un compas dans un carré, si on prend la taille du carré et qu'on se place à un coin, alors hop, arrondi.</p>
+<p>C'est plus lourds à calculer qu'un mélange de pixels, mais en fait vu qu'on ne le fait que sur une seule texture à la fois, les performances ne sont vraiment pas notre problème, ça m'arrange :)</p>
+<p>Voici le résultat:
+<center><img src='/images/81/carte.png'></center> </p>
+<p>Le code est disponible sur le <a href="https://github.com/naparuba/plouf/blob/db12a7f45a670f2fad1e875139a4d4e854abdf14/shaders/dissolve.gdshader">répo</a>. Attention, il fait d'autres actions que juste mélanger les sprite et arrondir les angles.</p>
+<p>Voila, c'est tout pour aujourd'hui pour nos shaders.</p>
+<p>Alors dans les faits j'en ais d'autres en stocks, mais il me semble que ces deux là sont les plus parlant et utiles pour commencer.</p>
+<p>Désormais vous n'avez plus d'excuses pour éviter les shaders, au final ce n'est pas si complexe qu'on pourrait le croire <code>(⌐■_■)</code></p>
+
+<div class="row" style='border: 2px solid rgba(0,39,59,.2);border-radius: 4px;'>
+    <img style='width: 48px;border: none;box-shadow: none;' data-role="user-avatar" data-user="94550631" src="/theme/images/author/naparuba-4x.gif"><a style="margin-top: 9px;margin-left: 5px;" href='/'> Jean Gabès </a>
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>
+</div>
+
+<hr/>
+
+<!--
+<div id="disqus_thread"></div>
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jeangabes.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
+
+        </footer>
+    </article>
+</section>
+
+<!--article.locale_date-->
+                </div> <!-- /container -->
+
+                <div class="col-md-3">
+                    <div id="SocialIcons" class="row">
+<ul class="social-link d-flex">
+    <li>
+        <a href="mailto:jean.gabes@gmail.com" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.github.com/naparuba" title="Github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/gabesjean/" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+    </li>
+
+    <li>
+        <a href="https://twitter.com/naparuba" title="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+    </li>
+</ul>                    </div>
+
+                    <div id="Archives" class="row" style="max-height:50em;overflow-y: auto;">
+                        <h2>Archives</h2>
+                        <ul style="padding-left: 8px;">
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2025</span> <a href="/fangame-plouf/"> Fangame sur  l'univers de Monsieur Plouf </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Sep 2024</span> <a href="/henskan-pourquoi/"> Henskan: pourquoi un (nouveau) projet pour liseuse </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2023</span> <a href="/python-property/"> Python: pourquoi je ne suis pas un fan des @property </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2023</span> <a href="/python-setproctitle/"> Python: donner un vrai nom à vos process </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2023</span> <a href="/python-copy/"> Python: la différence entre copy et deepcopy </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2023</span> <a href="/strace-outil-derniere-chance/"> Strace, l'outil de la dernière chance </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2023</span> <a href="/depuis-open-source-vers-editeur/"> Développer son outil en Open Source et en tant qu’éditeur, deux salles, deux ambiances </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2015</span> <a href="/smart-agent/"> Smart agent solution </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2010</span> <a href="/retour-des-rmll/"> Retour des RMLL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2010</span> <a href="/retour-a-lecole/"> Retour à l'école </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-la-01-est-arrivee/"> Shinken : la 0.1 est arrivée! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-example-de-hack-rapide-du-code/"> Shinken : example de Hack rapide du code </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">May 2010</span> <a href="/shinken-tagguez-vos-pollers/"> Shinken : tagguez vos pollers </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/shinken-quelques-news-sur-la-prochaine-01/"> Shinken : quelques news sur la prochaine 0.1 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/nagios-de-lopen-source-a-lopen-core/"> Nagios : de l'open source à l'open core ? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war/"> Art of (free software) war </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Apr 2010</span> <a href="/art-of-free-software-war-fr/"> Art of (free software) war - FR </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/deduplication-bloc-fixe-vs-bloc-variable/"> Déduplication : bloc fixe VS bloc variable </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Mar 2010</span> <a href="/la-reponse-de-lauteur-de-nagios/"> La réponse de l'auteur de Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/nagios-lauteur-tente-de-museler-sa-communaute-pour-cause-davoir-ete-trop-libre/"> Nagios : l'auteur tente de museler sa communauté pour cause d'avoir été trop libre!! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Feb 2010</span> <a href="/partie-a-trois-python-__slots__-et-metaclass/"> Partie à trois : Python, __slots__ et metaclass </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/les-escalades-de-notifications-enfin-simples-a-mettre-en-place/"> Les escalades de notifications enfin simples à mettre en place </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/gestion-des-exclusions-de-timeperiods/"> Gestion des exclusions de timeperiods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jan 2010</span> <a href="/apres-mysql-oracle-et-couchdb-sqlite/"> Après MySQL, Oracle et couchdb : Sqlite </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/generalisation-des-modulations-de-resultats/"> Généralisation des modulations de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/couchdb-dans-shinken/"> Couchdb dans Shinken </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-sur-zdnet/"> Shinken sur ZDNet! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/python-et-le-data-driven-programming/"> Python et le Data-Driven programming </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/il-fait-chaud-chaud-cet-hiver/"> Il fait chaud chaud cet hiver </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/hot-periods/"> Hot periods </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/mes-premiers-patchs/"> Mes premiers patchs ! </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-des-modulateurs-de-resultats/"> Shinken : des modulateurs de résultats </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quel-avenir-pour-nagios-shinken/"> Shinken : quel avenir pour Nagios? Shinken? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-gestion-des-noms-en-utf8/"> Shinken : gestion des noms en UTF8 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Dec 2009</span> <a href="/shinken-quoi-de-neuf-docteur/"> Shinken : Quoi de neuf docteur? </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-lart-de-linspiration/"> Shinken : l'art de l'inspiration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-nouveau-logo/"> Shinken : un nouveau logo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-le-choix-de-la-licence-agpl/"> Shinken : le choix de la licence AGPL </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-un-serveur-inutile-preferez-un-eeepc/"> Shinken : un serveur? Inutile, préférez un eeepc... </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-100kchecks-ah-desole-il-fallait-lire-200k/"> Shinken : 100Kchecks? Ah désolé, il fallait lire 200K </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-a-oui-au-fait-cest-multiplate-forme/"> Shinken : à oui au fait, c'est multiplate-forme </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-les-realms-sont-la/"> Shinken : les realms sont là </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Nov 2009</span> <a href="/shinken-pool-realm/"> Shinken : Pool -> Realm </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-la-notion-de-pool-ou-comment-pousser-encore-plus-loin-larchitecture/"> Shinken : la notion de pool, ou comment pousser encore plus loin l'architecture </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-dispatch-des-commandes-externes/"> Shinken : dispatch des commandes externes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-le-dispatching-des-configurations-et-les-spares/"> Shinken : le dispatching des configurations et les spares </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/patch-nagios-ssl-pour-ndo/"> Patch Nagios : SSL pour Ndo </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/100k-checks5minutes/"> 100K checks/5minutes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Oct 2009</span> <a href="/shinken-les-grandes-lignes/"> Shinken : Les grandes lignes </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/sortie-de-mon-livre-sur-nagios/"> Sortie de mon livre sur Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Aug 2009</span> <a href="/monter-un-cluster-filesystem-avec-ocfs2/"> Monter un cluster filesystem avec OCFS2 </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-une-gestion-plus-fine-de-la-configuration/"> Patch Nagios pour une gestion plus fine de la configuration </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/shinken-quand-un-python-rencontre-nagios/"> Shinken : quand un python rencontre Nagios </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jul 2009</span> <a href="/patch-nagios-pour-un-demarrage-bien-plus-rapide/"> Patch Nagios pour un démarrage (bien plus) rapide </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/administration-et-supervision-de-heartbeatldirectordipvs/"> Administration et supervision de HeartBeat/Ldirectord/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mise-en-place-dune-solution-de-load-balancing-hautement-disponible/"> Mise en place d'une solution de load balancing hautement disponible </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/la-haute-disponiblite-et-la-repartition-de-charge-avec-heartbeatipvs/"> La haute disponiblité et la répartition de charge avec HeartBeat/IPVS </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/funkyplaylist-un-script-generateur-de-playlist/"> FunkyPlayList : un script générateur de playlist </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/pyndsgest-gerer-vos-jeux-nds-facilement/"> Pyndsgest : gérer vos jeux NDS facilement </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/uberlogger/"> UberLogger </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/mon-blog/"> Mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2009</span> <a href="/ouverture-de-mon-blog/"> Ouverture de mon blog </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/un-petit-point-sur-lauteur/"> Un petit point sur l'auteur </a>
+                            </li>
+                            <li class="archive-entry">
+                                <span class="archives-li-header">Jun 2005</span> <a href="/ouverture/"> Ouverture </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="clear">
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+        <div class="row text-left">
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Navigation</h5>
+
+                <ul>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#about">A propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#skills">Skills</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#experiences">Expérience</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#education">Scolarité</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#projects">Mes projets</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="smooth-scroll" href="/#recent-posts">Derniers Posts</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <h5>Me contacter:</h5>
+                <ul>
+                    <li><span>Email: </span> <span>naparuba@gmail.com</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/theme/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/theme/js/popper.min.js"></script>
+<script type="text/javascript" src="/theme/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/theme/js/navbar.js"></script>
+<script type="text/javascript" src="/theme/js/plyr.js"></script>
+<script type="text/javascript" src="/theme/js/main.js"></script>
+
+
+<script src="/theme/js/itype.min.js"></script>
+<script src="/theme/js/github-button.js"></script>
+
+<script src="/theme/js/jquery.filterizr.min.js"></script>
+</body>
+</html>
