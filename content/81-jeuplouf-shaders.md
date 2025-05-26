@@ -1,4 +1,4 @@
-Title: Fangame sur  l'univers de Monsieur Plouf
+Title: Focus sur les shaders 2d dans Godot
 Date: 2025-05-25 07:20
 Category: Talk
 Tags: godot, projet, plouf
