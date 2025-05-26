@@ -1,5 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ - Jean Gabès</title><link href="/" rel="alternate"></link><link href="/feeds/jean-gabes.atom.xml" rel="self"></link><id>/</id><updated>2025-05-20T07:20:00+02:00</updated><entry><title>Fangame sur l'univers de Monsieur Plouf</title><link href="/fangame-plouf/" rel="alternate"></link><published>2025-05-20T07:20:00+02:00</published><updated>2025-05-20T07:20:00+02:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2025-05-20:/fangame-plouf/</id><summary type="html">&lt;p&gt;J'ai codé un fangame sur l'univers du youtuber Monsieur Plouf.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;center&gt;&lt;img src='/images/80/article.png'&gt;&lt;/center&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Serveurs + code = ༼ つ ͡◕ Ѿ ͡◕ ༽つ - Jean Gabès</title><link href="/" rel="alternate"></link><link href="/feeds/jean-gabes.atom.xml" rel="self"></link><id>/</id><updated>2025-05-25T07:20:00+02:00</updated><entry><title>Fangame sur l'univers de Monsieur Plouf</title><link href="/fangame-plouf-shaders/" rel="alternate"></link><published>2025-05-25T07:20:00+02:00</published><updated>2025-05-25T07:20:00+02:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2025-05-25:/fangame-plouf-shaders/</id><summary type="html">&lt;p&gt;Entrons dans le monde merveilleux des Shaders de sprite&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;center&gt;&lt;img src='/images/81/article.jpg'&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Les shaders: ce que j'avais toujours évités soigneusement&lt;/h1&gt;
+&lt;p&gt;J'ai a mon actif quelques petits développements avec &lt;a href="https://godotengine.org/"&gt;Godot&lt;/a&gt;, principalement en 2d. Alors bidouiller des sprites avec Gimp ça va a peu près, mais il y a un sujet que j'ai toujours soigneusement évité: les &lt;a href="https://fr.wikipedia.org/wiki/Shader"&gt;shaders&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;J'ai déjà eu besoin de shaders, genre surligner le contour d'un sprite, mais j'avais fait comme tout bon dev: un bon gros copier coller sans trop chercher à comprendre, et hop fini ᕦ(ò_óˇ)ᕤ&lt;/p&gt;
+&lt;p&gt;Après je connais le principe des shaders: ce sont des opérations codés dans un simili-C (déjà là ça motive pas des masses) qui peuvent jouer sur les pixels, et appelé un à un avec un très fort parallélisme.&lt;/p&gt;
+&lt;p&gt;Mais là où ça devient rigolo c'est qu'on a une vision totalement locale, point de structure globale à portée, car le but est de faire du parallélisme sur GPU, et une structure globale en GPU c'est la mort des performances.&lt;/p&gt;
+&lt;h1&gt;Bon on y arrive: j'ai vraiment besoins des shaders, on mélange deux sprites&lt;/h1&gt;
+&lt;p&gt;Arrive le projet de &lt;a href="https://github.com/naparuba/plouf"&gt;fangame Monsieur Plouf&lt;/a&gt;. Après quelques tests pour faire bouger de droite à gauche un sprite suivant le mouvement de la souris ou doigt, et j'avais des images avec les personnages.&lt;/p&gt;
+&lt;p&gt;Mais j'ai voulu les mettre dans des décors, et là ça devient plus complexe, car synchroniser les deux sprites et gérer les inputs des souris c'était faisable, mais galère à coder.&lt;/p&gt;
+&lt;p&gt;J'ai donc rajouté des images de background, et le tout en png, car j'aime bien la transparence.&lt;/p&gt;
+&lt;p&gt;Maintenant il fallait mélanger les deux.&lt;/p&gt;
+&lt;p&gt;Et en fait c'est assez simple. De base on a la texture du personnage, avec des pixels de couleurs pour le perso, et des pixels en alpha transparent ... bah là où c'est transparent.&lt;/p&gt;
+&lt;p&gt;On va fournir aux sprite du personnage un second sprite, celui du background:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;si on a un pixel du personnage qui est non transparent: on le garde&lt;/li&gt;
+&lt;li&gt;si c'est un transparent, on met à la place le pixel issu de la même position du background&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Voila, ce n'est pas plus compliqué que ça.&lt;/p&gt;
+&lt;h1&gt;Show me the code&lt;/h1&gt;
+&lt;p&gt;Voici ce que donne le code en question:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;shader_type&lt;/span&gt; &lt;span class="n"&gt;canvas_item&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;uniform&lt;/span&gt; &lt;span class="n"&gt;sampler2D&lt;/span&gt; &lt;span class="n"&gt;backTexture&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;vec4&lt;/span&gt; &lt;span class="n"&gt;back_rgb&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;texture&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;backTexture&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;UV&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;COLOR&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;COLOR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;back_rgb&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Et oui, c'est tout.&lt;/p&gt;
+&lt;p&gt;Alors voyons ça:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;shader_type canvas_item;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Pour avoir un shader dans Godot, si j'ai bien compris il y a plusieurs dialectes de shaders, ici je ne parlerai que de ceux de Godot 4.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;uniform sampler2D backTexture;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Pour charger la texture du back. Tout le parsing du PNG et cie est géré par Godot, on a juste à lui filer le .png chargé et hop, réglé. Merci Godot.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;vec4 back_rgb = texture(backTexture, UV);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Ici on va récupérer le pixel (&lt;code&gt;vector 4, RGB + alpha&lt;/code&gt;) dans la backTexture, et à la position &lt;code&gt;UV&lt;/code&gt; (c'est une constante que donne le shader quand il s'exécute).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;if (COLOR.a == 0.0){&lt;/span&gt;
+&lt;span class="err"&gt;    COLOR = back_rgb;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;On regarde alors l'alpha (&lt;code&gt;.a&lt;/code&gt;) et s'il est transparent (&lt;code&gt;0.0&lt;/code&gt;) dans &lt;code&gt;COLOR&lt;/code&gt; qui est le pixel qu'on est en train de gérer, donc celui de la texture du personnage, alors on y colle le pixel du fond.&lt;/p&gt;
+&lt;p&gt;Voila, ce n'est pas plus compliqué que ça.&lt;/p&gt;
+&lt;p&gt;Il faut dire que le plus gros du travail, à savoir le parsing du PNG et tout ce genre de trucs, pas passionnant pour un sous, est fait par le moteur.&lt;/p&gt;
+&lt;p&gt;On arrive donc à avoir à partir de ce sprite:
+&lt;center&gt;&lt;img src='/images/81/PLOUF_HESITE.png'&gt;&lt;/center&gt; &lt;/p&gt;
+&lt;p&gt;avec comme paramètre de shader ce sprite ci:
+&lt;center&gt;&lt;img src='/images/81/BACK_BUREAU.png'&gt;&lt;/center&gt; &lt;/p&gt;
+&lt;p&gt;On arrive à notre résultat:
+&lt;center&gt;&lt;img src='/images/81/melange.png'&gt;&lt;/center&gt; &lt;/p&gt;
+&lt;h1&gt;Un autre usage?&lt;/h1&gt;
+&lt;p&gt;Une carte n'est pas a bord carré, ça ne serait pas très joli. J'aimerai avoir des bords ronds.&lt;/p&gt;
+&lt;p&gt;Ok, donc prends Gimp, tu modifies tous les PNG des fonds et hop.&lt;/p&gt;
+&lt;p&gt;Alors oui, mais non:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;déjà c'est long,&lt;/li&gt;
+&lt;li&gt;je ne sais pas faire ça avec gimp,&lt;/li&gt;
+&lt;li&gt;et si j'ai un perso un peu large il dépasserait. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bref, ce n'est pas une bonne solution.&lt;/p&gt;
+&lt;p&gt;Et là on va ressortir notre petit copain shader: on va faire des coins arondis, tout simplement en mettant l'alpha des pixels dans les coins à &lt;code&gt;0.0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Ok facile, voila fini.&lt;/p&gt;
+&lt;p&gt;Bon alors non, ce n'est pas si simple. On a DEJA un shader sur notre texture, et dans Godot on ne peut pas en appliquer deux à la suite, ou en tout cas pas facilement (il y a une histoire de viewports, mais ça a l'air d'être un tel bordel que j'ai abandonné ce truc qui ressemble à une bombe atomique pour écraser une mouche).&lt;/p&gt;
+&lt;p&gt;Donc il va falloir rajouter notre calcul à notre shader déjà existant:
+   * On regarde si on est dans un pixel de coin et on mets l'alpha
+   * sinon on applique le mélange entre la texture du personnage et la texture du fond&lt;/p&gt;
+&lt;h1&gt;Code de l'arrondi de 10 pixels dans chaque coins&lt;/h1&gt;
+&lt;p&gt;Voici le bout du code pour savoir si on est dans un coin arrondi :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;uniform&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;hint_range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;uniform&lt;/span&gt; &lt;span class="n"&gt;vec2&lt;/span&gt; &lt;span class="n"&gt;texture_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vec2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;vec2&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;UV&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;in_bottom_left&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;in_bottom_right&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;in_top_left&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;in_top_right&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;pixel_pos&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;Calcul&lt;/span&gt; &lt;span class="n"&gt;de&lt;/span&gt; &lt;span class="n"&gt;la&lt;/span&gt; &lt;span class="n"&gt;distance&lt;/span&gt; &lt;span class="n"&gt;au&lt;/span&gt; &lt;span class="n"&gt;coin&lt;/span&gt;
+&lt;span class="nb"&gt;float&lt;/span&gt; &lt;span class="n"&gt;corner_dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in_bottom_left&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;corner_dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;length&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pixel_pos&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;vec2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in_bottom_right&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;corner_dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;length&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pixel_pos&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;vec2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in_top_left&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;corner_dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;length&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pixel_pos&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;vec2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in_top_right&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;corner_dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;length&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pixel_pos&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;vec2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;texture_size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;is_outside_corner&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in_bottom_left&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;in_bottom_right&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;in_top_left&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;in_top_right&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corner_dist&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;corner_radius&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;is_outside_corner&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;COLOR&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;discard&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;C'est ma méthode, et j'imagine que c'est loin d'être la méthode la plus optimale. De mon côté je regarde si on est dans un carré de 10 par 10 dans un des 4 coins.&lt;/p&gt;
+&lt;p&gt;À savoir qu'ici je regarde une valeur absolue en nombres de pixels, et &lt;code&gt;UV&lt;/code&gt; est en fait un couple de float entre &lt;code&gt;0.0&lt;/code&gt; et &lt;code&gt;1.0&lt;/code&gt; sur où est-ce qu'on est dans la texture.&lt;/p&gt;
+&lt;p&gt;Puis je regarde à quelle distance on est du coin en question. Si on est à une distance plus grande que 10, alors on mets en alpha. Ainsi, on a un joli arrondi de 10pixels. C'est comme utiliser un compas dans un carré, si on prend la taille du carré et qu'on se place à un coin, alors hop, arrondi.&lt;/p&gt;
+&lt;p&gt;C'est plus lourds à calculer qu'un mélange de pixels, mais en fait vu qu'on ne le fait que sur une seule texture à la fois, les performances ne sont vraiment pas notre problème, ça m'arrange :)&lt;/p&gt;
+&lt;p&gt;Voici le résultat:
+&lt;center&gt;&lt;img src='/images/81/carte.png'&gt;&lt;/center&gt; &lt;/p&gt;
+&lt;p&gt;Le code est disponible sur le &lt;a href="https://github.com/naparuba/plouf/blob/db12a7f45a670f2fad1e875139a4d4e854abdf14/shaders/dissolve.gdshader"&gt;répo&lt;/a&gt;. Attention, il fait d'autres actions que juste mélanger les sprite et arrondir les angles.&lt;/p&gt;
+&lt;p&gt;Voila, c'est tout pour aujourd'hui pour nos shaders.&lt;/p&gt;
+&lt;p&gt;Alors dans les faits j'en ais d'autres en stocks, mais il me semble que ces deux là sont les plus parlant et utiles pour commencer.&lt;/p&gt;
+&lt;p&gt;Désormais vous n'avez plus d'excuses pour éviter les shaders, au final ce n'est pas si complexe qu'on pourrait le croire &lt;code&gt;(⌐■_■)&lt;/code&gt;&lt;/p&gt;</content><category term="godot"></category><category term="projet"></category><category term="plouf"></category></entry><entry><title>Fangame sur l'univers de Monsieur Plouf</title><link href="/fangame-plouf/" rel="alternate"></link><published>2025-05-20T07:20:00+02:00</published><updated>2025-05-20T07:20:00+02:00</updated><author><name>Jean Gabès</name></author><id>tag:None,2025-05-20:/fangame-plouf/</id><summary type="html">&lt;p&gt;J'ai codé un fangame sur l'univers du youtuber Monsieur Plouf.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;center&gt;&lt;img src='/images/80/article.png'&gt;&lt;/center&gt;&lt;/p&gt;
 &lt;h1&gt;J'avais besoin de coder un truc&lt;/h1&gt;
 &lt;p&gt;J'avais fini deux jeux, à savoir Sekiro et &lt;a href="https://store.steampowered.com/app/1809540/Nine_Sols/?l=french"&gt;Nine Sols&lt;/a&gt;, et je recommande très fortement ce dernier (moins Sekiro, trop focus sur les combats de boss). Ce jeu m'a pris pas loin de 30 heures. Or c'est un peu ma limite pour jouer, après j'ai envie de créer un truc.&lt;/p&gt;
 &lt;p&gt;Et là j'ai eu pour idée de faire un petit jeu, en &lt;a href="https://godotengine.org/"&gt;Godot&lt;/a&gt;. Je me suis dit que tant qu'à faire je vais faire un fangame sur l'univers d'un youtuber que j'aime bien : &lt;a href="https://www.youtube.com/@MonsieurPlouf"&gt;Monsieur Plouf&lt;/a&gt;, qui des chroniques très intéressantes et amusantes.&lt;/p&gt;
